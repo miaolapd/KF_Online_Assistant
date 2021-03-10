@@ -14,7 +14,7 @@
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
 // @include     https://*kfgal.com/*
-// @version     14.1.6
+// @version     14.1.7
 // @grant       none
 // @run-at      document-end
 // @license     MIT
@@ -101,7 +101,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 版本号
-var version = '14.1.6';
+var version = '14.1.7';
 
 /**
  * 导出模块
@@ -10379,22 +10379,33 @@ var blockThread = exports.blockThread = function blockThread() {
         return false;
     };
 
-    var num = 0;
-    if (_Info2.default.isInHomePage) {
-        return; // 临时
-        $('.b_tit4 a, .b_tit4_1 a').each(function () {
+    /**
+     * 屏蔽左侧帖子推荐榜单
+     * @param $area 屏蔽区域
+     * @return {number} 屏蔽数量
+     */
+    var blockRecommendThread = function blockRecommendThread($area) {
+        var tmpNum = 0;
+        $area.each(function () {
             var $this = $(this);
             var title = $this.attr('title');
             if (!title) return;
-            var matches = /^《(.+)》by：(.+)$/.exec(title);
+            var matches = /^《(.+)》$/.exec(title);
             if (matches) {
-                if (isBlock(matches[1], matches[2])) {
-                    num++;
+                if (isBlock(matches[1], '')) {
+                    tmpNum++;
                     $this.parent('li').remove();
                 }
             }
         });
+        return tmpNum;
+    };
+
+    var num = 0;
+    if (_Info2.default.isInHomePage) {
+        num += blockRecommendThread($('.indexlbtit2 a, .rightlbtit a'));
     } else if (location.pathname === '/thread.php') {
+        num += blockRecommendThread($('.rightlbtit a'));
         var fid = parseInt($('input[name="f_fid"]:first').val());
         if (!fid) return;
         $('.threadtit1 a[href^="read.php"]').each(function () {
@@ -10420,6 +10431,8 @@ var blockThread = exports.blockThread = function blockThread() {
             $floor.prev('.readlou').remove();
             $floor.remove();
         }
+    } else {
+        num += blockRecommendThread($('.rightlbtit a'));
     }
     if (num > 0) console.log('\u3010\u5C4F\u853D\u5E16\u5B50\u3011\u5171\u6709' + num + '\u4E2A\u5E16\u5B50\u88AB\u5C4F\u853D');
 };

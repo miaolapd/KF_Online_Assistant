@@ -13,7 +13,7 @@
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
 // @include     https://*kfgal.com/*
-// @version     14.1.6
+// @version     14.1.7
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_deleteValue
@@ -102,7 +102,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 版本号
-const version = '14.1.6';
+const version = '14.1.7';
 
 /**
  * 导出模块
@@ -9077,22 +9077,33 @@ const blockThread = exports.blockThread = function () {
         return false;
     };
 
-    let num = 0;
-    if (_Info2.default.isInHomePage) {
-        return; // 临时
-        $('.b_tit4 a, .b_tit4_1 a').each(function () {
+    /**
+     * 屏蔽左侧帖子推荐榜单
+     * @param $area 屏蔽区域
+     * @return {number} 屏蔽数量
+     */
+    const blockRecommendThread = function ($area) {
+        let tmpNum = 0;
+        $area.each(function () {
             let $this = $(this);
             let title = $this.attr('title');
             if (!title) return;
-            let matches = /^《(.+)》by：(.+)$/.exec(title);
+            let matches = /^《(.+)》$/.exec(title);
             if (matches) {
-                if (isBlock(matches[1], matches[2])) {
-                    num++;
+                if (isBlock(matches[1], '')) {
+                    tmpNum++;
                     $this.parent('li').remove();
                 }
             }
         });
+        return tmpNum;
+    };
+
+    let num = 0;
+    if (_Info2.default.isInHomePage) {
+        num += blockRecommendThread($('.indexlbtit2 a, .rightlbtit a'));
     } else if (location.pathname === '/thread.php') {
+        num += blockRecommendThread($('.rightlbtit a'));
         let fid = parseInt($('input[name="f_fid"]:first').val());
         if (!fid) return;
         $('.threadtit1 a[href^="read.php"]').each(function () {
@@ -9118,6 +9129,8 @@ const blockThread = exports.blockThread = function () {
             $floor.prev('.readlou').remove();
             $floor.remove();
         }
+    } else {
+        num += blockRecommendThread($('.rightlbtit a'));
     }
     if (num > 0) console.log(`【屏蔽帖子】共有${num}个帖子被屏蔽`);
 };
