@@ -129,8 +129,8 @@ const buildForFirefoxEdition = function (isEs6 = false) {
         .pipe(replace(/\r\n/g, '\n'))
         .pipe(replace(
             /\/\/ @pd-update-url-placeholder/,
-            `// @updateURL   https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/${path}ForFirefox.meta.js\n` +
-            `// @downloadURL https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/${path}ForFirefox.user.js`
+            `// @updateURL   https://github.com/miaolapd/KF_Online_Assistant/raw/master/dist/${path}ForFirefox.meta.js\n` +
+            `// @downloadURL https://github.com/miaolapd/KF_Online_Assistant/raw/master/dist/${path}ForFirefox.user.js`
         ))
         .pipe(replace(/(\/\/ @grant\s+)none/, '$1GM_getValue\n$1GM_setValue\n$1GM_deleteValue'))
         .pipe(replace(
