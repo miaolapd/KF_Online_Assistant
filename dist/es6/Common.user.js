@@ -7,13 +7,14 @@
 // @description KFOL必备！为绯月Galgame论坛增加了大量人性化、自动化的功能，更多功能开发中……
 // @updateURL   https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/es6/Common.meta.js
 // @downloadURL https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/es6/Common.user.js
+// @include     https://*kfmax.com/*
 // @include     https://*kforz.com/*
 // @include     https://*bakabbs.com/*
 // @include     https://*365gal.com/*
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
 // @include     https://*kfgal.com/*
-// @version     14.1.7
+// @version     14.1.8
 // @grant       none
 // @run-at      document-end
 // @license     MIT
@@ -100,7 +101,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 版本号
-const version = '14.1.7';
+const version = '14.1.8';
 
 /**
  * 导出模块
@@ -10245,7 +10246,7 @@ const modifyKFOtherDomainLink = exports.modifyKFOtherDomainLink = function () {
         let $this = $(this);
         let url = $this.attr('href');
         if (/m\.miaola\.info\//i.test(url)) return;
-        let matches = /^(https?:\/\/(?:[\w\.]+?\.)?(?:2dgal|ddgal|9gal|9baka|9moe|kfgal|2dkf|ikfol|kfacg|fygal|bakabbs|365gal|365galgame|kforz|miaola|koyuki)\.\w+?\/)\w+\.php/i.exec(url);
+        let matches = /^(https?:\/\/(?:[\w\.]+?\.)?(?:2dgal|ddgal|9gal|9baka|9moe|kfgal|2dkf|ikfol|kfacg|fygal|bakabbs|365gal|365galgame|kforz|kfmax|miaola|koyuki)\.\w+?\/)\w+\.php/i.exec(url);
         if (matches) $this.attr('href', url.replace(matches[1], Util.getHostNameUrl()));
     });
 };

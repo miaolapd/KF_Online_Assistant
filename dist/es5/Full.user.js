@@ -8,13 +8,14 @@
 // @updateURL   https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/es5/Full.meta.js
 // @downloadURL https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/es5/Full.user.js
 // @require     https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/lib/polyfill.min.js?V6.26.0
+// @include     https://*kfmax.com/*
 // @include     https://*kforz.com/*
 // @include     https://*bakabbs.com/*
 // @include     https://*365gal.com/*
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
 // @include     https://*kfgal.com/*
-// @version     14.1.7
+// @version     14.1.8
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_deleteValue
@@ -103,7 +104,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 版本号
-var version = '14.1.7';
+var version = '14.1.8';
 
 /**
  * 导出模块
@@ -11543,7 +11544,7 @@ var modifyKFOtherDomainLink = exports.modifyKFOtherDomainLink = function modifyK
         var $this = $(this);
         var url = $this.attr('href');
         if (/m\.miaola\.info\//i.test(url)) return;
-        var matches = /^(https?:\/\/(?:[\w\.]+?\.)?(?:2dgal|ddgal|9gal|9baka|9moe|kfgal|2dkf|ikfol|kfacg|fygal|bakabbs|365gal|365galgame|kforz|miaola|koyuki)\.\w+?\/)\w+\.php/i.exec(url);
+        var matches = /^(https?:\/\/(?:[\w\.]+?\.)?(?:2dgal|ddgal|9gal|9baka|9moe|kfgal|2dkf|ikfol|kfacg|fygal|bakabbs|365gal|365galgame|kforz|kfmax|miaola|koyuki)\.\w+?\/)\w+\.php/i.exec(url);
         if (matches) $this.attr('href', url.replace(matches[1], Util.getHostNameUrl()));
     });
 };
