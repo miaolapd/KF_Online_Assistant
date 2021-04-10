@@ -84,8 +84,8 @@ const buildCommonEdition = function (isEs6 = false) {
         .pipe(replace(/\r\n/g, '\n'))
         .pipe(replace(
             /\/\/ @pd-update-url-placeholder/,
-            `// @updateURL   https://github.com/miaolapd/KF_Online_Assistant/raw/master/dist/${path}Common.meta.js\n` +
-            `// @downloadURL https://github.com/miaolapd/KF_Online_Assistant/raw/master/dist/${path}Common.user.js`
+            `// @updateURL   https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/${path}Common.meta.js\n` +
+            `// @downloadURL https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/${path}Common.user.js`
         ))
         .pipe(replace(/\/\/ @pd-require\r?\n/, !isEs6 ? `// @require     ${polyfillUrl}\n` : ''))
         .pipe(gulp.dest(distPath + path))
@@ -106,8 +106,8 @@ const buildFullEdition = function (isEs6 = false) {
         .pipe(replace(/\r\n/g, '\n'))
         .pipe(replace(
             /\/\/ @pd-update-url-placeholder/,
-            `// @updateURL   https://github.com/miaolapd/KF_Online_Assistant/raw/master/dist/${path}Full.meta.js\n` +
-            `// @downloadURL https://github.com/miaolapd/KF_Online_Assistant/raw/master/dist/${path}Full.user.js`
+            `// @updateURL   https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/${path}Full.meta.js\n` +
+            `// @downloadURL https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/${path}Full.user.js`
         ))
         .pipe(replace(/\/\/ @pd-require\r?\n/, !isEs6 ? `// @require     ${polyfillUrl}\n` : ''))
         .pipe(replace(/(\/\/ @grant\s+)none/, '$1GM_getValue\n$1GM_setValue\n$1GM_deleteValue'))
@@ -129,8 +129,8 @@ const buildForFirefoxEdition = function (isEs6 = false) {
         .pipe(replace(/\r\n/g, '\n'))
         .pipe(replace(
             /\/\/ @pd-update-url-placeholder/,
-            `// @updateURL   https://github.com/miaolapd/KF_Online_Assistant/raw/master/dist/${path}ForFirefox.meta.js\n` +
-            `// @downloadURL https://github.com/miaolapd/KF_Online_Assistant/raw/master/dist/${path}ForFirefox.user.js`
+            `// @updateURL   https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/${path}ForFirefox.meta.js\n` +
+            `// @downloadURL https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/${path}ForFirefox.user.js`
         ))
         .pipe(replace(/(\/\/ @grant\s+)none/, '$1GM_getValue\n$1GM_setValue\n$1GM_deleteValue'))
         .pipe(replace(

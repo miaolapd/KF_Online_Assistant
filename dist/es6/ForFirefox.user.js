@@ -5,8 +5,8 @@
 // @author      喵拉布丁
 // @homepage    https://github.com/miaolapd/KF_Online_Assistant
 // @description KFOL必备！为绯月Galgame论坛增加了大量人性化、自动化的功能，更多功能开发中……
-// @updateURL   https://github.com/miaolapd/KF_Online_Assistant/raw/master/dist/es6/ForFirefox.meta.js
-// @downloadURL https://github.com/miaolapd/KF_Online_Assistant/raw/master/dist/es6/ForFirefox.user.js
+// @updateURL   https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/es6/ForFirefox.meta.js
+// @downloadURL https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/es6/ForFirefox.user.js
 // @require     https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/lib/jquery.min.js?V2.2.4
 // @include     https://*kfmax.com/*
 // @include     https://*kforz.com/*
