@@ -38,7 +38,7 @@ __存储类型选择非默认时，请勿随便删除脚本，否则会导致设
 [详细日志请参见此页面&raquo;](https://gitee.com/miaolapd/KF_Online_Assistant/wikis/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
 
 ## 编译脚本
-在项目目录下执行`npm install`安装依赖包（需安装[Node.js](https://nodejs.org/)）；  
+在项目目录下执行`npm install`安装依赖包（需安装[Node.js (v10.x)](https://nodejs.org/)）；  
 执行`gulp bulid`，可对脚本文件进行编译；  
 执行`gulp watch`，可监视源文件的改动并立即进行编译；
 
