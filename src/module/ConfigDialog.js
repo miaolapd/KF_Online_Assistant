@@ -54,15 +54,11 @@ export const show = function () {
     </fieldset>
     <fieldset>
       <legend>
-        <label><input name="autoGetDailyBonusEnabled" type="checkbox"> 自动领取每日奖励</label>
+        <label>自动领取每日奖励</label>
       </legend>
       <label>
-        <input name="getBonusAfterLootCompleteEnabled" type="checkbox"> 完成争夺后才领取
-        <span class="pd_cfg_tips" title="在完成争夺奖励后才领取每日奖励">[?]</span>
-      </label>
-      <label class="pd_cfg_ml">
-        <input name="getBonusAfterSpeakCompleteEnabled" type="checkbox"> 完成发言后才领取
-        <span class="pd_cfg_tips" title="在完成发言奖励后才领取每日奖励">[?]</span>
+        <input name="autoGetDailyBonusEnabled" type="checkbox"> 自动领取每日奖励
+        <span class="pd_cfg_tips" title="每天自动领取每日奖励">[?]</span>
       </label>
     </fieldset>
     <fieldset>

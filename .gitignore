@@ -7,6 +7,7 @@ copy.bat
 copyScripts.bat
 build.bat
 buildCustomScripts.bat
+watch.bat
 myGulpFile.js
 package-lock.json
 gulp.cmd

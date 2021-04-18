@@ -15,7 +15,7 @@
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
 // @include     https://*kfgal.com/*
-// @version     14.1.8
+// @version     14.1.9
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_deleteValue
@@ -104,7 +104,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 版本号
-const version = '14.1.8';
+const version = '14.1.9';
 
 /**
  * 导出模块
@@ -685,10 +685,6 @@ const Config = exports.Config = {
 
     // 是否自动领取每日奖励，true：开启；false：关闭
     autoGetDailyBonusEnabled: false,
-    // 是否在完成争夺奖励后才领取每日奖励，true：开启；false：关闭
-    getBonusAfterLootCompleteEnabled: false,
-    // 是否在完成发言奖励后才领取每日奖励，true：开启；false：关闭
-    getBonusAfterSpeakCompleteEnabled: false,
 
     // 争夺各层分配点数列表，例：{1:{"力量":1,"体质":2,"敏捷":3,"灵活":4,"智力":5,"意志":6}, 10:{"力量":6,"体质":5,"敏捷":4,"灵活":3,"智力":2,"意志":1}}
     levelPointList: {},
@@ -1051,15 +1047,11 @@ const show = exports.show = function () {
     </fieldset>
     <fieldset>
       <legend>
-        <label><input name="autoGetDailyBonusEnabled" type="checkbox"> 自动领取每日奖励</label>
+        <label>自动领取每日奖励</label>
       </legend>
       <label>
-        <input name="getBonusAfterLootCompleteEnabled" type="checkbox"> 完成争夺后才领取
-        <span class="pd_cfg_tips" title="在完成争夺奖励后才领取每日奖励">[?]</span>
-      </label>
-      <label class="pd_cfg_ml">
-        <input name="getBonusAfterSpeakCompleteEnabled" type="checkbox"> 完成发言后才领取
-        <span class="pd_cfg_tips" title="在完成发言奖励后才领取每日奖励">[?]</span>
+        <input name="autoGetDailyBonusEnabled" type="checkbox"> 自动领取每日奖励
+        <span class="pd_cfg_tips" title="每天自动领取每日奖励">[?]</span>
       </label>
     </fieldset>
     <fieldset>
@@ -8849,24 +8841,13 @@ const getDailyBonus = exports.getDailyBonus = function () {
         url: 'kf_growup.php?t=' + $.now(),
         timeout: _Const2.default.defAjaxTimeout
     }).done(function (html) {
-        let matches = /<a href="(kf_growup\.php\?ok=3&safeid=\w+)" target="_self">你可以领取\s*(\d+)KFB\s*\+\s*(\d+)经验\s*\+\s*(\d+(?:\.\d+)?)贡献\s*\+\s*(\d+)转账额度/.exec(html);
+        let matches = /<a href="(kf_growup\.php\?ok=3&safeid=\w+)" target="_self">你可以领取\s*(\d+)KFB\s*\+\s*(\d+)经验\s*\+\s*(\d+(?:\.\d+)?)贡献/.exec(html);
         if (matches) {
-            if (Config.getBonusAfterLootCompleteEnabled && !/<div class="gro_divlv">\r\n争夺奖励/.test(html)) {
-                Util.setCookie(_Const2.default.getDailyBonusCookieName, -1, Util.getDate(`+${_Const2.default.getDailyBonusSpecialInterval}m`));
-                Msg.remove($wait);
-                return;
-            }
-            if (Config.getBonusAfterSpeakCompleteEnabled && !/<div class="gro_divlv">\r\n发言奖励/.test(html)) {
-                Util.setCookie(_Const2.default.getDailyBonusCookieName, -1, Util.getDate(`+${_Const2.default.getDailyBonusSpecialInterval}m`));
-                Msg.remove($wait);
-                return;
-            }
             let url = matches[1];
             let gain = {};
             if (parseInt(matches[2]) > 0) gain['KFB'] = parseInt(matches[2]);
             if (parseInt(matches[3]) > 0) gain['经验值'] = parseInt(matches[3]);
             if (parseFloat(matches[4]) > 0) gain['贡献'] = parseFloat(matches[4]);
-            if (parseInt(matches[5]) > 0) gain['转账额度'] = parseInt(matches[5]);
 
             $.get(`${url}&t=${$.now()}`, function (html) {
                 showFormatLog('领取每日奖励', html);

@@ -22,10 +22,6 @@ export const Config = {
 
     // 是否自动领取每日奖励，true：开启；false：关闭
     autoGetDailyBonusEnabled: false,
-    // 是否在完成争夺奖励后才领取每日奖励，true：开启；false：关闭
-    getBonusAfterLootCompleteEnabled: false,
-    // 是否在完成发言奖励后才领取每日奖励，true：开启；false：关闭
-    getBonusAfterSpeakCompleteEnabled: false,
 
     // 争夺各层分配点数列表，例：{1:{"力量":1,"体质":2,"敏捷":3,"灵活":4,"智力":5,"意志":6}, 10:{"力量":6,"体质":5,"敏捷":4,"灵活":3,"智力":2,"意志":1}}
     levelPointList: {},
