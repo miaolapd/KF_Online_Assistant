@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/5415
-// @version     5.1.3.1
+// @version     5.1.3.2
 // @author      eddie32
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
 // @icon        https://blog.nekohand.moe/favicon.ico
@@ -19,7 +19,7 @@
 // ==/UserScript==
 'use strict';
 // 版本号
-const version = '5.1.3.1';
+const version = '5.1.3.2';
 // 网站是否为KfMobile
 const isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
 
@@ -35,63 +35,62 @@ for (let i = 1; i < 49; i++) {
 
 // AC娘表情
 const AcSmileList = [];
-for (let i = 1; i < 51; i++) {
-    AcSmileList.push(`http://o6smnd6uw.bkt.clouddn.com/xds6/${i}.png`);
+for (let i = 1; i < 55; i++) {
+    AcSmileList.push(`https://sticker.inari.site/acfun/1/${i}.png`);
 }
-for (let i = 1; i < 40; i++) {
-    AcSmileList.push(`http://o6smnd6uw.bkt.clouddn.com/xds5/${(i) > 9 ? i : ('0' + i)}.gif`);
+for (let i = 1001; i < 1041; i++) {
+    AcSmileList.push(`https://sticker.inari.site/acfun/2/${i}.png`);
+}
+for (let i = 2001; i < 2056; i++) {
+    AcSmileList.push(`https://sticker.inari.site/acfun/3/${i}.png`);
 }
 
 // 常用表情
 const CommonSmileList = [];
 for (let i = 2; i < 64; i++) {
-    CommonSmileList.push(`http://o6smnd6uw.bkt.clouddn.com/xds4/0xx${i}.png`);
+    CommonSmileList.push(`https://sticker.inari.site/pop/sticker (${i}).png`);
 }
 
 // 阿卡林 from 摇曳百合
 const AkarinSmileList = [];
 for (let i = 1; i < 21; i++) {
-    AkarinSmileList.push(`http://o6smnd6uw.bkt.clouddn.com/xds2/akari${i}.gif`);
+    AkarinSmileList.push(`https://sticker.inari.site/akarin/2/akarin (${i}).gif`);
 }
 for (let i = 1; i < 72; i++) {
-    AkarinSmileList.push(`http://o6smnd6uw.bkt.clouddn.com/xds3/akari${i}.png`);
+    AkarinSmileList.push(`https://sticker.inari.site/akarin/1/akarin (${i}).png`);
 }
 
-// B站和tora酱表情
-const BiliBiliSmileList = [];
-for (let i = 1; i < 17; i++) {
-    BiliBiliSmileList.push(`http://o6smnd6uw.bkt.clouddn.com/xds/2233 (${i}).gif`);
-}
-for (let i = 1; i < 14; i++) {
-    BiliBiliSmileList.push(`http://o6smnd6uw.bkt.clouddn.com/xds/${i}.png`);
-}
-for (let i = 0; i < 14; i++) {
-    BiliBiliSmileList.push(`http://o6smnd6uw.bkt.clouddn.com/xds/bilibiliTV (${i}).png`);
-}
-for (let i = 1; i < 14; i++) {
-    BiliBiliSmileList.push(`http://o6smnd6uw.bkt.clouddn.com/xds2/0${(i) > 9 ? i : ('0' + i)}.jpg`);
+// 林大B
+const lindaBSmileList = [];
+for (let i = 1; i < 52; i++) {
+    lindaBSmileList.push(`https://sticker.inari.site/lindaB/lindaB (${i}).jpg`);
 }
 
 // lovelive表情（小）
 const LoveliveSmallSmileList = [];
-for (let i = 1; i < 41; i++) {
-    LoveliveSmallSmileList.push(`http://o6smnd6uw.bkt.clouddn.com/lovelive/Lovelive2nd${i}.png`);
+for (let i = 1; i < 42; i++) {
+    LoveliveSmallSmileList.push(`https://sticker.inari.site/lovelive/2/ll (${i}).png`);
 }
-for (let i = 1; i < 41; i++) {
-    LoveliveSmallSmileList.push(`http://o6smnd6uw.bkt.clouddn.com/lovelive/Lovelive${i}.png`);
+for (let i = 0; i < 38; i++) {
+    LoveliveSmallSmileList.push(`https://sticker.inari.site/lovelive/4/ll (${i}).jpg`);
 }
 
 // 少女歌剧
 const ShaoNvGeJuSmileList = [];
 for (let i = 1; i < 41; i++) {
-    ShaoNvGeJuSmileList.push(`http://o6smnd6uw.bkt.clouddn.com/sticker (${i}).png`);
+    ShaoNvGeJuSmileList.push(`https://sticker.inari.site/revstar/revstar (${i}).png`);
 }
 
 // バンドリ
 const BandoriSmileList = [];
 for (let i = 1; i < 41; i++) {
-    BandoriSmileList.push(`http://o6smnd6uw.bkt.clouddn.com/BGD/sticker (${i}).png`);
+    BandoriSmileList.push(`https://sticker.inari.site/bangdream/bangdream (${i}).png`);
 }
+
+// 自定义
+let userimgst=localStorage.userimgst;
+userimgst==undefined?userimgst=`["https://sticker.inari.site/null.jpg"]`:userimgst=localStorage.userimgst;
+const UserSmileList = JSON.parse(userimgst);
 
 /**
  * 表情菜单
@@ -127,7 +126,7 @@ const MenuList = {
     Acfun: {datatype: 'image', title: 'ACFUN', addr: AcSmileList},
     Common: {datatype: 'image', title: '常用', addr: CommonSmileList},
     Akari: {datatype: 'image', title: 'Akari', addr: AkarinSmileList},
-    BiliBili: {datatype: 'image', title: 'BiliBili', addr: BiliBiliSmileList},
+    lindaB:   {datatype: 'image', title: '林大B', addr: lindaBSmileList},
     LoveLive: {datatype: 'image', title: 'LoveLive', addr: LoveliveSmallSmileList},
     ShaoNvGeJu: {datatype: 'image', title: '少女歌剧', addr: ShaoNvGeJuSmileList},
     Bandori: {datatype: 'image', title: 'バンドリ', addr: BandoriSmileList},
@@ -215,7 +214,19 @@ const createContainer = function (textArea) {
 <div class="kfe-container">
   <div class="kfe-menu">
     <span title="made by eddie32 version ${version}; modified by 喵拉布丁" style="cursor: pointer;"><b>囧⑨</b></span>
+<script>//自定义贴纸功能js脚本
+function userimgadd(){let userimgaddr=prompt("请输入要添加的贴纸的url","https://sticker.inari.site/inari.png");
+let userimgaddrmt=userimgaddr.split(",");for(let mt=0;mt<userimgaddrmt.length;mt++){
+if(/(http:|https:).*.(png|jpg|jpeg|gif|webp|bmp|tif)$/i.test(userimgaddrmt[mt])) {
+const userimgaddrs="["+'"'+userimgaddrmt[mt]+'"'+"]";let userimgst=localStorage.userimgst;
+userimgst==undefined?userimgst="[]":userimgtest=localStorage.userimgst;
+let UserSmileList=JSON.parse(userimgst);UserSmileList.push(userimgaddrmt[mt]);
+userimgst= JSON.stringify(UserSmileList);localStorage.setItem("userimgst", userimgst);}else{}}}
+function userimgclr(){if(confirm('确定清空自定义表情贴纸吗')==true){localStorage.removeItem('userimgst');}else{}}
+</script>
     ${getSubMenuHtml()}
+    <input type="button" class="kfe-user-add" value="添加" onclick="userimgadd()">
+    <input type="button" class="kfe-user-clr" value="清空" onclick="userimgclr()">
     <span class="kfe-close-panel">[-]</span>
   </div>
 </div>
