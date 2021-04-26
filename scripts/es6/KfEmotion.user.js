@@ -1,25 +1,27 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/5415
-// @version     5.1.3.2
+// @version     6.0.0
 // @author      eddie32
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
-// @icon        https://blog.nekohand.moe/favicon.ico
-// @homepage    https://github.com/liu599/KF-Emotion-UserScript
-// @include     http*://*2dkf.com/*
-// @include     http*://*9moe.com/*
-// @include     http*://*kfgal.com/*
+// @icon        https://sticker.inari.site/favicon.ico
+// @homepage    https://mistakey.top/KFStickers
+// @include     https://*kfmax.com/*
+// @include     https://*bakabbs.com/*
+// @include     https://*365gal.com/*
+// @include     https://*365galgame.com/*
 // @include     https://*miaola.info/*
 // @copyright   2014-2017, eddie32
 // @grant       none
 // @license     MIT
 // @run-at      document-end
 // @modifier    喵拉布丁
+// @modifier    mistakey
 // @modifier-source https://raw.githubusercontent.com/miaolapd/KF_Online_Assistant/master/scripts/es6/KfEmotion.user.js
 // ==/UserScript==
 'use strict';
 // 版本号
-const version = '5.1.3.2';
+const version = '6.0.0';
 // 网站是否为KfMobile
 const isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
 
@@ -87,10 +89,19 @@ for (let i = 1; i < 41; i++) {
     BandoriSmileList.push(`https://sticker.inari.site/bangdream/bangdream (${i}).png`);
 }
 
-// 自定义
-let userimgst=localStorage.userimgst;
-userimgst==undefined?userimgst=`["https://sticker.inari.site/null.jpg"]`:userimgst=localStorage.userimgst;
-const UserSmileList = JSON.parse(userimgst);
+// 自定义表情
+let UserSmileList = [];
+if (!localStorage.userimgst) {
+    UserSmileList = ['https://sticker.inari.site/null.jpg'];
+}
+else {
+    try {
+        UserSmileList = JSON.parse(localStorage.userimgst);
+    }
+    catch (ex) {
+        console.log(ex);
+    }
+}
 
 /**
  * 表情菜单
@@ -130,6 +141,7 @@ const MenuList = {
     LoveLive: {datatype: 'image', title: 'LoveLive', addr: LoveliveSmallSmileList},
     ShaoNvGeJu: {datatype: 'image', title: '少女歌剧', addr: ShaoNvGeJuSmileList},
     Bandori: {datatype: 'image', title: 'バンドリ', addr: BandoriSmileList},
+    UserSmileList: {datatype: 'image', title: '自定义', addr: UserSmileList},
 };
 
 /**
@@ -213,20 +225,10 @@ const createContainer = function (textArea) {
     let $container = $(`
 <div class="kfe-container">
   <div class="kfe-menu">
-    <span title="made by eddie32 version ${version}; modified by 喵拉布丁" style="cursor: pointer;"><b>囧⑨</b></span>
-<script>//自定义贴纸功能js脚本
-function userimgadd(){let userimgaddr=prompt("请输入要添加的贴纸的url","https://sticker.inari.site/inari.png");
-let userimgaddrmt=userimgaddr.split(",");for(let mt=0;mt<userimgaddrmt.length;mt++){
-if(/(http:|https:).*.(png|jpg|jpeg|gif|webp|bmp|tif)$/i.test(userimgaddrmt[mt])) {
-const userimgaddrs="["+'"'+userimgaddrmt[mt]+'"'+"]";let userimgst=localStorage.userimgst;
-userimgst==undefined?userimgst="[]":userimgtest=localStorage.userimgst;
-let UserSmileList=JSON.parse(userimgst);UserSmileList.push(userimgaddrmt[mt]);
-userimgst= JSON.stringify(UserSmileList);localStorage.setItem("userimgst", userimgst);}else{}}}
-function userimgclr(){if(confirm('确定清空自定义表情贴纸吗')==true){localStorage.removeItem('userimgst');}else{}}
-</script>
+    <span title="made by eddie32 version ${version}; modified by 喵拉布丁、mistakey" style="cursor: pointer;"><b>囧⑨</b></span>
     ${getSubMenuHtml()}
-    <input type="button" class="kfe-user-add" value="添加" onclick="userimgadd()">
-    <input type="button" class="kfe-user-clr" value="清空" onclick="userimgclr()">
+    <input type="button" class="kfe-user-add" value="添加">
+    <input type="button" class="kfe-user-clr" value="清空">
     <span class="kfe-close-panel">[-]</span>
   </div>
 </div>
@@ -255,6 +257,39 @@ function userimgclr(){if(confirm('确定清空自定义表情贴纸吗')==true){
         showZoomInImage($(this));
     }).on('mouseleave', '.kfe-smile', function () {
         $('.kfe-zoom-in').remove();
+    }).on('click', '.kfe-user-add', function (e) {
+        e.preventDefault();
+        let userimgaddr = prompt("请输入要添加的贴纸的URL（添加后需刷新页面才能生效）:", "https://sticker.inari.site/inari.png");
+        if (!userimgaddr) return;
+
+        let userimgaddrmt = userimgaddr.split(',');
+        let addList = [];
+        for (let mt = 0; mt < userimgaddrmt.length; mt++) {
+            if (/(http:|https:).*.(png|jpg|jpeg|gif|webp|bmp|tif)$/i.test(userimgaddrmt[mt])) {
+                addList.push(userimgaddrmt[mt]);
+            }
+        }
+
+        if (addList.length > 0) {
+            let userSmileList = [];
+            if (localStorage.userimgst) {
+                try {
+                    userSmileList = JSON.parse(localStorage.userimgst);
+                }
+                catch (ex) {
+                    console.log(ex);
+                    userSmileList = [];
+                }
+            }
+
+            userSmileList = [...userSmileList, ...addList];
+            localStorage.setItem('userimgst', JSON.stringify(userSmileList));
+        }
+    }).on('click', '.kfe-user-clr', function (e) {
+        e.preventDefault();
+        if (confirm('确定清空自定义表情贴纸吗？')) {
+            localStorage.removeItem('userimgst');
+        }
     }).find('.kfe-close-panel').click(function () {
         $container.find('.kfe-smile-panel').hide();
     });

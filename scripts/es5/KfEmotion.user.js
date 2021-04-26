@@ -1,26 +1,30 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/5415
-// @version     5.1.3.1
+// @version     6.0.0
 // @author      eddie32
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
-// @icon        https://blog.nekohand.moe/favicon.ico
-// @homepage    https://github.com/liu599/KF-Emotion-UserScript
-// @include     http*://*2dkf.com/*
-// @include     http*://*9moe.com/*
-// @include     http*://*kfgal.com/*
+// @icon        https://sticker.inari.site/favicon.ico
+// @homepage    https://mistakey.top/KFStickers
+// @include     https://*kfmax.com/*
+// @include     https://*bakabbs.com/*
+// @include     https://*365gal.com/*
+// @include     https://*365galgame.com/*
 // @include     https://*miaola.info/*
 // @copyright   2014-2017, eddie32
 // @grant       none
 // @license     MIT
 // @run-at      document-end
 // @modifier    喵拉布丁
+// @modifier    mistakey
 // @modifier-source https://raw.githubusercontent.com/miaolapd/KF_Online_Assistant/master/scripts/es6/KfEmotion.user.js
 // ==/UserScript==
 'use strict';
 // 版本号
 
-var version = '5.1.3.1';
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var version = '6.0.0';
 // 网站是否为KfMobile
 var isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
 
@@ -36,62 +40,68 @@ for (var i = 1; i < 49; i++) {
 
 // AC娘表情
 var AcSmileList = [];
-for (var _i = 1; _i < 51; _i++) {
-    AcSmileList.push('http://o6smnd6uw.bkt.clouddn.com/xds6/' + _i + '.png');
+for (var _i = 1; _i < 55; _i++) {
+    AcSmileList.push('https://sticker.inari.site/acfun/1/' + _i + '.png');
 }
-for (var _i2 = 1; _i2 < 40; _i2++) {
-    AcSmileList.push('http://o6smnd6uw.bkt.clouddn.com/xds5/' + (_i2 > 9 ? _i2 : '0' + _i2) + '.gif');
+for (var _i2 = 1001; _i2 < 1041; _i2++) {
+    AcSmileList.push('https://sticker.inari.site/acfun/2/' + _i2 + '.png');
+}
+for (var _i3 = 2001; _i3 < 2056; _i3++) {
+    AcSmileList.push('https://sticker.inari.site/acfun/3/' + _i3 + '.png');
 }
 
 // 常用表情
 var CommonSmileList = [];
-for (var _i3 = 2; _i3 < 64; _i3++) {
-    CommonSmileList.push('http://o6smnd6uw.bkt.clouddn.com/xds4/0xx' + _i3 + '.png');
+for (var _i4 = 2; _i4 < 64; _i4++) {
+    CommonSmileList.push('https://sticker.inari.site/pop/sticker (' + _i4 + ').png');
 }
 
 // 阿卡林 from 摇曳百合
 var AkarinSmileList = [];
-for (var _i4 = 1; _i4 < 21; _i4++) {
-    AkarinSmileList.push('http://o6smnd6uw.bkt.clouddn.com/xds2/akari' + _i4 + '.gif');
+for (var _i5 = 1; _i5 < 21; _i5++) {
+    AkarinSmileList.push('https://sticker.inari.site/akarin/2/akarin (' + _i5 + ').gif');
 }
-for (var _i5 = 1; _i5 < 72; _i5++) {
-    AkarinSmileList.push('http://o6smnd6uw.bkt.clouddn.com/xds3/akari' + _i5 + '.png');
+for (var _i6 = 1; _i6 < 72; _i6++) {
+    AkarinSmileList.push('https://sticker.inari.site/akarin/1/akarin (' + _i6 + ').png');
 }
 
-// B站和tora酱表情
-var BiliBiliSmileList = [];
-for (var _i6 = 1; _i6 < 17; _i6++) {
-    BiliBiliSmileList.push('http://o6smnd6uw.bkt.clouddn.com/xds/2233 (' + _i6 + ').gif');
-}
-for (var _i7 = 1; _i7 < 14; _i7++) {
-    BiliBiliSmileList.push('http://o6smnd6uw.bkt.clouddn.com/xds/' + _i7 + '.png');
-}
-for (var _i8 = 0; _i8 < 14; _i8++) {
-    BiliBiliSmileList.push('http://o6smnd6uw.bkt.clouddn.com/xds/bilibiliTV (' + _i8 + ').png');
-}
-for (var _i9 = 1; _i9 < 14; _i9++) {
-    BiliBiliSmileList.push('http://o6smnd6uw.bkt.clouddn.com/xds2/0' + (_i9 > 9 ? _i9 : '0' + _i9) + '.jpg');
+// 林大B
+var lindaBSmileList = [];
+for (var _i7 = 1; _i7 < 52; _i7++) {
+    lindaBSmileList.push('https://sticker.inari.site/lindaB/lindaB (' + _i7 + ').jpg');
 }
 
 // lovelive表情（小）
 var LoveliveSmallSmileList = [];
-for (var _i10 = 1; _i10 < 41; _i10++) {
-    LoveliveSmallSmileList.push('http://o6smnd6uw.bkt.clouddn.com/lovelive/Lovelive2nd' + _i10 + '.png');
+for (var _i8 = 1; _i8 < 42; _i8++) {
+    LoveliveSmallSmileList.push('https://sticker.inari.site/lovelive/2/ll (' + _i8 + ').png');
 }
-for (var _i11 = 1; _i11 < 41; _i11++) {
-    LoveliveSmallSmileList.push('http://o6smnd6uw.bkt.clouddn.com/lovelive/Lovelive' + _i11 + '.png');
+for (var _i9 = 0; _i9 < 38; _i9++) {
+    LoveliveSmallSmileList.push('https://sticker.inari.site/lovelive/4/ll (' + _i9 + ').jpg');
 }
 
 // 少女歌剧
 var ShaoNvGeJuSmileList = [];
-for (var _i12 = 1; _i12 < 41; _i12++) {
-    ShaoNvGeJuSmileList.push('http://o6smnd6uw.bkt.clouddn.com/sticker (' + _i12 + ').png');
+for (var _i10 = 1; _i10 < 41; _i10++) {
+    ShaoNvGeJuSmileList.push('https://sticker.inari.site/revstar/revstar (' + _i10 + ').png');
 }
 
 // バンドリ
 var BandoriSmileList = [];
-for (var _i13 = 1; _i13 < 41; _i13++) {
-    BandoriSmileList.push('http://o6smnd6uw.bkt.clouddn.com/BGD/sticker (' + _i13 + ').png');
+for (var _i11 = 1; _i11 < 41; _i11++) {
+    BandoriSmileList.push('https://sticker.inari.site/bangdream/bangdream (' + _i11 + ').png');
+}
+
+// 自定义表情
+var UserSmileList = [];
+if (!localStorage.userimgst) {
+    UserSmileList = ['https://sticker.inari.site/null.jpg'];
+} else {
+    try {
+        UserSmileList = JSON.parse(localStorage.userimgst);
+    } catch (ex) {
+        console.log(ex);
+    }
 }
 
 /**
@@ -113,10 +123,11 @@ var MenuList = {
     Acfun: { datatype: 'image', title: 'ACFUN', addr: AcSmileList },
     Common: { datatype: 'image', title: '常用', addr: CommonSmileList },
     Akari: { datatype: 'image', title: 'Akari', addr: AkarinSmileList },
-    BiliBili: { datatype: 'image', title: 'BiliBili', addr: BiliBiliSmileList },
+    lindaB: { datatype: 'image', title: '林大B', addr: lindaBSmileList },
     LoveLive: { datatype: 'image', title: 'LoveLive', addr: LoveliveSmallSmileList },
     ShaoNvGeJu: { datatype: 'image', title: '少女歌剧', addr: ShaoNvGeJuSmileList },
-    Bandori: { datatype: 'image', title: 'バンドリ', addr: BandoriSmileList }
+    Bandori: { datatype: 'image', title: 'バンドリ', addr: BandoriSmileList },
+    UserSmileList: { datatype: 'image', title: '自定义', addr: UserSmileList }
 };
 
 /**
@@ -164,15 +175,15 @@ var getSmilePanelHtml = function getSmilePanelHtml(key) {
     var data = MenuList[key];
     if (!data) return '';
     var html = '';
-    for (var _i14 = 0; _i14 < data.addr.length; _i14++) {
+    for (var _i12 = 0; _i12 < data.addr.length; _i12++) {
         if (data.datatype === 'image') {
-            html += '<img class="kfe-smile" src="' + data.addr[_i14] + '" alt="[\u8868\u60C5]">';
+            html += '<img class="kfe-smile" src="' + data.addr[_i12] + '" alt="[\u8868\u60C5]">';
         } else if (data.datatype === 'imageLink') {
-            var ref = typeof data.ref !== 'undefined' && typeof data.ref[_i14] !== 'undefined' ? data.ref[_i14] : '';
-            html += '<img class="kfe-smile" data-code="' + ref + '" src="' + data.addr[_i14] + '" alt="[\u8868\u60C5]">';
+            var ref = typeof data.ref !== 'undefined' && typeof data.ref[_i12] !== 'undefined' ? data.ref[_i12] : '';
+            html += '<img class="kfe-smile" data-code="' + ref + '" src="' + data.addr[_i12] + '" alt="[\u8868\u60C5]">';
         } else if (data.datatype === 'plain') {
-            var _ref = typeof data.ref !== 'undefined' && typeof data.ref[_i14] !== 'undefined' ? data.ref[_i14] : data.addr[_i14];
-            html += '<a class="kfe-smile-text" data-code="' + data.addr[_i14] + '" href="#">' + _ref + '</a>';
+            var _ref = typeof data.ref !== 'undefined' && typeof data.ref[_i12] !== 'undefined' ? data.ref[_i12] : data.addr[_i12];
+            html += '<a class="kfe-smile-text" data-code="' + data.addr[_i12] + '" href="#">' + _ref + '</a>';
         }
     }
     return '<div class="kfe-smile-panel" data-key="' + key + '">' + html + '</div>';
@@ -195,7 +206,7 @@ var getSubMenuHtml = function getSubMenuHtml() {
  * @param textArea 文本框
  */
 var createContainer = function createContainer(textArea) {
-    var $container = $('\n<div class="kfe-container">\n  <div class="kfe-menu">\n    <span title="made by eddie32 version ' + version + '; modified by \u55B5\u62C9\u5E03\u4E01" style="cursor: pointer;"><b>\u56E7\u2468</b></span>\n    ' + getSubMenuHtml() + '\n    <span class="kfe-close-panel">[-]</span>\n  </div>\n</div>\n').insertBefore($(textArea));
+    var $container = $('\n<div class="kfe-container">\n  <div class="kfe-menu">\n    <span title="made by eddie32 version ' + version + '; modified by \u55B5\u62C9\u5E03\u4E01\u3001mistakey" style="cursor: pointer;"><b>\u56E7\u2468</b></span>\n    ' + getSubMenuHtml() + '\n    <input type="button" class="kfe-user-add" value="\u6DFB\u52A0">\n    <input type="button" class="kfe-user-clr" value="\u6E05\u7A7A">\n    <span class="kfe-close-panel">[-]</span>\n  </div>\n</div>\n').insertBefore($(textArea));
     $container.on('click', '.kfe-sub-menu', function (e) {
         e.preventDefault();
         var $this = $(this);
@@ -218,6 +229,38 @@ var createContainer = function createContainer(textArea) {
         showZoomInImage($(this));
     }).on('mouseleave', '.kfe-smile', function () {
         $('.kfe-zoom-in').remove();
+    }).on('click', '.kfe-user-add', function (e) {
+        e.preventDefault();
+        var userimgaddr = prompt("请输入要添加的贴纸的URL（添加后需刷新页面才能生效）:", "https://sticker.inari.site/inari.png");
+        if (!userimgaddr) return;
+
+        var userimgaddrmt = userimgaddr.split(',');
+        var addList = [];
+        for (var mt = 0; mt < userimgaddrmt.length; mt++) {
+            if (/(http:|https:).*.(png|jpg|jpeg|gif|webp|bmp|tif)$/i.test(userimgaddrmt[mt])) {
+                addList.push(userimgaddrmt[mt]);
+            }
+        }
+
+        if (addList.length > 0) {
+            var userSmileList = [];
+            if (localStorage.userimgst) {
+                try {
+                    userSmileList = JSON.parse(localStorage.userimgst);
+                } catch (ex) {
+                    console.log(ex);
+                    userSmileList = [];
+                }
+            }
+
+            userSmileList = [].concat(_toConsumableArray(userSmileList), addList);
+            localStorage.setItem('userimgst', JSON.stringify(userSmileList));
+        }
+    }).on('click', '.kfe-user-clr', function (e) {
+        e.preventDefault();
+        if (confirm('确定清空自定义表情贴纸吗？')) {
+            localStorage.removeItem('userimgst');
+        }
     }).find('.kfe-close-panel').click(function () {
         $container.find('.kfe-smile-panel').hide();
     });
