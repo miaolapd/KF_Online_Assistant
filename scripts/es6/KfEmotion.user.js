@@ -289,7 +289,7 @@ const createContainer = function (textArea) {
     }).on('click', '.kfe-user-out', function (e) {
         e.preventDefault();
         if (UserSmileList !="https://sticker.inari.site/null.jpg"){
-            alert('自定义表情贴纸已导出，请复制：\n'+UserSmileList);
+            prompt("自定义表情贴纸已导出，请复制",UserSmileList);
         }
         else {
             alert("自定义表情贴纸为空！");
