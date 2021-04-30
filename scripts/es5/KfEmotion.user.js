@@ -206,7 +206,7 @@ var getSubMenuHtml = function getSubMenuHtml() {
  * @param textArea 文本框
  */
 var createContainer = function createContainer(textArea) {
-    var $container = $('\n<div class="kfe-container">\n  <div class="kfe-menu">\n    <span title="made by eddie32 version ' + version + '; modified by \u55B5\u62C9\u5E03\u4E01\u3001mistakey" style="cursor: pointer;"><b>\u56E7\u2468</b></span>\n    ' + getSubMenuHtml() + '\n    <span class="kfe-close-panel">[-]</span>\n   <input type="button" class="kfe-user-add" value="\u6DFB\u52A0">\n    <input type="button" class="kfe-user-out" value="\u5BFC\u51FA">\n    <input type="button" class="kfe-user-clr" value="\u6E05\u7A7A">\n     </div>\n</div>\n').insertBefore($(textArea));
+    var $container = $('\n<div class="kfe-container">\n  <div class="kfe-menu">\n    <span title="made by eddie32 version ' + version + '; modified by \u55B5\u62C9\u5E03\u4E01\u3001mistakey" style="cursor: pointer;"><b>\u56E7\u2468</b></span>\n    ' + getSubMenuHtml() + '\n    <span class="kfe-close-panel">[-]</span>\n    <input type="button" class="kfe-user-add" value="\u6DFB\u52A0">\n    <input type="button" class="kfe-user-out" value="\u5BFC\u51FA">\n    <input type="button" class="kfe-user-clr" value="\u6E05\u7A7A">\n  </div>\n</div>\n').insertBefore($(textArea));
     $container.on('click', '.kfe-sub-menu', function (e) {
         e.preventDefault();
         var $this = $(this);
@@ -256,13 +256,12 @@ var createContainer = function createContainer(textArea) {
             userSmileList = [].concat(_toConsumableArray(userSmileList), addList);
             localStorage.setItem('userimgst', JSON.stringify(userSmileList));
         }
-     }).on('click', '.kfe-user-out', function (e) {
+    }).on('click', '.kfe-user-out', function (e) {
         e.preventDefault();
-        if (UserSmileList !="https://sticker.inari.site/null.jpg"){
-           prompt("自定义表情贴纸已导出，请复制",UserSmileList);
-        }
-        else {
-           alert("自定义表情贴纸为空！");
+        if (UserSmileList != "https://sticker.inari.site/null.jpg") {
+            prompt("自定义表情贴纸已导出，请复制", UserSmileList);
+        } else {
+            alert("自定义表情贴纸为空！");
         }
     }).on('click', '.kfe-user-clr', function (e) {
         e.preventDefault();
