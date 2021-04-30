@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/5415
-// @version     6.0.0
+// @version     6.0.1
 // @author      eddie32
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
 // @icon        https://sticker.inari.site/favicon.ico
@@ -21,7 +21,7 @@
 // ==/UserScript==
 'use strict';
 // 版本号
-const version = '6.0.0';
+const version = '6.0.1';
 // 网站是否为KfMobile
 const isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
 
@@ -227,9 +227,10 @@ const createContainer = function (textArea) {
   <div class="kfe-menu">
     <span title="made by eddie32 version ${version}; modified by 喵拉布丁、mistakey" style="cursor: pointer;"><b>囧⑨</b></span>
     ${getSubMenuHtml()}
-    <input type="button" class="kfe-user-add" value="添加">
-    <input type="button" class="kfe-user-clr" value="清空">
     <span class="kfe-close-panel">[-]</span>
+    <input type="button" class="kfe-user-add" value="添加">
+    <input type="button" class="kfe-user-out" value="导出">
+    <input type="button" class="kfe-user-clr" value="清空">
   </div>
 </div>
 `).insertBefore($(textArea));
@@ -259,7 +260,7 @@ const createContainer = function (textArea) {
         $('.kfe-zoom-in').remove();
     }).on('click', '.kfe-user-add', function (e) {
         e.preventDefault();
-        let userimgaddr = prompt("请输入要添加的贴纸的URL（添加后需刷新页面才能生效）:", "https://sticker.inari.site/inari.png");
+        let userimgaddr = prompt("请输入要添加的贴纸的URL，添加多个请用半角,隔开贴纸URL（添加后刷新页面生效）", "https://sticker.inari.site/inari.png");
         if (!userimgaddr) return;
 
         let userimgaddrmt = userimgaddr.split(',');
@@ -284,6 +285,14 @@ const createContainer = function (textArea) {
 
             userSmileList = [...userSmileList, ...addList];
             localStorage.setItem('userimgst', JSON.stringify(userSmileList));
+        }
+    }).on('click', '.kfe-user-out', function (e) {
+        e.preventDefault();
+        if (UserSmileList !="https://sticker.inari.site/null.jpg"){
+            alert('自定义表情贴纸已导出，请复制：\n'+UserSmileList);
+        }
+        else {
+            alert("自定义表情贴纸为空！");
         }
     }).on('click', '.kfe-user-clr', function (e) {
         e.preventDefault();
