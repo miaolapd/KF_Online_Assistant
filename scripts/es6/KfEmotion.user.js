@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/5415
-// @version     6.0.1
+// @version     6.1.0
 // @author      eddie32
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
 // @icon        https://sticker.inari.site/favicon.ico
@@ -10,6 +10,7 @@
 // @include     https://*bakabbs.com/*
 // @include     https://*365gal.com/*
 // @include     https://*365galgame.com/*
+// @include     https://kfol.moe.edu.rs/*
 // @include     https://*miaola.info/*
 // @copyright   2014-2017, eddie32
 // @grant       none
@@ -21,7 +22,7 @@
 // ==/UserScript==
 'use strict';
 // 版本号
-const version = '6.0.1';
+const version = '6.1.0';
 // 网站是否为KfMobile
 const isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
 
@@ -33,6 +34,20 @@ if (isKfMobile) kfImgPath = Info.imgPath;
 for (let i = 1; i < 49; i++) {
     KfSmileList.push(`/${kfImgPath}/post/smile/em/em${(i) > 9 ? i : ('0' + i)}.gif`);
     KfSmileCodeList.push(`[s:${i + 9}]`);
+}
+
+// 常用表情
+const CommonSmileList = [];
+// 小日向雪花
+for (let i = 1; i < 7; i++) {
+    CommonSmileList.push(`https://sticker.inari.site/yukika/${i}.jpg`);
+}
+for (let i = 21; i < 24; i++) {
+    CommonSmileList.push(`https://sticker.inari.site/yukika/${i}.jpg`);
+}
+// 血压
+for (let i = 48; i < 54; i++) {
+    CommonSmileList.push(`https://sticker.inari.site/pop/sticker (${i}).png`);
 }
 
 // AC娘表情
@@ -47,10 +62,13 @@ for (let i = 2001; i < 2056; i++) {
     AcSmileList.push(`https://sticker.inari.site/acfun/3/${i}.png`);
 }
 
-// 常用表情
-const CommonSmileList = [];
-for (let i = 2; i < 64; i++) {
-    CommonSmileList.push(`https://sticker.inari.site/pop/sticker (${i}).png`);
+// S1麻将脸
+const S1SmileList = [];
+for (let i = 1; i < 33; i++) {
+    S1SmileList.push(`https://sticker.inari.site/s1/${i}.gif`);
+}
+for (let i = 1; i < 229; i++) {
+    S1SmileList.push(`https://sticker.inari.site/s1/${i}.png`);
 }
 
 // 阿卡林 from 摇曳百合
@@ -68,25 +86,55 @@ for (let i = 1; i < 52; i++) {
     lindaBSmileList.push(`https://sticker.inari.site/lindaB/lindaB (${i}).jpg`);
 }
 
+// 微博&贴吧
+const WeiboTbSmileList = [];
+for (let i = 0; i < 101; i++) {
+    WeiboTbSmileList.push(`https://sticker.inari.site/weibo/${i}.png`);
+}
+for(let i = 1; i < 10; i++) {
+    WeiboTbSmileList.push(`http://tb2.bdstatic.com/tb/editor/images/face/i_f0${i}.png`);
+}
+for(let i = 10; i < 34; i++) {
+    WeiboTbSmileList.push(`http://tb2.bdstatic.com/tb/editor/images/face/i_f${i}.png`);
+}
+
 // lovelive表情（小）
 const LoveliveSmallSmileList = [];
 for (let i = 1; i < 42; i++) {
     LoveliveSmallSmileList.push(`https://sticker.inari.site/lovelive/2/ll (${i}).png`);
 }
-for (let i = 0; i < 38; i++) {
+for (let i = 1; i < 21; i++) {
     LoveliveSmallSmileList.push(`https://sticker.inari.site/lovelive/4/ll (${i}).jpg`);
 }
 
-// 少女歌剧
-const ShaoNvGeJuSmileList = [];
+// 少女歌剧&公主链接
+const RevPCRSmileList = [];
 for (let i = 1; i < 41; i++) {
-    ShaoNvGeJuSmileList.push(`https://sticker.inari.site/revstar/revstar (${i}).png`);
+    RevPCRSmileList.push(`https://sticker.inari.site/revstar/revstar (${i}).png`);
+}
+for (let i = 1; i < 49; i++) {
+    RevPCRSmileList.push(`https://sticker.inari.site/redive/sticker (${i}).png`);
 }
 
 // バンドリ
 const BandoriSmileList = [];
 for (let i = 1; i < 41; i++) {
     BandoriSmileList.push(`https://sticker.inari.site/bangdream/bangdream (${i}).png`);
+}
+
+// 其他表情
+const PopularSmileList = [];
+// 伪中国语
+for (let i = 49; i < 83; i++) {
+    PopularSmileList.push(`https://sticker.inari.site/fakehan/sticker (${i}).png`);
+}
+// Touhou（灵梦）
+for (let i = 22; i < 46; i++) {
+    PopularSmileList.push(`https://sticker.inari.site/touhou/reimu/${i}.jpg`);
+}
+// 流行
+for (let i = 1; i < 48; i++) {
+    PopularSmileList.push(`https://sticker.inari.site/pop/sticker (${i}).png`);
 }
 
 // 自定义表情
@@ -112,11 +160,13 @@ const MenuList = {
         datatype: 'plain',
         title: '快捷',
         addr: [
-            '[sell=100][/sell]', '[quote][/quote]', '[hide=100][/hide]', '[code][/code]', '[strike][/strike]', '[fly][/fly]',
-            '[color=#00FF00][/color]', '[b][/b]', '[u][/u]', '[i][/i]', '[hr]', '[backcolor=][/backcolor]', '[url=][/url]', '[img][/img]'
+            '[sell=100][/sell]', '[quote][/quote]', '[hide=100][/hide]', '[code][/code]', '[strike][/strike]', '[fly][/fly]','[color=#00FF00][/color]', 
+            '[b][/b]', '[u][/u]', '[i][/i]', '[hr]', '[backcolor=][/backcolor]', '[url=][/url]','[img][/img]','[audio]喵拉助手功能，原版不解析[/audio]',
+            '[video]喵拉助手功能，原版不解析[/video]','[table][/table]','[tr][/tr]','[td][/td]','[align=left][/align]','[align=center][/align]','[align=right][/align]'
         ],
         ref: [
-            '出售贴sell=售价', '引用', '隐藏hide=神秘等级', '插入代码', '删除线', '跑马灯', '文字颜色', '粗体', '下划线', '斜体', '水平线', '背景色', '插入链接', '插入图片'
+            '出售贴sell=售价', '引用', '隐藏hide=神秘等级', '插入代码', '删除线', '跑马灯', '文字颜色', '粗体', '下划线','斜体', '水平线', '背景色', '插入链接', '插入图片',
+            '插入音频','插入视频','插入表格','插入表格行','插入表格列','左对齐','居中','右对齐'
         ]
     },
     Emoji: {
@@ -134,14 +184,17 @@ const MenuList = {
             '|•ω•`)'
         ]
     },
-    Acfun: {datatype: 'image', title: 'ACFUN', addr: AcSmileList},
-    Common: {datatype: 'image', title: '常用', addr: CommonSmileList},
-    Akari: {datatype: 'image', title: 'Akari', addr: AkarinSmileList},
+    Common:   {datatype: 'image', title: '常用', addr: CommonSmileList},
+    Acfun:    {datatype: 'image', title: 'ACFUN', addr: AcSmileList},
+    S1Maj:    {datatype: 'image', title: 'S1', addr: S1SmileList},
+    Akari:    {datatype: 'image', title: 'Akari', addr: AkarinSmileList},
     lindaB:   {datatype: 'image', title: '林大B', addr: lindaBSmileList},
-    LoveLive: {datatype: 'image', title: 'LoveLive', addr: LoveliveSmallSmileList},
-    ShaoNvGeJu: {datatype: 'image', title: '少女歌剧', addr: ShaoNvGeJuSmileList},
-    Bandori: {datatype: 'image', title: 'バンドリ', addr: BandoriSmileList},
-    UserSmileList: {datatype: 'image', title: '自定义', addr: UserSmileList},
+    Weibotb:  {datatype: 'image', title: '微博贴吧', addr: WeiboTbSmileList},
+    LoveLive: {datatype: 'image', title: 'LL', addr: LoveliveSmallSmileList},
+    RevPCR:   {datatype: 'image', title: '少歌PCR', addr: RevPCRSmileList},
+    Bandori:  {datatype: 'image', title: '邦邦', addr: BandoriSmileList},
+    Popular:  {datatype: 'image', title: '其他', addr: PopularSmileList},
+    Userimg:  {datatype: 'image', title: '自定义', addr: UserSmileList},
 };
 
 /**
@@ -225,7 +278,7 @@ const createContainer = function (textArea) {
     let $container = $(`
 <div class="kfe-container">
   <div class="kfe-menu">
-    <span title="made by eddie32 version ${version}; modified by 喵拉布丁、mistakey" style="cursor: pointer;"><b>囧⑨</b></span>
+    <span class="kfe-close-panel" title="made by eddie32 version ${version}; modified by 喵拉布丁、mistakey" style="cursor: pointer;"><b>囧⑨</b></span>
     ${getSubMenuHtml()}
     <span class="kfe-close-panel">[-]</span>
     <input type="button" class="kfe-user-add" value="添加">
