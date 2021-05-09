@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/5415
-// @version     6.0.1
+// @version     6.1.0
 // @author      eddie32
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
 // @icon        https://sticker.inari.site/favicon.ico
@@ -10,6 +10,7 @@
 // @include     https://*bakabbs.com/*
 // @include     https://*365gal.com/*
 // @include     https://*365galgame.com/*
+// @include     https://kfol.moe.edu.rs/*
 // @include     https://*miaola.info/*
 // @copyright   2014-2017, eddie32
 // @grant       none
@@ -24,7 +25,7 @@
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var version = '6.0.1';
+var version = '6.1.0';
 // 网站是否为KfMobile
 var isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
 
@@ -38,58 +39,105 @@ for (var i = 1; i < 49; i++) {
     KfSmileCodeList.push('[s:' + (i + 9) + ']');
 }
 
-// AC娘表情
-var AcSmileList = [];
-for (var _i = 1; _i < 55; _i++) {
-    AcSmileList.push('https://sticker.inari.site/acfun/1/' + _i + '.png');
-}
-for (var _i2 = 1001; _i2 < 1041; _i2++) {
-    AcSmileList.push('https://sticker.inari.site/acfun/2/' + _i2 + '.png');
-}
-for (var _i3 = 2001; _i3 < 2056; _i3++) {
-    AcSmileList.push('https://sticker.inari.site/acfun/3/' + _i3 + '.png');
-}
-
 // 常用表情
 var CommonSmileList = [];
-for (var _i4 = 2; _i4 < 64; _i4++) {
-    CommonSmileList.push('https://sticker.inari.site/pop/sticker (' + _i4 + ').png');
+// 小日向雪花
+for (var _i = 1; _i < 7; _i++) {
+    CommonSmileList.push('https://sticker.inari.site/yukika/' + _i + '.jpg');
+}
+for (var _i2 = 21; _i2 < 24; _i2++) {
+    CommonSmileList.push('https://sticker.inari.site/yukika/' + _i2 + '.jpg');
+}
+// 血压
+for (var _i3 = 48; _i3 < 54; _i3++) {
+    CommonSmileList.push('https://sticker.inari.site/pop/sticker (' + _i3 + ').png');
+}
+
+// AC娘表情
+var AcSmileList = [];
+for (var _i4 = 1; _i4 < 55; _i4++) {
+    AcSmileList.push('https://sticker.inari.site/acfun/1/' + _i4 + '.png');
+}
+for (var _i5 = 1001; _i5 < 1041; _i5++) {
+    AcSmileList.push('https://sticker.inari.site/acfun/2/' + _i5 + '.png');
+}
+for (var _i6 = 2001; _i6 < 2056; _i6++) {
+    AcSmileList.push('https://sticker.inari.site/acfun/3/' + _i6 + '.png');
+}
+
+// S1麻将脸
+var S1SmileList = [];
+for (var _i7 = 1; _i7 < 33; _i7++) {
+    S1SmileList.push('https://sticker.inari.site/s1/' + _i7 + '.gif');
+}
+for (var _i8 = 1; _i8 < 229; _i8++) {
+    S1SmileList.push('https://sticker.inari.site/s1/' + _i8 + '.png');
 }
 
 // 阿卡林 from 摇曳百合
 var AkarinSmileList = [];
-for (var _i5 = 1; _i5 < 21; _i5++) {
-    AkarinSmileList.push('https://sticker.inari.site/akarin/2/akarin (' + _i5 + ').gif');
+for (var _i9 = 1; _i9 < 21; _i9++) {
+    AkarinSmileList.push('https://sticker.inari.site/akarin/2/akarin (' + _i9 + ').gif');
 }
-for (var _i6 = 1; _i6 < 72; _i6++) {
-    AkarinSmileList.push('https://sticker.inari.site/akarin/1/akarin (' + _i6 + ').png');
+for (var _i10 = 1; _i10 < 72; _i10++) {
+    AkarinSmileList.push('https://sticker.inari.site/akarin/1/akarin (' + _i10 + ').png');
 }
 
 // 林大B
 var lindaBSmileList = [];
-for (var _i7 = 1; _i7 < 52; _i7++) {
-    lindaBSmileList.push('https://sticker.inari.site/lindaB/lindaB (' + _i7 + ').jpg');
+for (var _i11 = 1; _i11 < 52; _i11++) {
+    lindaBSmileList.push('https://sticker.inari.site/lindaB/lindaB (' + _i11 + ').jpg');
+}
+
+// 微博&贴吧
+var WeiboTbSmileList = [];
+for (var _i12 = 0; _i12 < 101; _i12++) {
+    WeiboTbSmileList.push('https://sticker.inari.site/weibo/' + _i12 + '.png');
+}
+for (var _i13 = 1; _i13 < 10; _i13++) {
+    WeiboTbSmileList.push('http://tb2.bdstatic.com/tb/editor/images/face/i_f0' + _i13 + '.png');
+}
+for (var _i14 = 10; _i14 < 34; _i14++) {
+    WeiboTbSmileList.push('http://tb2.bdstatic.com/tb/editor/images/face/i_f' + _i14 + '.png');
 }
 
 // lovelive表情（小）
 var LoveliveSmallSmileList = [];
-for (var _i8 = 1; _i8 < 42; _i8++) {
-    LoveliveSmallSmileList.push('https://sticker.inari.site/lovelive/2/ll (' + _i8 + ').png');
+for (var _i15 = 1; _i15 < 42; _i15++) {
+    LoveliveSmallSmileList.push('https://sticker.inari.site/lovelive/2/ll (' + _i15 + ').png');
 }
-for (var _i9 = 0; _i9 < 38; _i9++) {
-    LoveliveSmallSmileList.push('https://sticker.inari.site/lovelive/4/ll (' + _i9 + ').jpg');
+for (var _i16 = 1; _i16 < 21; _i16++) {
+    LoveliveSmallSmileList.push('https://sticker.inari.site/lovelive/4/ll (' + _i16 + ').jpg');
 }
 
-// 少女歌剧
-var ShaoNvGeJuSmileList = [];
-for (var _i10 = 1; _i10 < 41; _i10++) {
-    ShaoNvGeJuSmileList.push('https://sticker.inari.site/revstar/revstar (' + _i10 + ').png');
+// 少女歌剧&公主链接
+var RevPCRSmileList = [];
+for (var _i17 = 1; _i17 < 41; _i17++) {
+    RevPCRSmileList.push('https://sticker.inari.site/revstar/revstar (' + _i17 + ').png');
+}
+for (var _i18 = 1; _i18 < 49; _i18++) {
+    RevPCRSmileList.push('https://sticker.inari.site/redive/sticker (' + _i18 + ').png');
 }
 
 // バンドリ
 var BandoriSmileList = [];
-for (var _i11 = 1; _i11 < 41; _i11++) {
-    BandoriSmileList.push('https://sticker.inari.site/bangdream/bangdream (' + _i11 + ').png');
+for (var _i19 = 1; _i19 < 41; _i19++) {
+    BandoriSmileList.push('https://sticker.inari.site/bangdream/bangdream (' + _i19 + ').png');
+}
+
+// 其他表情
+var PopularSmileList = [];
+// 伪中国语
+for (var _i20 = 49; _i20 < 83; _i20++) {
+    PopularSmileList.push('https://sticker.inari.site/fakehan/sticker (' + _i20 + ').png');
+}
+// Touhou（灵梦）
+for (var _i21 = 22; _i21 < 46; _i21++) {
+    PopularSmileList.push('https://sticker.inari.site/touhou/reimu/' + _i21 + '.jpg');
+}
+// 流行
+for (var _i22 = 1; _i22 < 48; _i22++) {
+    PopularSmileList.push('https://sticker.inari.site/pop/sticker (' + _i22 + ').png');
 }
 
 // 自定义表情
@@ -112,22 +160,25 @@ var MenuList = {
     Shortcut: {
         datatype: 'plain',
         title: '快捷',
-        addr: ['[sell=100][/sell]', '[quote][/quote]', '[hide=100][/hide]', '[code][/code]', '[strike][/strike]', '[fly][/fly]', '[color=#00FF00][/color]', '[b][/b]', '[u][/u]', '[i][/i]', '[hr]', '[backcolor=][/backcolor]', '[url=][/url]', '[img][/img]'],
-        ref: ['出售贴sell=售价', '引用', '隐藏hide=神秘等级', '插入代码', '删除线', '跑马灯', '文字颜色', '粗体', '下划线', '斜体', '水平线', '背景色', '插入链接', '插入图片']
+        addr: ['[sell=100][/sell]', '[quote][/quote]', '[hide=100][/hide]', '[code][/code]', '[strike][/strike]', '[fly][/fly]', '[color=#00FF00][/color]', '[b][/b]', '[u][/u]', '[i][/i]', '[hr]', '[backcolor=][/backcolor]', '[url=][/url]', '[img][/img]', '[audio]请填写HTML5音频地址[/audio]', '[video]请填写HTML5视频地址[/video]', '[table][/table]', '[tr][/tr]', '[td][/td]', '[align=left][/align]', '[align=center][/align]', '[align=right][/align]'],
+        ref: ['出售贴sell=售价', '引用', '隐藏hide=神秘等级', '插入代码', '删除线', '跑马灯', '文字颜色', '粗体', '下划线', '斜体', '水平线', '背景色', '插入链接', '插入图片', '插入音频', '插入视频', '插入表格', '插入表格行', '插入表格列', '左对齐', '居中', '右对齐']
     },
     Emoji: {
         datatype: 'plain',
         title: '颜文字',
         addr: ['(●・ 8 ・●)', '╰(๑◕ ▽ ◕๑)╯', '(ゝω・)', '〜♪♪', '(ﾟДﾟ≡ﾟДﾟ)', '(＾o＾)ﾉ', '(|||ﾟДﾟ)', '(`ε´ )', '(╬ﾟдﾟ)', '(|||ﾟдﾟ)', '(￣∇￣)', '(￣3￣)', '(￣ｰ￣)', '(￣ . ￣)', '(￣︿￣)', '(￣︶￣)', '(*´ω`*)', '(・ω・)', '(⌒▽⌒)', '(￣▽￣）', '(=・ω・=)', '(｀・ω・´)', '(〜￣△￣)〜', '(･∀･)', '(°∀°)ﾉ', '(￣3￣)', '╮(￣▽￣)╭', '( ´_ゝ｀)', 'のヮの', '(ﾉ؂< ๑）诶嘿☆～', '(&lt;_&lt;)', '(&gt;_&gt;)', '(;¬_¬)', '(▔□▔)/', '(ﾟДﾟ≡ﾟдﾟ)!?', 'Σ(ﾟдﾟ;)', 'Σ( ￣□￣||)', '(´；ω；`)', '（/TДT)/', '(^・ω・^ )', '(｡･ω･｡)', '(●￣(ｴ)￣●)', 'ε=ε=(ノ≧∇≦)ノ', '(´･_･`)', '(-_-#)', '（￣へ￣）', '(￣ε(#￣) Σ', 'ヽ(`Д´)ﾉ', '(╯°口°)╯(┴—┴', '（#-_-)┯━┯', '_(:3」∠)_', '(笑)', '(汗)', '(泣)', '(苦笑)', '(´・ω・`)', '(╯°□°）╯︵ ┻━┻', '(╯‵□′)╯︵┻━┻', '( ´ρ`)', '( ﾟωﾟ)', '(oﾟωﾟo)', '(　^ω^)', '(｡◕∀◕｡)', '/( ◕‿‿◕ )\\', 'ε٩( º∀º )۶з', '(￣ε(#￣)☆╰╮(￣▽￣///)', '（●´3｀）~♪', '_(:з」∠)_', 'хорошо!', '＼(^o^)／', '(•̅灬•̅ )', '(ﾟДﾟ)', 'まったく、小学生は最高だぜ！！', 'ε=ε=ε=┏(゜ロ゜;)┛', '(；°ほ°)', '⎝≧⏝⏝≦⎠', 'ヽ(✿ﾟ▽ﾟ)ノ', '焔に舞い上がるスパークよ、邪悪な異性交際に、天罰を与え！', '|•ω•`)']
     },
-    Acfun: { datatype: 'image', title: 'ACFUN', addr: AcSmileList },
     Common: { datatype: 'image', title: '常用', addr: CommonSmileList },
+    Acfun: { datatype: 'image', title: 'ACFUN', addr: AcSmileList },
+    S1Maj: { datatype: 'image', title: 'S1', addr: S1SmileList },
     Akari: { datatype: 'image', title: 'Akari', addr: AkarinSmileList },
     lindaB: { datatype: 'image', title: '林大B', addr: lindaBSmileList },
-    LoveLive: { datatype: 'image', title: 'LoveLive', addr: LoveliveSmallSmileList },
-    ShaoNvGeJu: { datatype: 'image', title: '少女歌剧', addr: ShaoNvGeJuSmileList },
-    Bandori: { datatype: 'image', title: 'バンドリ', addr: BandoriSmileList },
-    UserSmileList: { datatype: 'image', title: '自定义', addr: UserSmileList }
+    Weibotb: { datatype: 'image', title: '微博贴吧', addr: WeiboTbSmileList },
+    LoveLive: { datatype: 'image', title: 'LL', addr: LoveliveSmallSmileList },
+    RevPCR: { datatype: 'image', title: '少歌PCR', addr: RevPCRSmileList },
+    Bandori: { datatype: 'image', title: '邦邦', addr: BandoriSmileList },
+    Popular: { datatype: 'image', title: '其他', addr: PopularSmileList },
+    Userimg: { datatype: 'image', title: '自定义', addr: UserSmileList }
 };
 
 /**
@@ -175,15 +226,15 @@ var getSmilePanelHtml = function getSmilePanelHtml(key) {
     var data = MenuList[key];
     if (!data) return '';
     var html = '';
-    for (var _i12 = 0; _i12 < data.addr.length; _i12++) {
+    for (var _i23 = 0; _i23 < data.addr.length; _i23++) {
         if (data.datatype === 'image') {
-            html += '<img class="kfe-smile" src="' + data.addr[_i12] + '" alt="[\u8868\u60C5]">';
+            html += '<img class="kfe-smile" src="' + data.addr[_i23] + '" alt="[\u8868\u60C5]">';
         } else if (data.datatype === 'imageLink') {
-            var ref = typeof data.ref !== 'undefined' && typeof data.ref[_i12] !== 'undefined' ? data.ref[_i12] : '';
-            html += '<img class="kfe-smile" data-code="' + ref + '" src="' + data.addr[_i12] + '" alt="[\u8868\u60C5]">';
+            var ref = typeof data.ref !== 'undefined' && typeof data.ref[_i23] !== 'undefined' ? data.ref[_i23] : '';
+            html += '<img class="kfe-smile" data-code="' + ref + '" src="' + data.addr[_i23] + '" alt="[\u8868\u60C5]">';
         } else if (data.datatype === 'plain') {
-            var _ref = typeof data.ref !== 'undefined' && typeof data.ref[_i12] !== 'undefined' ? data.ref[_i12] : data.addr[_i12];
-            html += '<a class="kfe-smile-text" data-code="' + data.addr[_i12] + '" href="#">' + _ref + '</a>';
+            var _ref = typeof data.ref !== 'undefined' && typeof data.ref[_i23] !== 'undefined' ? data.ref[_i23] : data.addr[_i23];
+            html += '<a class="kfe-smile-text" data-code="' + data.addr[_i23] + '" href="#">' + _ref + '</a>';
         }
     }
     return '<div class="kfe-smile-panel" data-key="' + key + '">' + html + '</div>';
@@ -206,7 +257,7 @@ var getSubMenuHtml = function getSubMenuHtml() {
  * @param textArea 文本框
  */
 var createContainer = function createContainer(textArea) {
-    var $container = $('\n<div class="kfe-container">\n  <div class="kfe-menu">\n    <span title="made by eddie32 version ' + version + '; modified by \u55B5\u62C9\u5E03\u4E01\u3001mistakey" style="cursor: pointer;"><b>\u56E7\u2468</b></span>\n    ' + getSubMenuHtml() + '\n    <span class="kfe-close-panel">[-]</span>\n    <input type="button" class="kfe-user-add" value="\u6DFB\u52A0">\n    <input type="button" class="kfe-user-out" value="\u5BFC\u51FA">\n    <input type="button" class="kfe-user-clr" value="\u6E05\u7A7A">\n  </div>\n</div>\n').insertBefore($(textArea));
+    var $container = $('\n<div class="kfe-container">\n  <div class="kfe-menu">\n    <span class="kfe-close-panel" title="made by eddie32 version ' + version + '; modified by \u55B5\u62C9\u5E03\u4E01\u3001mistakey" style="cursor: pointer;"><b>\u56E7\u2468</b></span>\n    ' + getSubMenuHtml() + '\n    <span class="kfe-close-panel">[-]</span>\n    <input type="button" class="kfe-user-add" value="\u6DFB\u52A0">\n    <input type="button" class="kfe-user-out" value="\u5BFC\u51FA">\n    <input type="button" class="kfe-user-clr" value="\u6E05\u7A7A">\n  </div>\n</div>\n').insertBefore($(textArea));
     $container.on('click', '.kfe-sub-menu', function (e) {
         e.preventDefault();
         var $this = $(this);

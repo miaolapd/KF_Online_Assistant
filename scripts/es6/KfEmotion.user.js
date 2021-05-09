@@ -161,8 +161,8 @@ const MenuList = {
         title: '快捷',
         addr: [
             '[sell=100][/sell]', '[quote][/quote]', '[hide=100][/hide]', '[code][/code]', '[strike][/strike]', '[fly][/fly]','[color=#00FF00][/color]', 
-            '[b][/b]', '[u][/u]', '[i][/i]', '[hr]', '[backcolor=][/backcolor]', '[url=][/url]','[img][/img]','[audio]喵拉助手功能，原版不解析[/audio]',
-            '[video]喵拉助手功能，原版不解析[/video]','[table][/table]','[tr][/tr]','[td][/td]','[align=left][/align]','[align=center][/align]','[align=right][/align]'
+            '[b][/b]', '[u][/u]', '[i][/i]', '[hr]', '[backcolor=][/backcolor]', '[url=][/url]','[img][/img]','[audio]请填写HTML5音频地址[/audio]',
+            '[video]请填写HTML5视频地址[/video]','[table][/table]','[tr][/tr]','[td][/td]','[align=left][/align]','[align=center][/align]','[align=right][/align]'
         ],
         ref: [
             '出售贴sell=售价', '引用', '隐藏hide=神秘等级', '插入代码', '删除线', '跑马灯', '文字颜色', '粗体', '下划线','斜体', '水平线', '背景色', '插入链接', '插入图片',
