@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/5415
-// @version     6.1.0
+// @version     6.2.0
 // @author      eddie32
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
 // @icon        https://sticker.inari.site/favicon.ico
@@ -22,7 +22,7 @@
 // ==/UserScript==
 'use strict';
 // 版本号
-const version = '6.1.0';
+const version = '6.2.0';
 // 网站是否为KfMobile
 const isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
 
@@ -48,6 +48,14 @@ for (let i = 21; i < 24; i++) {
 // 血压
 for (let i = 48; i < 54; i++) {
     CommonSmileList.push(`https://sticker.inari.site/pop/sticker (${i}).png`);
+}
+// Touhou（灵梦）
+for (let i = 22; i < 46; i++) {
+    CommonSmileList.push(`https://sticker.inari.site/touhou/reimu/${i}.jpg`);
+}
+// 伪中国语
+for (let i = 49; i < 83; i++) {
+    CommonSmileList.push(`https://sticker.inari.site/fakehan/sticker (${i}).png`);
 }
 
 // AC娘表情
@@ -122,19 +130,13 @@ for (let i = 1; i < 41; i++) {
     BandoriSmileList.push(`https://sticker.inari.site/bangdream/bangdream (${i}).png`);
 }
 
-// 其他表情
-const PopularSmileList = [];
-// 伪中国语
-for (let i = 49; i < 83; i++) {
-    PopularSmileList.push(`https://sticker.inari.site/fakehan/sticker (${i}).png`);
+// 随机
+const RandomSmileList = [];
+for (let i = 1; i < 20; i++) {
+    RandomSmileList.push(`https://sticker.inari.site/rgif/${Math.ceil(Math.random()*420)}.gif`);
 }
-// Touhou（灵梦）
-for (let i = 22; i < 46; i++) {
-    PopularSmileList.push(`https://sticker.inari.site/touhou/reimu/${i}.jpg`);
-}
-// 流行
-for (let i = 1; i < 48; i++) {
-    PopularSmileList.push(`https://sticker.inari.site/pop/sticker (${i}).png`);
+for (let i = 1; i < 20; i++) {
+    RandomSmileList.push(`https://sticker.inari.site/rwebp/${Math.ceil(Math.random()*330)}.webp`);
 }
 
 // 自定义表情
@@ -193,7 +195,7 @@ const MenuList = {
     LoveLive: {datatype: 'image', title: 'LL', addr: LoveliveSmallSmileList},
     RevPCR:   {datatype: 'image', title: '少歌PCR', addr: RevPCRSmileList},
     Bandori:  {datatype: 'image', title: '邦邦', addr: BandoriSmileList},
-    Popular:  {datatype: 'image', title: '其他', addr: PopularSmileList},
+    Random:   {datatype: 'image', title: '随机', addr: RandomSmileList},
     Userimg:  {datatype: 'image', title: '自定义', addr: UserSmileList},
 };
 
