@@ -36,6 +36,16 @@ for (let i = 1; i < 49; i++) {
     KfSmileCodeList.push(`[s:${i + 9}]`);
 }
 
+// 图片搭配自定义文字
+const PtSmileList = [];
+const PtSmileCodeList = [];
+PtSmileList.push(`https://sticker.inari.site/PicText/Pt.png`);
+PtSmileCodeList.push(`[align=center][img]此处替换为自定义图片url[/img][/align][align=center][backcolor=#FFFFFF][size=3]  [b]在此输入自定义文字[/b]  [/size][/backcolor][/align]`);
+for (let i = 1; i < 38; i++) {
+    PtSmileList.push(`https://sticker.inari.site/PicText/${i}.webp`);
+    PtSmileCodeList.push(`[align=center][img]https://sticker.inari.site/PicText/${i}.webp[/img][/align][align=center][backcolor=#FFFFFF][size=3]  [b]请在此处输入自定义文字[/b]  [/size][/backcolor][/align]`);
+}
+
 // 常用表情
 const CommonSmileList = [];
 // 小日向雪花
@@ -106,12 +116,24 @@ for(let i = 10; i < 34; i++) {
     WeiboTbSmileList.push(`http://tb2.bdstatic.com/tb/editor/images/face/i_f${i}.png`);
 }
 
+// 暹罗猫小红豆
+const SiameseSmileList = [];
+for (let i = 1; i < 25; i++) {
+    SiameseSmileList.push(`https://sticker.inari.site/usr/Kawaii_Siamese/wx1/${i}.png`);
+}
+for (let i = 1; i < 25; i++) {
+    SiameseSmileList.push(`https://sticker.inari.site/usr/Kawaii_Siamese/wx2/${i}.png`);
+}
+for (let i = 1; i < 41; i++) {
+    SiameseSmileList.push(`https://sticker.inari.site/usr/Kawaii_Siamese/line/${i}.png`);
+}
+
 // lovelive表情（小）
 const LoveliveSmallSmileList = [];
 for (let i = 1; i < 42; i++) {
     LoveliveSmallSmileList.push(`https://sticker.inari.site/lovelive/2/ll (${i}).png`);
 }
-for (let i = 1; i < 21; i++) {
+for (let i = 1; i < 20; i++) {
     LoveliveSmallSmileList.push(`https://sticker.inari.site/lovelive/4/ll (${i}).jpg`);
 }
 
@@ -133,10 +155,10 @@ for (let i = 1; i < 41; i++) {
 // 随机
 const RandomSmileList = [];
 for (let i = 1; i < 20; i++) {
-    RandomSmileList.push(`https://sticker.inari.site/rgif/${Math.ceil(Math.random()*420)}.gif`);
+    RandomSmileList.push(`https://sticker.inari.site/rgif/${Math.ceil(Math.random()*2600)}.gif`);
 }
 for (let i = 1; i < 20; i++) {
-    RandomSmileList.push(`https://sticker.inari.site/rwebp/${Math.ceil(Math.random()*330)}.webp`);
+    RandomSmileList.push(`https://sticker.inari.site/rwebp/${Math.ceil(Math.random()*7000)}.webp`);
 }
 
 // 自定义表情
@@ -173,25 +195,34 @@ const MenuList = {
     },
     Emoji: {
         datatype: 'plain',
-        title: '颜文字',
+        title: '绘/颜文字',
         addr: [
-            '(●・ 8 ・●)', '╰(๑◕ ▽ ◕๑)╯', '(ゝω・)', '〜♪♪', '(ﾟДﾟ≡ﾟДﾟ)', '(＾o＾)ﾉ', '(|||ﾟДﾟ)', '(`ε´ )', '(╬ﾟдﾟ)', '(|||ﾟдﾟ)', '(￣∇￣)',
-            '(￣3￣)', '(￣ｰ￣)', '(￣ . ￣)', '(￣︿￣)', '(￣︶￣)', '(*´ω`*)', '(・ω・)', '(⌒▽⌒)', '(￣▽￣）', '(=・ω・=)', '(｀・ω・´)',
-            '(〜￣△￣)〜', '(･∀･)', '(°∀°)ﾉ', '(￣3￣)', '╮(￣▽￣)╭', '( ´_ゝ｀)', 'のヮの', '(ﾉ؂< ๑）诶嘿☆～', '(&lt;_&lt;)', '(&gt;_&gt;)',
-            '(;¬_¬)', '(▔□▔)/', '(ﾟДﾟ≡ﾟдﾟ)!?', 'Σ(ﾟдﾟ;)', 'Σ( ￣□￣||)', '(´；ω；`)', '（/TДT)/', '(^・ω・^ )', '(｡･ω･｡)', '(●￣(ｴ)￣●)',
-            'ε=ε=(ノ≧∇≦)ノ', '(´･_･`)', '(-_-#)', '（￣へ￣）', '(￣ε(#￣) Σ', 'ヽ(`Д´)ﾉ', '(╯°口°)╯(┴—┴', '（#-_-)┯━┯', '_(:3」∠)_', '(笑)',
-            '(汗)', '(泣)', '(苦笑)', '(´・ω・`)', '(╯°□°）╯︵ ┻━┻', '(╯‵□′)╯︵┻━┻', '( ´ρ`)', '( ﾟωﾟ)', '(oﾟωﾟo)', '(　^ω^)', '(｡◕∀◕｡)',
-            '/( ◕‿‿◕ )\\', 'ε٩( º∀º )۶з', '(￣ε(#￣)☆╰╮(￣▽￣///)', '（●´3｀）~♪', '_(:з」∠)_', 'хорошо!', '＼(^o^)／', '(•̅灬•̅ )', '(ﾟДﾟ)',
-            'まったく、小学生は最高だぜ！！', 'ε=ε=ε=┏(゜ロ゜;)┛', '(；°ほ°)', '⎝≧⏝⏝≦⎠', 'ヽ(✿ﾟ▽ﾟ)ノ', '焔に舞い上がるスパークよ、邪悪な異性交際に、天罰を与え！',
-            '|•ω•`)'
+            '😀', '😁', '😂', '🤣', '😃', '😄', '😅', '😆', '😉', '😊', '😋', '😎', '😍', '😘', '🥰', '😗', '😙', '😚', '🙂', '🤗', '🤩', '🤔', '🤨', '😐',
+            '😑', '😶', '🙄', '😏', '😣', '😥', '😮', '🤐', '😯', '😪', '😫', '🥱', '😴', '😌', '😛', '😜', '😝', '🤤', '😒', '😓', '😔', '😕', '🙃', '🤑',
+            '😲', '🙁', '😖', '😞', '😟', '😤', '😢', '😭', '😦', '😧', '😨', '😩', '🤯', '😬', '😰', '😱', '🥵', '🥶', '😳', '🤪', '😵', '🥴', '😠', '😡',
+            '🤬', '😷', '🤒', '🤕', '🤢', '🤮', '🤧', '😇', '🥳', '🥺', '🤠', '🤡', '🤥', '🤫', '🤭', '🧐', '🤓', '😈', '👿', '👹', '👺', '💀', '👻', '👽',
+            '💩', '🙈', '🙉', '🙊', '🐵', '🐶', '🐷', '🐹', '🐸', '🐴', '🐎', '🐢', '🐍', '🐬', '🐳', '🐓', '👀', '👩', '👨', '🧑', '👧', '👦', '🧒', '👶',
+            '👵', '👴', '👳', '‍👮', '🙅', '🙆', '‍🙋', '🤷', '🤺', '💪', '🦵', '🦶', '👂', '🤏', '👈', '👉', '☝', '👆', '👇', '✌', '🤞', '🖖', '🤘', '🤙', '🖐',
+            '✋', '👌', '👍', '👎', '✊', '👊', '🤛', '🤜', '🤚', '👋', '🤟', '✍', '👏', '👐', '🙌', '🤲', '🙏', '🤝', '💅', '🎈', '🧧','🎀', '🎁', '🎨', '💎',
+            '⚽', '⚾', '🏀', '🏐', '🏈', '🎱', '🎳','🏓', '🏑', '🎾', '🥇', '🥈', '🥉', '🏅', '🏆', '🎮', '🎲','🔒', '🔑', '💊', '💻', '📱', '📞','💣', '🎻',
+            '🎧', '📸', '📺','💽', '🚲', '🚓', '🚑', '🚒', '🚔', '🚢', '🚀', '🛸', '⛵', '🏥','🚽','🧻','⛅', '🔥', '💧', '🌞', '🌜', '🌈', '🍔', '🍟', '🍉',
+            '(●・ 8 ・●)', '╰(๑◕ ▽ ◕๑)╯', '(ゝω・)', '〜♪♪', '(ﾟДﾟ≡ﾟДﾟ)', '(＾o＾)ﾉ', '(|||ﾟДﾟ)', '(`ε´ )', '(╬ﾟдﾟ)', '(|||ﾟдﾟ)', '(￣∇￣)', '(￣3￣)', '(￣ｰ￣)',
+            '(￣ . ￣)', '(￣︿￣)', '(￣︶￣)', '(*´ω`*)', '(・ω・)', '(⌒▽⌒)', '(￣▽￣）', '(=・ω・=)', '(･∀･)', '(｀・ω・´)', '(〜￣△￣)〜', '(°∀°)ﾉ', '(￣3￣)',
+            '╮(￣▽￣)╭', '( ´_ゝ｀)', 'のヮの', '(ﾉ؂< ๑）诶嘿☆～', '(<_<)', '(>_>)', '(;¬_¬)', '(▔□▔)/', '(ﾟДﾟ≡ﾟдﾟ)!?', 'Σ(ﾟдﾟ;)', 'Σ( ￣□￣||)', '(´；ω；`)',
+            '（/TДT)/', '(^・ω・^ )', '(｡･ω･｡)', '(oﾟωﾟo)', '(●￣(ｴ)￣●)', 'ε=ε=(ノ≧∇≦)ノ', '(´･_･`)', '(-_-#)', '（￣へ￣）', '(￣ε(#￣) Σ', 'ヽ(`Д´)ﾉ', '( ´ρ`)',
+            '(╯°口°)╯(┴—┴', '（#-_-)┯━┯', '_(:3」∠)_', '(笑)','(汗)', '(泣)', '(苦笑)', '(´・ω・`)', '(╯°□°）╯︵ ┻━┻','(╯‵□′)╯︵┻━┻', '( ﾟωﾟ)',
+            '(　^ω^)', '(｡◕∀◕｡)', '/( ◕‿‿◕ )\\', 'ε٩( º∀º )۶з', '(￣ε(#￣)☆╰╮(￣▽￣///)', '（●´3｀）~♪', '_(:з」∠)_', 'хорошо!', '＼(^o^)／','(•̅灬•̅ )',
+            '(ﾟДﾟ)', '(；°ほ°)', 'ε=ε=ε=┏(゜ロ゜;)┛', '⎝≧⏝⏝≦⎠', 'ヽ(✿ﾟ▽ﾟ)ノ', '|•ω•`)', '小学生は最高だぜ！！', '焔に舞い上がるスパークよ、邪悪な異性交際に、天罰を与え！'
         ]
     },
+    PtSmile:  {datatype: 'imageLink', title: '图文', addr: PtSmileList, ref: PtSmileCodeList},
     Common:   {datatype: 'image', title: '常用', addr: CommonSmileList},
     Acfun:    {datatype: 'image', title: 'ACFUN', addr: AcSmileList},
     S1Maj:    {datatype: 'image', title: 'S1', addr: S1SmileList},
     Akari:    {datatype: 'image', title: 'Akari', addr: AkarinSmileList},
     lindaB:   {datatype: 'image', title: '林大B', addr: lindaBSmileList},
     Weibotb:  {datatype: 'image', title: '微博贴吧', addr: WeiboTbSmileList},
+    Siamese:  {datatype: 'image', title: '小红豆', addr: SiameseSmileList},
     LoveLive: {datatype: 'image', title: 'LL', addr: LoveliveSmallSmileList},
     RevPCR:   {datatype: 'image', title: '少歌PCR', addr: RevPCRSmileList},
     Bandori:  {datatype: 'image', title: '邦邦', addr: BandoriSmileList},
@@ -367,10 +398,10 @@ const appendCss = function () {
 <style>
   .kfe-container { padding: 5px; vertical-align: middle; font: 12px/1.7em "sans-serif"; }
   .kfe-menu { margin-bottom: 5px; }
-  .kfe-sub-menu { margin: 0 7px; text-decoration: none; border-bottom: 2px solid transparent; }
+  .kfe-sub-menu { margin: 0 4px; text-decoration: none; border-bottom: 2px solid transparent; }
   .kfe-sub-menu:hover, .kfe-sub-menu:focus { text-decoration: none; border-color: deeppink; }
   a.kfe-sub-menu-active { color: black }
-  .kfe-smile-panel { display: none; height: 120px; padding: 5px 3px; overflow-y: auto; border-top: 1px solid #ddd; }
+  .kfe-smile-panel { display: none; height: 136px; padding: 5px 3px; overflow-y: auto; border-top: 1px solid #ddd; }
   .kfe-smile-panel[data-key="Shortcut"] { height: auto; }
   .kfe-smile { display: inline-block; max-width: 60px; max-height: 60px; cursor: pointer; }
   .kfe-smile-text { display: inline-block; padding: 3px 5px; }
