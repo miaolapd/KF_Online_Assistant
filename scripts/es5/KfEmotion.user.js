@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/5415
-// @version     6.2.0
+// @version     6.3.0
 // @author      eddie32
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
 // @icon        https://sticker.inari.site/favicon.ico
@@ -25,7 +25,7 @@
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var version = '6.2.0';
+var version = '6.3.0';
 // 网站是否为KfMobile
 var isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
 
@@ -39,107 +39,129 @@ for (var i = 1; i < 49; i++) {
     KfSmileCodeList.push('[s:' + (i + 9) + ']');
 }
 
+// 图片搭配自定义文字
+var PtSmileList = [];
+var PtSmileCodeList = [];
+PtSmileList.push('https://sticker.inari.site/PicText/Pt.png');
+PtSmileCodeList.push('[align=center][img]\u6B64\u5904\u66FF\u6362\u4E3A\u81EA\u5B9A\u4E49\u56FE\u7247url[/img][/align][align=center][backcolor=#FFFFFF][size=3]  [b]\u5728\u6B64\u8F93\u5165\u81EA\u5B9A\u4E49\u6587\u5B57[/b]  [/size][/backcolor][/align]');
+for (var _i = 1; _i < 38; _i++) {
+    PtSmileList.push('https://sticker.inari.site/PicText/' + _i + '.webp');
+    PtSmileCodeList.push('[align=center][img]https://sticker.inari.site/PicText/' + _i + '.webp[/img][/align][align=center][backcolor=#FFFFFF][size=3]  [b]\u8BF7\u5728\u6B64\u5904\u8F93\u5165\u81EA\u5B9A\u4E49\u6587\u5B57[/b]  [/size][/backcolor][/align]');
+}
+
 // 常用表情
 var CommonSmileList = [];
 // 小日向雪花
-for (var _i = 1; _i < 7; _i++) {
-    CommonSmileList.push('https://sticker.inari.site/yukika/' + _i + '.jpg');
-}
-for (var _i2 = 21; _i2 < 24; _i2++) {
+for (var _i2 = 1; _i2 < 7; _i2++) {
     CommonSmileList.push('https://sticker.inari.site/yukika/' + _i2 + '.jpg');
 }
+for (var _i3 = 21; _i3 < 24; _i3++) {
+    CommonSmileList.push('https://sticker.inari.site/yukika/' + _i3 + '.jpg');
+}
 // 血压
-for (var _i3 = 48; _i3 < 54; _i3++) {
-    CommonSmileList.push('https://sticker.inari.site/pop/sticker (' + _i3 + ').png');
+for (var _i4 = 48; _i4 < 54; _i4++) {
+    CommonSmileList.push('https://sticker.inari.site/pop/sticker (' + _i4 + ').png');
 }
 // Touhou（灵梦）
-for (var _i4 = 22; _i4 < 46; _i4++) {
-    CommonSmileList.push('https://sticker.inari.site/touhou/reimu/' + _i4 + '.jpg');
+for (var _i5 = 22; _i5 < 46; _i5++) {
+    CommonSmileList.push('https://sticker.inari.site/touhou/reimu/' + _i5 + '.jpg');
 }
 // 伪中国语
-for (var _i5 = 49; _i5 < 83; _i5++) {
-    CommonSmileList.push('https://sticker.inari.site/fakehan/sticker (' + _i5 + ').png');
+for (var _i6 = 49; _i6 < 83; _i6++) {
+    CommonSmileList.push('https://sticker.inari.site/fakehan/sticker (' + _i6 + ').png');
 }
 
 // AC娘表情
 var AcSmileList = [];
-for (var _i6 = 1; _i6 < 55; _i6++) {
-    AcSmileList.push('https://sticker.inari.site/acfun/1/' + _i6 + '.png');
+for (var _i7 = 1; _i7 < 55; _i7++) {
+    AcSmileList.push('https://sticker.inari.site/acfun/1/' + _i7 + '.png');
 }
-for (var _i7 = 1001; _i7 < 1041; _i7++) {
-    AcSmileList.push('https://sticker.inari.site/acfun/2/' + _i7 + '.png');
+for (var _i8 = 1001; _i8 < 1041; _i8++) {
+    AcSmileList.push('https://sticker.inari.site/acfun/2/' + _i8 + '.png');
 }
-for (var _i8 = 2001; _i8 < 2056; _i8++) {
-    AcSmileList.push('https://sticker.inari.site/acfun/3/' + _i8 + '.png');
+for (var _i9 = 2001; _i9 < 2056; _i9++) {
+    AcSmileList.push('https://sticker.inari.site/acfun/3/' + _i9 + '.png');
 }
 
 // S1麻将脸
 var S1SmileList = [];
-for (var _i9 = 1; _i9 < 33; _i9++) {
-    S1SmileList.push('https://sticker.inari.site/s1/' + _i9 + '.gif');
+for (var _i10 = 1; _i10 < 33; _i10++) {
+    S1SmileList.push('https://sticker.inari.site/s1/' + _i10 + '.gif');
 }
-for (var _i10 = 1; _i10 < 229; _i10++) {
-    S1SmileList.push('https://sticker.inari.site/s1/' + _i10 + '.png');
+for (var _i11 = 1; _i11 < 229; _i11++) {
+    S1SmileList.push('https://sticker.inari.site/s1/' + _i11 + '.png');
 }
 
 // 阿卡林 from 摇曳百合
 var AkarinSmileList = [];
-for (var _i11 = 1; _i11 < 21; _i11++) {
-    AkarinSmileList.push('https://sticker.inari.site/akarin/2/akarin (' + _i11 + ').gif');
+for (var _i12 = 1; _i12 < 21; _i12++) {
+    AkarinSmileList.push('https://sticker.inari.site/akarin/2/akarin (' + _i12 + ').gif');
 }
-for (var _i12 = 1; _i12 < 72; _i12++) {
-    AkarinSmileList.push('https://sticker.inari.site/akarin/1/akarin (' + _i12 + ').png');
+for (var _i13 = 1; _i13 < 72; _i13++) {
+    AkarinSmileList.push('https://sticker.inari.site/akarin/1/akarin (' + _i13 + ').png');
 }
 
 // 林大B
 var lindaBSmileList = [];
-for (var _i13 = 1; _i13 < 52; _i13++) {
-    lindaBSmileList.push('https://sticker.inari.site/lindaB/lindaB (' + _i13 + ').jpg');
+for (var _i14 = 1; _i14 < 52; _i14++) {
+    lindaBSmileList.push('https://sticker.inari.site/lindaB/lindaB (' + _i14 + ').jpg');
 }
 
 // 微博&贴吧
 var WeiboTbSmileList = [];
-for (var _i14 = 0; _i14 < 101; _i14++) {
-    WeiboTbSmileList.push('https://sticker.inari.site/weibo/' + _i14 + '.png');
+for (var _i15 = 0; _i15 < 101; _i15++) {
+    WeiboTbSmileList.push('https://sticker.inari.site/weibo/' + _i15 + '.png');
 }
-for (var _i15 = 1; _i15 < 10; _i15++) {
-    WeiboTbSmileList.push('http://tb2.bdstatic.com/tb/editor/images/face/i_f0' + _i15 + '.png');
+for (var _i16 = 1; _i16 < 10; _i16++) {
+    WeiboTbSmileList.push('http://tb2.bdstatic.com/tb/editor/images/face/i_f0' + _i16 + '.png');
 }
-for (var _i16 = 10; _i16 < 34; _i16++) {
-    WeiboTbSmileList.push('http://tb2.bdstatic.com/tb/editor/images/face/i_f' + _i16 + '.png');
+for (var _i17 = 10; _i17 < 34; _i17++) {
+    WeiboTbSmileList.push('http://tb2.bdstatic.com/tb/editor/images/face/i_f' + _i17 + '.png');
+}
+
+// 暹罗猫小红豆
+var SiameseSmileList = [];
+for (var _i18 = 1; _i18 < 25; _i18++) {
+    SiameseSmileList.push('https://sticker.inari.site/usr/Kawaii_Siamese/wx1/' + _i18 + '.png');
+}
+for (var _i19 = 1; _i19 < 25; _i19++) {
+    SiameseSmileList.push('https://sticker.inari.site/usr/Kawaii_Siamese/wx2/' + _i19 + '.png');
+}
+for (var _i20 = 1; _i20 < 41; _i20++) {
+    SiameseSmileList.push('https://sticker.inari.site/usr/Kawaii_Siamese/line/' + _i20 + '.png');
 }
 
 // lovelive表情（小）
 var LoveliveSmallSmileList = [];
-for (var _i17 = 1; _i17 < 42; _i17++) {
-    LoveliveSmallSmileList.push('https://sticker.inari.site/lovelive/2/ll (' + _i17 + ').png');
+for (var _i21 = 1; _i21 < 42; _i21++) {
+    LoveliveSmallSmileList.push('https://sticker.inari.site/lovelive/2/ll (' + _i21 + ').png');
 }
-for (var _i18 = 1; _i18 < 21; _i18++) {
-    LoveliveSmallSmileList.push('https://sticker.inari.site/lovelive/4/ll (' + _i18 + ').jpg');
+for (var _i22 = 1; _i22 < 20; _i22++) {
+    LoveliveSmallSmileList.push('https://sticker.inari.site/lovelive/4/ll (' + _i22 + ').jpg');
 }
 
 // 少女歌剧&公主链接
 var RevPCRSmileList = [];
-for (var _i19 = 1; _i19 < 41; _i19++) {
-    RevPCRSmileList.push('https://sticker.inari.site/revstar/revstar (' + _i19 + ').png');
+for (var _i23 = 1; _i23 < 41; _i23++) {
+    RevPCRSmileList.push('https://sticker.inari.site/revstar/revstar (' + _i23 + ').png');
 }
-for (var _i20 = 1; _i20 < 49; _i20++) {
-    RevPCRSmileList.push('https://sticker.inari.site/redive/sticker (' + _i20 + ').png');
+for (var _i24 = 1; _i24 < 49; _i24++) {
+    RevPCRSmileList.push('https://sticker.inari.site/redive/sticker (' + _i24 + ').png');
 }
 
 // バンドリ
 var BandoriSmileList = [];
-for (var _i21 = 1; _i21 < 41; _i21++) {
-    BandoriSmileList.push('https://sticker.inari.site/bangdream/bangdream (' + _i21 + ').png');
+for (var _i25 = 1; _i25 < 41; _i25++) {
+    BandoriSmileList.push('https://sticker.inari.site/bangdream/bangdream (' + _i25 + ').png');
 }
 
 // 随机
 var RandomSmileList = [];
-for (var _i22 = 1; _i22 < 20; _i22++) {
-    RandomSmileList.push('https://sticker.inari.site/rgif/' + Math.ceil(Math.random() * 420) + '.gif');
+for (var _i26 = 1; _i26 < 20; _i26++) {
+    RandomSmileList.push('https://sticker.inari.site/rgif/' + Math.ceil(Math.random() * 2600) + '.gif');
 }
-for (var _i23 = 1; _i23 < 20; _i23++) {
-    RandomSmileList.push('https://sticker.inari.site/rwebp/' + Math.ceil(Math.random() * 330) + '.webp');
+for (var _i27 = 1; _i27 < 20; _i27++) {
+    RandomSmileList.push('https://sticker.inari.site/rwebp/' + Math.ceil(Math.random() * 7000) + '.webp');
 }
 
 // 自定义表情
@@ -167,15 +189,17 @@ var MenuList = {
     },
     Emoji: {
         datatype: 'plain',
-        title: '颜文字',
-        addr: ['(●・ 8 ・●)', '╰(๑◕ ▽ ◕๑)╯', '(ゝω・)', '〜♪♪', '(ﾟДﾟ≡ﾟДﾟ)', '(＾o＾)ﾉ', '(|||ﾟДﾟ)', '(`ε´ )', '(╬ﾟдﾟ)', '(|||ﾟдﾟ)', '(￣∇￣)', '(￣3￣)', '(￣ｰ￣)', '(￣ . ￣)', '(￣︿￣)', '(￣︶￣)', '(*´ω`*)', '(・ω・)', '(⌒▽⌒)', '(￣▽￣）', '(=・ω・=)', '(｀・ω・´)', '(〜￣△￣)〜', '(･∀･)', '(°∀°)ﾉ', '(￣3￣)', '╮(￣▽￣)╭', '( ´_ゝ｀)', 'のヮの', '(ﾉ؂< ๑）诶嘿☆～', '(&lt;_&lt;)', '(&gt;_&gt;)', '(;¬_¬)', '(▔□▔)/', '(ﾟДﾟ≡ﾟдﾟ)!?', 'Σ(ﾟдﾟ;)', 'Σ( ￣□￣||)', '(´；ω；`)', '（/TДT)/', '(^・ω・^ )', '(｡･ω･｡)', '(●￣(ｴ)￣●)', 'ε=ε=(ノ≧∇≦)ノ', '(´･_･`)', '(-_-#)', '（￣へ￣）', '(￣ε(#￣) Σ', 'ヽ(`Д´)ﾉ', '(╯°口°)╯(┴—┴', '（#-_-)┯━┯', '_(:3」∠)_', '(笑)', '(汗)', '(泣)', '(苦笑)', '(´・ω・`)', '(╯°□°）╯︵ ┻━┻', '(╯‵□′)╯︵┻━┻', '( ´ρ`)', '( ﾟωﾟ)', '(oﾟωﾟo)', '(　^ω^)', '(｡◕∀◕｡)', '/( ◕‿‿◕ )\\', 'ε٩( º∀º )۶з', '(￣ε(#￣)☆╰╮(￣▽￣///)', '（●´3｀）~♪', '_(:з」∠)_', 'хорошо!', '＼(^o^)／', '(•̅灬•̅ )', '(ﾟДﾟ)', 'まったく、小学生は最高だぜ！！', 'ε=ε=ε=┏(゜ロ゜;)┛', '(；°ほ°)', '⎝≧⏝⏝≦⎠', 'ヽ(✿ﾟ▽ﾟ)ノ', '焔に舞い上がるスパークよ、邪悪な異性交際に、天罰を与え！', '|•ω•`)']
+        title: '绘/颜文字',
+        addr: ['😀', '😁', '😂', '🤣', '😃', '😄', '😅', '😆', '😉', '😊', '😋', '😎', '😍', '😘', '🥰', '😗', '😙', '😚', '🙂', '🤗', '🤩', '🤔', '🤨', '😐', '😑', '😶', '🙄', '😏', '😣', '😥', '😮', '🤐', '😯', '😪', '😫', '🥱', '😴', '😌', '😛', '😜', '😝', '🤤', '😒', '😓', '😔', '😕', '🙃', '🤑', '😲', '🙁', '😖', '😞', '😟', '😤', '😢', '😭', '😦', '😧', '😨', '😩', '🤯', '😬', '😰', '😱', '🥵', '🥶', '😳', '🤪', '😵', '🥴', '😠', '😡', '🤬', '😷', '🤒', '🤕', '🤢', '🤮', '🤧', '😇', '🥳', '🥺', '🤠', '🤡', '🤥', '🤫', '🤭', '🧐', '🤓', '😈', '👿', '👹', '👺', '💀', '👻', '👽', '💩', '🙈', '🙉', '🙊', '🐵', '🐶', '🐷', '🐹', '🐸', '🐴', '🐎', '🐢', '🐍', '🐬', '🐳', '🐓', '👀', '👩', '👨', '🧑', '👧', '👦', '🧒', '👶', '👵', '👴', '👳', '‍👮', '🙅', '🙆', '‍🙋', '🤷', '🤺', '💪', '🦵', '🦶', '👂', '🤏', '👈', '👉', '☝', '👆', '👇', '✌', '🤞', '🖖', '🤘', '🤙', '🖐', '✋', '👌', '👍', '👎', '✊', '👊', '🤛', '🤜', '🤚', '👋', '🤟', '✍', '👏', '👐', '🙌', '🤲', '🙏', '🤝', '💅', '🎈', '🧧', '🎀', '🎁', '🎨', '💎', '⚽', '⚾', '🏀', '🏐', '🏈', '🎱', '🎳', '🏓', '🏑', '🎾', '🥇', '🥈', '🥉', '🏅', '🏆', '🎮', '🎲', '🔒', '🔑', '💊', '💻', '📱', '📞', '💣', '🎻', '🎧', '📸', '📺', '💽', '🚲', '🚓', '🚑', '🚒', '🚔', '🚢', '🚀', '🛸', '⛵', '🏥', '🚽', '🧻', '⛅', '🔥', '💧', '🌞', '🌜', '🌈', '🍔', '🍟', '🍉', '(●・ 8 ・●)', '╰(๑◕ ▽ ◕๑)╯', '(ゝω・)', '〜♪♪', '(ﾟДﾟ≡ﾟДﾟ)', '(＾o＾)ﾉ', '(|||ﾟДﾟ)', '(`ε´ )', '(╬ﾟдﾟ)', '(|||ﾟдﾟ)', '(￣∇￣)', '(￣3￣)', '(￣ｰ￣)', '(￣ . ￣)', '(￣︿￣)', '(￣︶￣)', '(*´ω`*)', '(・ω・)', '(⌒▽⌒)', '(￣▽￣）', '(=・ω・=)', '(･∀･)', '(｀・ω・´)', '(〜￣△￣)〜', '(°∀°)ﾉ', '(￣3￣)', '╮(￣▽￣)╭', '( ´_ゝ｀)', 'のヮの', '(ﾉ؂< ๑）诶嘿☆～', '(<_<)', '(>_>)', '(;¬_¬)', '(▔□▔)/', '(ﾟДﾟ≡ﾟдﾟ)!?', 'Σ(ﾟдﾟ;)', 'Σ( ￣□￣||)', '(´；ω；`)', '（/TДT)/', '(^・ω・^ )', '(｡･ω･｡)', '(oﾟωﾟo)', '(●￣(ｴ)￣●)', 'ε=ε=(ノ≧∇≦)ノ', '(´･_･`)', '(-_-#)', '（￣へ￣）', '(￣ε(#￣) Σ', 'ヽ(`Д´)ﾉ', '( ´ρ`)', '(╯°口°)╯(┴—┴', '（#-_-)┯━┯', '_(:3」∠)_', '(笑)', '(汗)', '(泣)', '(苦笑)', '(´・ω・`)', '(╯°□°）╯︵ ┻━┻', '(╯‵□′)╯︵┻━┻', '( ﾟωﾟ)', '(　^ω^)', '(｡◕∀◕｡)', '/( ◕‿‿◕ )\\', 'ε٩( º∀º )۶з', '(￣ε(#￣)☆╰╮(￣▽￣///)', '（●´3｀）~♪', '_(:з」∠)_', 'хорошо!', '＼(^o^)／', '(•̅灬•̅ )', '(ﾟДﾟ)', '(；°ほ°)', 'ε=ε=ε=┏(゜ロ゜;)┛', '⎝≧⏝⏝≦⎠', 'ヽ(✿ﾟ▽ﾟ)ノ', '|•ω•`)', '小学生は最高だぜ！！', '焔に舞い上がるスパークよ、邪悪な異性交際に、天罰を与え！']
     },
+    PtSmile: { datatype: 'imageLink', title: '图文', addr: PtSmileList, ref: PtSmileCodeList },
     Common: { datatype: 'image', title: '常用', addr: CommonSmileList },
     Acfun: { datatype: 'image', title: 'ACFUN', addr: AcSmileList },
     S1Maj: { datatype: 'image', title: 'S1', addr: S1SmileList },
     Akari: { datatype: 'image', title: 'Akari', addr: AkarinSmileList },
     lindaB: { datatype: 'image', title: '林大B', addr: lindaBSmileList },
     Weibotb: { datatype: 'image', title: '微博贴吧', addr: WeiboTbSmileList },
+    Siamese: { datatype: 'image', title: '小红豆', addr: SiameseSmileList },
     LoveLive: { datatype: 'image', title: 'LL', addr: LoveliveSmallSmileList },
     RevPCR: { datatype: 'image', title: '少歌PCR', addr: RevPCRSmileList },
     Bandori: { datatype: 'image', title: '邦邦', addr: BandoriSmileList },
@@ -228,15 +252,15 @@ var getSmilePanelHtml = function getSmilePanelHtml(key) {
     var data = MenuList[key];
     if (!data) return '';
     var html = '';
-    for (var _i24 = 0; _i24 < data.addr.length; _i24++) {
+    for (var _i28 = 0; _i28 < data.addr.length; _i28++) {
         if (data.datatype === 'image') {
-            html += '<img class="kfe-smile" src="' + data.addr[_i24] + '" alt="[\u8868\u60C5]">';
+            html += '<img class="kfe-smile" src="' + data.addr[_i28] + '" alt="[\u8868\u60C5]">';
         } else if (data.datatype === 'imageLink') {
-            var ref = typeof data.ref !== 'undefined' && typeof data.ref[_i24] !== 'undefined' ? data.ref[_i24] : '';
-            html += '<img class="kfe-smile" data-code="' + ref + '" src="' + data.addr[_i24] + '" alt="[\u8868\u60C5]">';
+            var ref = typeof data.ref !== 'undefined' && typeof data.ref[_i28] !== 'undefined' ? data.ref[_i28] : '';
+            html += '<img class="kfe-smile" data-code="' + ref + '" src="' + data.addr[_i28] + '" alt="[\u8868\u60C5]">';
         } else if (data.datatype === 'plain') {
-            var _ref = typeof data.ref !== 'undefined' && typeof data.ref[_i24] !== 'undefined' ? data.ref[_i24] : data.addr[_i24];
-            html += '<a class="kfe-smile-text" data-code="' + data.addr[_i24] + '" href="#">' + _ref + '</a>';
+            var _ref = typeof data.ref !== 'undefined' && typeof data.ref[_i28] !== 'undefined' ? data.ref[_i28] : data.addr[_i28];
+            html += '<a class="kfe-smile-text" data-code="' + data.addr[_i28] + '" href="#">' + _ref + '</a>';
         }
     }
     return '<div class="kfe-smile-panel" data-key="' + key + '">' + html + '</div>';
@@ -330,7 +354,7 @@ var createContainer = function createContainer(textArea) {
  * 添加CSS
  */
 var appendCss = function appendCss() {
-    $('head').append('\n<style>\n  .kfe-container { padding: 5px; vertical-align: middle; font: 12px/1.7em "sans-serif"; }\n  .kfe-menu { margin-bottom: 5px; }\n  .kfe-sub-menu { margin: 0 7px; text-decoration: none; border-bottom: 2px solid transparent; }\n  .kfe-sub-menu:hover, .kfe-sub-menu:focus { text-decoration: none; border-color: deeppink; }\n  a.kfe-sub-menu-active { color: black }\n  .kfe-smile-panel { display: none; height: 120px; padding: 5px 3px; overflow-y: auto; border-top: 1px solid #ddd; }\n  .kfe-smile-panel[data-key="Shortcut"] { height: auto; }\n  .kfe-smile { display: inline-block; max-width: 60px; max-height: 60px; cursor: pointer; }\n  .kfe-smile-text { display: inline-block; padding: 3px 5px; }\n  .kfe-smile-text:hover { color: #fff !important; background-color: #2b2b2b; text-decoration: none; }\n  .kfe-close-panel { cursor: pointer; }\n  .kfe-zoom-in {\n    position: absolute; max-width: 150px; max-height: 150px; background-color: #fcfcfc; border: 3px solid rgba(242, 242, 242, 0.6);\n    border-radius: 2px; box-shadow: 0 0 3px rgb(102, 102, 102);\n  }\n</style>\n');
+    $('head').append('\n<style>\n  .kfe-container { padding: 5px; vertical-align: middle; font: 12px/1.7em "sans-serif"; }\n  .kfe-menu { margin-bottom: 5px; }\n  .kfe-sub-menu { margin: 0 4px; text-decoration: none; border-bottom: 2px solid transparent; }\n  .kfe-sub-menu:hover, .kfe-sub-menu:focus { text-decoration: none; border-color: deeppink; }\n  a.kfe-sub-menu-active { color: black }\n  .kfe-smile-panel { display: none; height: 136px; padding: 5px 3px; overflow-y: auto; border-top: 1px solid #ddd; }\n  .kfe-smile-panel[data-key="Shortcut"] { height: auto; }\n  .kfe-smile { display: inline-block; max-width: 60px; max-height: 60px; cursor: pointer; }\n  .kfe-smile-text { display: inline-block; padding: 3px 5px; }\n  .kfe-smile-text:hover { color: #fff !important; background-color: #2b2b2b; text-decoration: none; }\n  .kfe-close-panel { cursor: pointer; }\n  .kfe-zoom-in {\n    position: absolute; max-width: 150px; max-height: 150px; background-color: #fcfcfc; border: 3px solid rgba(242, 242, 242, 0.6);\n    border-radius: 2px; box-shadow: 0 0 3px rgb(102, 102, 102);\n  }\n</style>\n');
     if (isKfMobile) {
         $('head').append('\n<style>\n  #readPage .kfe-container, #writeMessagePage .kfe-container { margin-top: -10px; }\n  .kfe-menu { white-space: nowrap; overflow-x: auto; }\n</style>\n');
     }
