@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/5415
-// @version     6.3.0
+// @version     6.4.2
 // @author      eddie32
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
 // @icon        https://sticker.inari.site/favicon.ico
@@ -22,7 +22,7 @@
 // ==/UserScript==
 'use strict';
 // 版本号
-const version = '6.3.0';
+const version = '6.4.2';
 // 网站是否为KfMobile
 const isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
 
@@ -34,6 +34,11 @@ if (isKfMobile) kfImgPath = Info.imgPath;
 for (let i = 1; i < 49; i++) {
     KfSmileList.push(`/${kfImgPath}/post/smile/em/em${(i) > 9 ? i : ('0' + i)}.gif`);
     KfSmileCodeList.push(`[s:${i + 9}]`);
+}
+// 追加，与KF自带用文字截图贴纸【追加小企鹅】做了简单的分隔提醒
+for (let i = 0; i < 204; i++) {
+    KfSmileList.push(`https://sticker.inari.site/pesoguin/${i}.gif`);
+    KfSmileCodeList.push(`[img]https://sticker.inari.site/pesoguin/${i}.gif[/img]`);
 }
 
 // 图片搭配自定义文字
@@ -155,10 +160,10 @@ for (let i = 1; i < 41; i++) {
 // 随机
 const RandomSmileList = [];
 for (let i = 1; i < 20; i++) {
-    RandomSmileList.push(`https://sticker.inari.site/rgif/${Math.ceil(Math.random()*2600)}.gif`);
+    RandomSmileList.push(`https://sticker.inari.site/rgif/${Math.ceil(Math.random()*2555)}.gif`);
 }
 for (let i = 1; i < 20; i++) {
-    RandomSmileList.push(`https://sticker.inari.site/rwebp/${Math.ceil(Math.random()*7000)}.webp`);
+    RandomSmileList.push(`https://sticker.inari.site/rwebp/${Math.ceil(Math.random()*6930)}.webp`);
 }
 
 // 自定义表情
@@ -314,9 +319,10 @@ const createContainer = function (textArea) {
     <span class="kfe-close-panel" title="made by eddie32 version ${version}; modified by 喵拉布丁、mistakey" style="cursor: pointer;"><b>囧⑨</b></span>
     ${getSubMenuHtml()}
     <span class="kfe-close-panel">[-]</span>
-    <input type="button" class="kfe-user-add" value="添加">
-    <input type="button" class="kfe-user-out" value="导出">
-    <input type="button" class="kfe-user-clr" value="清空">
+    <input type="button" class="kfe-user-c" value="增">
+    <input type="button" class="kfe-user-r" value="查">
+    <input type="button" class="kfe-user-u" value="改">
+    <input type="button" class="kfe-user-d" value="删">
   </div>
 </div>
 `).insertBefore($(textArea));
@@ -344,7 +350,7 @@ const createContainer = function (textArea) {
         showZoomInImage($(this));
     }).on('mouseleave', '.kfe-smile', function () {
         $('.kfe-zoom-in').remove();
-    }).on('click', '.kfe-user-add', function (e) {
+    }).on('click', '.kfe-user-c', function (e) {
         e.preventDefault();
         let userimgaddr = prompt("请输入要添加的贴纸的URL，添加多个请用半角,隔开贴纸URL（添加后刷新页面生效）", "https://sticker.inari.site/inari.png");
         if (!userimgaddr) return;
@@ -352,11 +358,24 @@ const createContainer = function (textArea) {
         let userimgaddrmt = userimgaddr.split(',');
         let addList = [];
         for (let mt = 0; mt < userimgaddrmt.length; mt++) {
+            //含http/https协议前缀的完整图片url，请确保未开启防盗链
             if (/(http:|https:).*.(png|jpg|jpeg|gif|webp|bmp|tif)$/i.test(userimgaddrmt[mt])) {
                 addList.push(userimgaddrmt[mt]);
             }
+            //任意无协议前缀的图片url，默认增加https协议前缀
+            else if (/[a-zA-Z0-9\-\.]+\.+[a-zA-Z]+\/.*.(png|jpg|jpeg|gif|webp|bmp|tif)$/i.test(userimgaddrmt[mt])) {
+                addList.push('https://'+userimgaddrmt[mt]);
+            }
+            //由sticker.inari.site托管的用户贴纸组
+            else if (/[A-Za-z0-9\_\/]+\/+[0-9\/]+.(png|jpg|jpeg|gif|webp)$/i.test(userimgaddrmt[mt])) {
+                addList.push('https://sticker.inari.site/usr/'+userimgaddrmt[mt]);
+            }
         }
-
+        
+        if (addList.length < userimgaddrmt.length){
+            alert('含有非法输入，请检查是否由图片url错误');
+        }
+        
         if (addList.length > 0) {
             let userSmileList = [];
             if (localStorage.userimgst) {
@@ -371,8 +390,9 @@ const createContainer = function (textArea) {
 
             userSmileList = [...userSmileList, ...addList];
             localStorage.setItem('userimgst', JSON.stringify(userSmileList));
+            alert('贴纸已添加，请刷新');
         }
-    }).on('click', '.kfe-user-out', function (e) {
+    }).on('click', '.kfe-user-r', function (e) {
         e.preventDefault();
         if (UserSmileList !="https://sticker.inari.site/null.jpg"){
             prompt("自定义表情贴纸已导出，请复制",UserSmileList);
@@ -380,10 +400,79 @@ const createContainer = function (textArea) {
         else {
             alert("自定义表情贴纸为空！");
         }
-    }).on('click', '.kfe-user-clr', function (e) {
+    }).on('click', '.kfe-user-u', function (e) {
         e.preventDefault();
-        if (confirm('确定清空自定义表情贴纸吗？')) {
-            localStorage.removeItem('userimgst');
+        if (confirm('确定要替换指定的自定义表情贴纸吗？')) {
+        let userimgu = prompt("请输入要替换的贴纸序号", "1");
+            if (/[0-9]$/i.test(userimgu)) {
+             let userimgst = localStorage.userimgst;
+             let UserSmileList = JSON.parse(userimgst);
+              if (userimgu > UserSmileList.length) {
+                alert('序号超出贴纸数，请检查');
+              }
+              else if (userimgu == 0) {
+                 alert('非法输入，请检查！');
+              }
+              else if (userimgu <= UserSmileList.length) {
+                let usreplace = prompt("请输入用于替换的图片url", "https://sticker.inari.site/inari.png");
+                    let j = userimgu;
+                    if (/(http:\/\/|https:\/\/).*.(png|jpg|jpeg|gif|webp|bmp|tif)$/i.test(usreplace)) {
+                        if (confirm('确定替换序号为【'+userimgu+'】的贴纸吗？这是最后一次确认！')) {
+                        UserSmileList[j - 1] = usreplace;
+                        localStorage.setItem('userimgst', JSON.stringify(UserSmileList));
+                        alert('已替换指定序号贴纸，请刷新');
+                        }
+                    }
+                    else if(usreplace==null){}
+                    else {
+                        alert('非法输入，请检查！');
+                    }
+             }
+            }
+            else if (userimgu == null) { }
+            else {
+                alert('非法输入，请检查！');
+            }
+        }    
+    }).on('click', '.kfe-user-d', function (e) {
+        e.preventDefault();
+        if (confirm('要删除自定义表情贴纸？')) {
+          if (confirm('[确定]删除全部贴纸，[取消]删除指定贴纸。')) {
+              if (confirm('确定删除全部自定义贴纸吗？')) {
+                  localStorage.removeItem('userimgst');
+                  alert('已删除全部自定义贴纸，请刷新');
+              }
+          }
+          else {
+              let userimgd = prompt("请输入要删除贴纸的序号", "1");
+              if (/[0-9]$/i.test(userimgd)) {
+               let userimgst = localStorage.userimgst;
+               let UserSmileList = JSON.parse(userimgst);
+               if (userimgd > UserSmileList.length) {
+                alert('序号超出贴纸数，请检查');
+               }
+               else if (userimgd == 0) {
+                 alert('非法输入，请检查！');
+               }
+               else if (userimgd <= UserSmileList.length) {
+                 if (confirm('确定删除序号为【'+userimgd+'】的贴纸吗？这是最后一次确认！')) {
+                   for (let i = userimgd; i <= UserSmileList.length; i++) {
+                        UserSmileList[i - 1] = UserSmileList[i];
+                    }
+                    UserSmileList.pop();
+                   localStorage.setItem('userimgst', JSON.stringify(UserSmileList));
+                   alert('已删除指定序号贴纸，请刷新');
+                 }
+                }
+                else {
+                        alert('非法输入，请检查！');
+                }
+             }
+             else if (userimgd == null) { }
+             else {
+                alert('非法输入，请检查！');
+             }
+          }
         }
     }).find('.kfe-close-panel').click(function () {
         $container.find('.kfe-smile-panel').hide();
