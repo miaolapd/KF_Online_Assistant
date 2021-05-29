@@ -402,7 +402,6 @@ const createContainer = function (textArea) {
         }
     }).on('click', '.kfe-user-u', function (e) {
         e.preventDefault();
-        if (confirm('确定要替换指定的自定义表情贴纸吗？')) {
         let userimgu = prompt("请输入要替换的贴纸序号", "1");
             if (/[0-9]$/i.test(userimgu)) {
              let userimgst = localStorage.userimgst;
@@ -433,7 +432,7 @@ const createContainer = function (textArea) {
             else {
                 alert('非法输入，请检查！');
             }
-        }    
+            
     }).on('click', '.kfe-user-d', function (e) {
         e.preventDefault();
         if (confirm('要删除自定义表情贴纸？')) {
