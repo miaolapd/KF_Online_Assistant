@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/5415
-// @version     6.3.0
+// @version     6.4.2
 // @author      eddie32
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
 // @icon        https://sticker.inari.site/favicon.ico
@@ -25,7 +25,7 @@
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var version = '6.3.0';
+var version = '6.4.2';
 // 网站是否为KfMobile
 var isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
 
@@ -38,130 +38,135 @@ for (var i = 1; i < 49; i++) {
     KfSmileList.push('/' + kfImgPath + '/post/smile/em/em' + (i > 9 ? i : '0' + i) + '.gif');
     KfSmileCodeList.push('[s:' + (i + 9) + ']');
 }
+// 追加，与KF自带用文字截图贴纸【追加小企鹅】做了简单的分隔提醒
+for (var _i = 0; _i < 204; _i++) {
+    KfSmileList.push('https://sticker.inari.site/pesoguin/' + _i + '.gif');
+    KfSmileCodeList.push('[img]https://sticker.inari.site/pesoguin/' + _i + '.gif[/img]');
+}
 
 // 图片搭配自定义文字
 var PtSmileList = [];
 var PtSmileCodeList = [];
 PtSmileList.push('https://sticker.inari.site/PicText/Pt.png');
 PtSmileCodeList.push('[align=center][img]\u6B64\u5904\u66FF\u6362\u4E3A\u81EA\u5B9A\u4E49\u56FE\u7247url[/img][/align][align=center][backcolor=#FFFFFF][size=3]  [b]\u5728\u6B64\u8F93\u5165\u81EA\u5B9A\u4E49\u6587\u5B57[/b]  [/size][/backcolor][/align]');
-for (var _i = 1; _i < 38; _i++) {
-    PtSmileList.push('https://sticker.inari.site/PicText/' + _i + '.webp');
-    PtSmileCodeList.push('[align=center][img]https://sticker.inari.site/PicText/' + _i + '.webp[/img][/align][align=center][backcolor=#FFFFFF][size=3]  [b]\u8BF7\u5728\u6B64\u5904\u8F93\u5165\u81EA\u5B9A\u4E49\u6587\u5B57[/b]  [/size][/backcolor][/align]');
+for (var _i2 = 1; _i2 < 38; _i2++) {
+    PtSmileList.push('https://sticker.inari.site/PicText/' + _i2 + '.webp');
+    PtSmileCodeList.push('[align=center][img]https://sticker.inari.site/PicText/' + _i2 + '.webp[/img][/align][align=center][backcolor=#FFFFFF][size=3]  [b]\u8BF7\u5728\u6B64\u5904\u8F93\u5165\u81EA\u5B9A\u4E49\u6587\u5B57[/b]  [/size][/backcolor][/align]');
 }
 
 // 常用表情
 var CommonSmileList = [];
 // 小日向雪花
-for (var _i2 = 1; _i2 < 7; _i2++) {
-    CommonSmileList.push('https://sticker.inari.site/yukika/' + _i2 + '.jpg');
-}
-for (var _i3 = 21; _i3 < 24; _i3++) {
+for (var _i3 = 1; _i3 < 7; _i3++) {
     CommonSmileList.push('https://sticker.inari.site/yukika/' + _i3 + '.jpg');
 }
+for (var _i4 = 21; _i4 < 24; _i4++) {
+    CommonSmileList.push('https://sticker.inari.site/yukika/' + _i4 + '.jpg');
+}
 // 血压
-for (var _i4 = 48; _i4 < 54; _i4++) {
-    CommonSmileList.push('https://sticker.inari.site/pop/sticker (' + _i4 + ').png');
+for (var _i5 = 48; _i5 < 54; _i5++) {
+    CommonSmileList.push('https://sticker.inari.site/pop/sticker (' + _i5 + ').png');
 }
 // Touhou（灵梦）
-for (var _i5 = 22; _i5 < 46; _i5++) {
-    CommonSmileList.push('https://sticker.inari.site/touhou/reimu/' + _i5 + '.jpg');
+for (var _i6 = 22; _i6 < 46; _i6++) {
+    CommonSmileList.push('https://sticker.inari.site/touhou/reimu/' + _i6 + '.jpg');
 }
 // 伪中国语
-for (var _i6 = 49; _i6 < 83; _i6++) {
-    CommonSmileList.push('https://sticker.inari.site/fakehan/sticker (' + _i6 + ').png');
+for (var _i7 = 49; _i7 < 83; _i7++) {
+    CommonSmileList.push('https://sticker.inari.site/fakehan/sticker (' + _i7 + ').png');
 }
 
 // AC娘表情
 var AcSmileList = [];
-for (var _i7 = 1; _i7 < 55; _i7++) {
-    AcSmileList.push('https://sticker.inari.site/acfun/1/' + _i7 + '.png');
+for (var _i8 = 1; _i8 < 55; _i8++) {
+    AcSmileList.push('https://sticker.inari.site/acfun/1/' + _i8 + '.png');
 }
-for (var _i8 = 1001; _i8 < 1041; _i8++) {
-    AcSmileList.push('https://sticker.inari.site/acfun/2/' + _i8 + '.png');
+for (var _i9 = 1001; _i9 < 1041; _i9++) {
+    AcSmileList.push('https://sticker.inari.site/acfun/2/' + _i9 + '.png');
 }
-for (var _i9 = 2001; _i9 < 2056; _i9++) {
-    AcSmileList.push('https://sticker.inari.site/acfun/3/' + _i9 + '.png');
+for (var _i10 = 2001; _i10 < 2056; _i10++) {
+    AcSmileList.push('https://sticker.inari.site/acfun/3/' + _i10 + '.png');
 }
 
 // S1麻将脸
 var S1SmileList = [];
-for (var _i10 = 1; _i10 < 33; _i10++) {
-    S1SmileList.push('https://sticker.inari.site/s1/' + _i10 + '.gif');
+for (var _i11 = 1; _i11 < 33; _i11++) {
+    S1SmileList.push('https://sticker.inari.site/s1/' + _i11 + '.gif');
 }
-for (var _i11 = 1; _i11 < 229; _i11++) {
-    S1SmileList.push('https://sticker.inari.site/s1/' + _i11 + '.png');
+for (var _i12 = 1; _i12 < 229; _i12++) {
+    S1SmileList.push('https://sticker.inari.site/s1/' + _i12 + '.png');
 }
 
 // 阿卡林 from 摇曳百合
 var AkarinSmileList = [];
-for (var _i12 = 1; _i12 < 21; _i12++) {
-    AkarinSmileList.push('https://sticker.inari.site/akarin/2/akarin (' + _i12 + ').gif');
+for (var _i13 = 1; _i13 < 21; _i13++) {
+    AkarinSmileList.push('https://sticker.inari.site/akarin/2/akarin (' + _i13 + ').gif');
 }
-for (var _i13 = 1; _i13 < 72; _i13++) {
-    AkarinSmileList.push('https://sticker.inari.site/akarin/1/akarin (' + _i13 + ').png');
+for (var _i14 = 1; _i14 < 72; _i14++) {
+    AkarinSmileList.push('https://sticker.inari.site/akarin/1/akarin (' + _i14 + ').png');
 }
 
 // 林大B
 var lindaBSmileList = [];
-for (var _i14 = 1; _i14 < 52; _i14++) {
-    lindaBSmileList.push('https://sticker.inari.site/lindaB/lindaB (' + _i14 + ').jpg');
+for (var _i15 = 1; _i15 < 52; _i15++) {
+    lindaBSmileList.push('https://sticker.inari.site/lindaB/lindaB (' + _i15 + ').jpg');
 }
 
 // 微博&贴吧
 var WeiboTbSmileList = [];
-for (var _i15 = 0; _i15 < 101; _i15++) {
-    WeiboTbSmileList.push('https://sticker.inari.site/weibo/' + _i15 + '.png');
+for (var _i16 = 0; _i16 < 101; _i16++) {
+    WeiboTbSmileList.push('https://sticker.inari.site/weibo/' + _i16 + '.png');
 }
-for (var _i16 = 1; _i16 < 10; _i16++) {
-    WeiboTbSmileList.push('http://tb2.bdstatic.com/tb/editor/images/face/i_f0' + _i16 + '.png');
+for (var _i17 = 1; _i17 < 10; _i17++) {
+    WeiboTbSmileList.push('http://tb2.bdstatic.com/tb/editor/images/face/i_f0' + _i17 + '.png');
 }
-for (var _i17 = 10; _i17 < 34; _i17++) {
-    WeiboTbSmileList.push('http://tb2.bdstatic.com/tb/editor/images/face/i_f' + _i17 + '.png');
+for (var _i18 = 10; _i18 < 34; _i18++) {
+    WeiboTbSmileList.push('http://tb2.bdstatic.com/tb/editor/images/face/i_f' + _i18 + '.png');
 }
 
 // 暹罗猫小红豆
 var SiameseSmileList = [];
-for (var _i18 = 1; _i18 < 25; _i18++) {
-    SiameseSmileList.push('https://sticker.inari.site/usr/Kawaii_Siamese/wx1/' + _i18 + '.png');
-}
 for (var _i19 = 1; _i19 < 25; _i19++) {
-    SiameseSmileList.push('https://sticker.inari.site/usr/Kawaii_Siamese/wx2/' + _i19 + '.png');
+    SiameseSmileList.push('https://sticker.inari.site/usr/Kawaii_Siamese/wx1/' + _i19 + '.png');
 }
-for (var _i20 = 1; _i20 < 41; _i20++) {
-    SiameseSmileList.push('https://sticker.inari.site/usr/Kawaii_Siamese/line/' + _i20 + '.png');
+for (var _i20 = 1; _i20 < 25; _i20++) {
+    SiameseSmileList.push('https://sticker.inari.site/usr/Kawaii_Siamese/wx2/' + _i20 + '.png');
+}
+for (var _i21 = 1; _i21 < 41; _i21++) {
+    SiameseSmileList.push('https://sticker.inari.site/usr/Kawaii_Siamese/line/' + _i21 + '.png');
 }
 
 // lovelive表情（小）
 var LoveliveSmallSmileList = [];
-for (var _i21 = 1; _i21 < 42; _i21++) {
-    LoveliveSmallSmileList.push('https://sticker.inari.site/lovelive/2/ll (' + _i21 + ').png');
+for (var _i22 = 1; _i22 < 42; _i22++) {
+    LoveliveSmallSmileList.push('https://sticker.inari.site/lovelive/2/ll (' + _i22 + ').png');
 }
-for (var _i22 = 1; _i22 < 20; _i22++) {
-    LoveliveSmallSmileList.push('https://sticker.inari.site/lovelive/4/ll (' + _i22 + ').jpg');
+for (var _i23 = 1; _i23 < 20; _i23++) {
+    LoveliveSmallSmileList.push('https://sticker.inari.site/lovelive/4/ll (' + _i23 + ').jpg');
 }
 
 // 少女歌剧&公主链接
 var RevPCRSmileList = [];
-for (var _i23 = 1; _i23 < 41; _i23++) {
-    RevPCRSmileList.push('https://sticker.inari.site/revstar/revstar (' + _i23 + ').png');
+for (var _i24 = 1; _i24 < 41; _i24++) {
+    RevPCRSmileList.push('https://sticker.inari.site/revstar/revstar (' + _i24 + ').png');
 }
-for (var _i24 = 1; _i24 < 49; _i24++) {
-    RevPCRSmileList.push('https://sticker.inari.site/redive/sticker (' + _i24 + ').png');
+for (var _i25 = 1; _i25 < 49; _i25++) {
+    RevPCRSmileList.push('https://sticker.inari.site/redive/sticker (' + _i25 + ').png');
 }
 
 // バンドリ
 var BandoriSmileList = [];
-for (var _i25 = 1; _i25 < 41; _i25++) {
-    BandoriSmileList.push('https://sticker.inari.site/bangdream/bangdream (' + _i25 + ').png');
+for (var _i26 = 1; _i26 < 41; _i26++) {
+    BandoriSmileList.push('https://sticker.inari.site/bangdream/bangdream (' + _i26 + ').png');
 }
 
 // 随机
 var RandomSmileList = [];
-for (var _i26 = 1; _i26 < 20; _i26++) {
-    RandomSmileList.push('https://sticker.inari.site/rgif/' + Math.ceil(Math.random() * 2600) + '.gif');
-}
 for (var _i27 = 1; _i27 < 20; _i27++) {
-    RandomSmileList.push('https://sticker.inari.site/rwebp/' + Math.ceil(Math.random() * 7000) + '.webp');
+    RandomSmileList.push('https://sticker.inari.site/rgif/' + Math.ceil(Math.random() * 2555) + '.gif');
+}
+for (var _i28 = 1; _i28 < 20; _i28++) {
+    RandomSmileList.push('https://sticker.inari.site/rwebp/' + Math.ceil(Math.random() * 6930) + '.webp');
 }
 
 // 自定义表情
@@ -252,15 +257,15 @@ var getSmilePanelHtml = function getSmilePanelHtml(key) {
     var data = MenuList[key];
     if (!data) return '';
     var html = '';
-    for (var _i28 = 0; _i28 < data.addr.length; _i28++) {
+    for (var _i29 = 0; _i29 < data.addr.length; _i29++) {
         if (data.datatype === 'image') {
-            html += '<img class="kfe-smile" src="' + data.addr[_i28] + '" alt="[\u8868\u60C5]">';
+            html += '<img class="kfe-smile" src="' + data.addr[_i29] + '" alt="[\u8868\u60C5]">';
         } else if (data.datatype === 'imageLink') {
-            var ref = typeof data.ref !== 'undefined' && typeof data.ref[_i28] !== 'undefined' ? data.ref[_i28] : '';
-            html += '<img class="kfe-smile" data-code="' + ref + '" src="' + data.addr[_i28] + '" alt="[\u8868\u60C5]">';
+            var ref = typeof data.ref !== 'undefined' && typeof data.ref[_i29] !== 'undefined' ? data.ref[_i29] : '';
+            html += '<img class="kfe-smile" data-code="' + ref + '" src="' + data.addr[_i29] + '" alt="[\u8868\u60C5]">';
         } else if (data.datatype === 'plain') {
-            var _ref = typeof data.ref !== 'undefined' && typeof data.ref[_i28] !== 'undefined' ? data.ref[_i28] : data.addr[_i28];
-            html += '<a class="kfe-smile-text" data-code="' + data.addr[_i28] + '" href="#">' + _ref + '</a>';
+            var _ref = typeof data.ref !== 'undefined' && typeof data.ref[_i29] !== 'undefined' ? data.ref[_i29] : data.addr[_i29];
+            html += '<a class="kfe-smile-text" data-code="' + data.addr[_i29] + '" href="#">' + _ref + '</a>';
         }
     }
     return '<div class="kfe-smile-panel" data-key="' + key + '">' + html + '</div>';
@@ -283,7 +288,7 @@ var getSubMenuHtml = function getSubMenuHtml() {
  * @param textArea 文本框
  */
 var createContainer = function createContainer(textArea) {
-    var $container = $('\n<div class="kfe-container">\n  <div class="kfe-menu">\n    <span class="kfe-close-panel" title="made by eddie32 version ' + version + '; modified by \u55B5\u62C9\u5E03\u4E01\u3001mistakey" style="cursor: pointer;"><b>\u56E7\u2468</b></span>\n    ' + getSubMenuHtml() + '\n    <span class="kfe-close-panel">[-]</span>\n    <input type="button" class="kfe-user-add" value="\u6DFB\u52A0">\n    <input type="button" class="kfe-user-out" value="\u5BFC\u51FA">\n    <input type="button" class="kfe-user-clr" value="\u6E05\u7A7A">\n  </div>\n</div>\n').insertBefore($(textArea));
+    var $container = $('\n<div class="kfe-container">\n  <div class="kfe-menu">\n    <span class="kfe-close-panel" title="made by eddie32 version ' + version + '; modified by \u55B5\u62C9\u5E03\u4E01\u3001mistakey" style="cursor: pointer;"><b>\u56E7\u2468</b></span>\n    ' + getSubMenuHtml() + '\n    <span class="kfe-close-panel">[-]</span>\n    <input type="button" class="kfe-user-c" value="\u589E">\n    <input type="button" class="kfe-user-r" value="\u67E5">\n    <input type="button" class="kfe-user-u" value="\u6539">\n    <input type="button" class="kfe-user-d" value="\u5220">\n  </div>\n</div>\n').insertBefore($(textArea));
     $container.on('click', '.kfe-sub-menu', function (e) {
         e.preventDefault();
         var $this = $(this);
@@ -306,7 +311,7 @@ var createContainer = function createContainer(textArea) {
         showZoomInImage($(this));
     }).on('mouseleave', '.kfe-smile', function () {
         $('.kfe-zoom-in').remove();
-    }).on('click', '.kfe-user-add', function (e) {
+    }).on('click', '.kfe-user-c', function (e) {
         e.preventDefault();
         var userimgaddr = prompt("请输入要添加的贴纸的URL，添加多个请用半角,隔开贴纸URL（添加后刷新页面生效）", "https://sticker.inari.site/inari.png");
         if (!userimgaddr) return;
@@ -314,9 +319,22 @@ var createContainer = function createContainer(textArea) {
         var userimgaddrmt = userimgaddr.split(',');
         var addList = [];
         for (var mt = 0; mt < userimgaddrmt.length; mt++) {
+            //含http/https协议前缀的完整图片url，请确保未开启防盗链
             if (/(http:|https:).*.(png|jpg|jpeg|gif|webp|bmp|tif)$/i.test(userimgaddrmt[mt])) {
                 addList.push(userimgaddrmt[mt]);
             }
+            //任意无协议前缀的图片url，默认增加https协议前缀
+            else if (/[a-zA-Z0-9\-\.]+\.+[a-zA-Z]+\/.*.(png|jpg|jpeg|gif|webp|bmp|tif)$/i.test(userimgaddrmt[mt])) {
+                    addList.push('https://' + userimgaddrmt[mt]);
+                }
+                //由sticker.inari.site托管的用户贴纸组
+                else if (/[A-Za-z0-9\_\/]+\/+[0-9\/]+.(png|jpg|jpeg|gif|webp)$/i.test(userimgaddrmt[mt])) {
+                        addList.push('https://sticker.inari.site/usr/' + userimgaddrmt[mt]);
+                    }
+        }
+
+        if (addList.length < userimgaddrmt.length) {
+            alert('含有非法输入，请检查是否由图片url错误');
         }
 
         if (addList.length > 0) {
@@ -332,18 +350,74 @@ var createContainer = function createContainer(textArea) {
 
             userSmileList = [].concat(_toConsumableArray(userSmileList), addList);
             localStorage.setItem('userimgst', JSON.stringify(userSmileList));
+            alert('贴纸已添加，请刷新');
         }
-    }).on('click', '.kfe-user-out', function (e) {
+    }).on('click', '.kfe-user-r', function (e) {
         e.preventDefault();
         if (UserSmileList != "https://sticker.inari.site/null.jpg") {
             prompt("自定义表情贴纸已导出，请复制", UserSmileList);
         } else {
             alert("自定义表情贴纸为空！");
         }
-    }).on('click', '.kfe-user-clr', function (e) {
+    }).on('click', '.kfe-user-u', function (e) {
         e.preventDefault();
-        if (confirm('确定清空自定义表情贴纸吗？')) {
-            localStorage.removeItem('userimgst');
+        var userimgu = prompt("请输入要替换的贴纸序号", "1");
+        if (/[0-9]$/i.test(userimgu)) {
+            var userimgst = localStorage.userimgst;
+            var _UserSmileList = JSON.parse(userimgst);
+            if (userimgu > _UserSmileList.length) {
+                alert('序号超出贴纸数，请检查');
+            } else if (userimgu == 0) {
+                alert('非法输入，请检查！');
+            } else if (userimgu <= _UserSmileList.length) {
+                var usreplace = prompt("请输入用于替换的图片url", "https://sticker.inari.site/inari.png");
+                var j = userimgu;
+                if (/(http:\/\/|https:\/\/).*.(png|jpg|jpeg|gif|webp|bmp|tif)$/i.test(usreplace)) {
+                    if (confirm('确定替换序号为【' + userimgu + '】的贴纸吗？这是最后一次确认！')) {
+                        _UserSmileList[j - 1] = usreplace;
+                        localStorage.setItem('userimgst', JSON.stringify(_UserSmileList));
+                        alert('已替换指定序号贴纸，请刷新');
+                    }
+                } else if (usreplace == null) {} else {
+                    alert('非法输入，请检查！');
+                }
+            }
+        } else if (userimgu == null) {} else {
+            alert('非法输入，请检查！');
+        }
+    }).on('click', '.kfe-user-d', function (e) {
+        e.preventDefault();
+        if (confirm('要删除自定义表情贴纸？')) {
+            if (confirm('[确定]删除全部贴纸，[取消]删除指定贴纸。')) {
+                if (confirm('确定删除全部自定义贴纸吗？')) {
+                    localStorage.removeItem('userimgst');
+                    alert('已删除全部自定义贴纸，请刷新');
+                }
+            } else {
+                var userimgd = prompt("请输入要删除贴纸的序号", "1");
+                if (/[0-9]$/i.test(userimgd)) {
+                    var userimgst = localStorage.userimgst;
+                    var _UserSmileList2 = JSON.parse(userimgst);
+                    if (userimgd > _UserSmileList2.length) {
+                        alert('序号超出贴纸数，请检查');
+                    } else if (userimgd == 0) {
+                        alert('非法输入，请检查！');
+                    } else if (userimgd <= _UserSmileList2.length) {
+                        if (confirm('确定删除序号为【' + userimgd + '】的贴纸吗？这是最后一次确认！')) {
+                            for (var _i30 = userimgd; _i30 <= _UserSmileList2.length; _i30++) {
+                                _UserSmileList2[_i30 - 1] = _UserSmileList2[_i30];
+                            }
+                            _UserSmileList2.pop();
+                            localStorage.setItem('userimgst', JSON.stringify(_UserSmileList2));
+                            alert('已删除指定序号贴纸，请刷新');
+                        }
+                    } else {
+                        alert('非法输入，请检查！');
+                    }
+                } else if (userimgd == null) {} else {
+                    alert('非法输入，请检查！');
+                }
+            }
         }
     }).find('.kfe-close-panel').click(function () {
         $container.find('.kfe-smile-panel').hide();
