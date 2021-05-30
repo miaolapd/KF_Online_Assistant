@@ -334,7 +334,7 @@ var createContainer = function createContainer(textArea) {
         }
 
         if (addList.length < userimgaddrmt.length) {
-            alert('含有非法输入，请检查是否由图片url错误');
+            alert('含有非法输入，请检查是否有图片url错误');
         }
 
         if (addList.length > 0) {
