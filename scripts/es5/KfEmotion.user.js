@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/5415
-// @version     6.4.2
+// @version     6.4.3
 // @author      eddie32
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
 // @icon        https://sticker.inari.site/favicon.ico
@@ -25,7 +25,7 @@
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var version = '6.4.2';
+var version = '6.4.3';
 // 网站是否为KfMobile
 var isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
 
@@ -171,11 +171,15 @@ for (var _i28 = 1; _i28 < 20; _i28++) {
 
 // 自定义表情
 var UserSmileList = [];
+var UsersSmileList = [];
 if (!localStorage.userimgst) {
-    UserSmileList = ['https://sticker.inari.site/null.jpg'];
+    UsersSmileList = ['https://sticker.inari.site/null.jpg'];
 } else {
     try {
         UserSmileList = JSON.parse(localStorage.userimgst);
+        for (var _i29 = 0; _i29 < UserSmileList.length; _i29++) {
+            UsersSmileList.push(UserSmileList[_i29] + '?num=' + (_i29 + 1));
+        }
     } catch (ex) {
         console.log(ex);
     }
@@ -209,7 +213,7 @@ var MenuList = {
     RevPCR: { datatype: 'image', title: '少歌PCR', addr: RevPCRSmileList },
     Bandori: { datatype: 'image', title: '邦邦', addr: BandoriSmileList },
     Random: { datatype: 'image', title: '随机', addr: RandomSmileList },
-    Userimg: { datatype: 'image', title: '自定义', addr: UserSmileList }
+    Userimg: { datatype: 'image', title: '自定义', addr: UsersSmileList }
 };
 
 /**
@@ -257,15 +261,15 @@ var getSmilePanelHtml = function getSmilePanelHtml(key) {
     var data = MenuList[key];
     if (!data) return '';
     var html = '';
-    for (var _i29 = 0; _i29 < data.addr.length; _i29++) {
+    for (var _i30 = 0; _i30 < data.addr.length; _i30++) {
         if (data.datatype === 'image') {
-            html += '<img class="kfe-smile" src="' + data.addr[_i29] + '" alt="[\u8868\u60C5]">';
+            html += '<img class="kfe-smile" src="' + data.addr[_i30] + '" alt="[\u8868\u60C5]">';
         } else if (data.datatype === 'imageLink') {
-            var ref = typeof data.ref !== 'undefined' && typeof data.ref[_i29] !== 'undefined' ? data.ref[_i29] : '';
-            html += '<img class="kfe-smile" data-code="' + ref + '" src="' + data.addr[_i29] + '" alt="[\u8868\u60C5]">';
+            var ref = typeof data.ref !== 'undefined' && typeof data.ref[_i30] !== 'undefined' ? data.ref[_i30] : '';
+            html += '<img class="kfe-smile" data-code="' + ref + '" src="' + data.addr[_i30] + '" alt="[\u8868\u60C5]">';
         } else if (data.datatype === 'plain') {
-            var _ref = typeof data.ref !== 'undefined' && typeof data.ref[_i29] !== 'undefined' ? data.ref[_i29] : data.addr[_i29];
-            html += '<a class="kfe-smile-text" data-code="' + data.addr[_i29] + '" href="#">' + _ref + '</a>';
+            var _ref = typeof data.ref !== 'undefined' && typeof data.ref[_i30] !== 'undefined' ? data.ref[_i30] : data.addr[_i30];
+            html += '<a class="kfe-smile-text" data-code="' + data.addr[_i30] + '" href="#">' + _ref + '</a>';
         }
     }
     return '<div class="kfe-smile-panel" data-key="' + key + '">' + html + '</div>';
@@ -288,7 +292,7 @@ var getSubMenuHtml = function getSubMenuHtml() {
  * @param textArea 文本框
  */
 var createContainer = function createContainer(textArea) {
-    var $container = $('\n<div class="kfe-container">\n  <div class="kfe-menu">\n    <span class="kfe-close-panel" title="made by eddie32 version ' + version + '; modified by \u55B5\u62C9\u5E03\u4E01\u3001mistakey" style="cursor: pointer;"><b>\u56E7\u2468</b></span>\n    ' + getSubMenuHtml() + '\n    <span class="kfe-close-panel">[-]</span>\n    <input type="button" class="kfe-user-c" value="\u589E">\n    <input type="button" class="kfe-user-r" value="\u67E5">\n    <input type="button" class="kfe-user-u" value="\u6539">\n    <input type="button" class="kfe-user-d" value="\u5220">\n  </div>\n</div>\n').insertBefore($(textArea));
+    var $container = $('\n<div class="kfe-container">\n  <div class="kfe-menu">\n    <span class="kfe-close-panel" title="Created by eddie32; Modified by \u55B5\u62C9\u5E03\u4E01, mistakey; Version ' + version + '" style="cursor: pointer;"><b>\u56E7\u2468</b></span>\n    ' + getSubMenuHtml() + '\n    <span class="kfe-close-panel">[-]</span>\n    <input type="button" class="kfe-user-c" value="\u589E">\n    <input type="button" class="kfe-user-r" value="\u67E5">\n    <input type="button" class="kfe-user-u" value="\u6539">\n    <input type="button" class="kfe-user-d" value="\u5220">\n  </div>\n</div>\n').insertBefore($(textArea));
     $container.on('click', '.kfe-sub-menu', function (e) {
         e.preventDefault();
         var $this = $(this);
@@ -404,8 +408,8 @@ var createContainer = function createContainer(textArea) {
                         alert('非法输入，请检查！');
                     } else if (userimgd <= _UserSmileList2.length) {
                         if (confirm('确定删除序号为【' + userimgd + '】的贴纸吗？这是最后一次确认！')) {
-                            for (var _i30 = userimgd; _i30 <= _UserSmileList2.length; _i30++) {
-                                _UserSmileList2[_i30 - 1] = _UserSmileList2[_i30];
+                            for (var _i31 = userimgd; _i31 <= _UserSmileList2.length; _i31++) {
+                                _UserSmileList2[_i31 - 1] = _UserSmileList2[_i31];
                             }
                             _UserSmileList2.pop();
                             localStorage.setItem('userimgst', JSON.stringify(_UserSmileList2));
