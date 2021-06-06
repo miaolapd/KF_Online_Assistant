@@ -168,12 +168,16 @@ for (let i = 1; i < 20; i++) {
 
 // 自定义表情
 let UserSmileList = [];
+let UsersSmileList = [];
 if (!localStorage.userimgst) {
-    UserSmileList = ['https://sticker.inari.site/null.jpg'];
+    UsersSmileList = ['https://sticker.inari.site/null.jpg'];
 }
 else {
     try {
         UserSmileList = JSON.parse(localStorage.userimgst);
+        for (let i = 0; i < UserSmileList.length; i++){
+            UsersSmileList.push(`${UserSmileList[i]}?=${i+1}`);
+        }
     }
     catch (ex) {
         console.log(ex);
@@ -232,7 +236,7 @@ const MenuList = {
     RevPCR:   {datatype: 'image', title: '少歌PCR', addr: RevPCRSmileList},
     Bandori:  {datatype: 'image', title: '邦邦', addr: BandoriSmileList},
     Random:   {datatype: 'image', title: '随机', addr: RandomSmileList},
-    Userimg:  {datatype: 'image', title: '自定义', addr: UserSmileList},
+    Userimg:  {datatype: 'image', title: '自定义', addr: UsersSmileList},
 };
 
 /**
