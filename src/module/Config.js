@@ -119,6 +119,8 @@ export const Config = {
 	adminMemberEnabled: false,
     // 是否保持顶部导航栏置顶，true：开启；false：关闭
     navBarAlwaysTopEnabled: true,
+    // 是否在快捷导航中显示咕咕镇的链接，true：开启；false：关闭
+    showGuGuZhenInFastNavEnabled: false,
 
     // 是否开启关注用户的功能，true：开启；false：关闭
     followUserEnabled: false,

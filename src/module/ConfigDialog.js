@@ -174,7 +174,7 @@ export const show = function () {
       </label>
       <label class="pd_cfg_ml">
         <input name="kfSmileEnhanceExtensionEnabled" type="checkbox" ${Info.isInSpecialDomain ? '' : 'disabled'}> 开启绯月表情增强插件
-        <span class="pd_cfg_tips" title="在发帖框上显示绯月表情增强插件（仅在miaola.info域名下生效），该插件由eddie32开发">[?]</span>
+        <span class="pd_cfg_tips" title="在发帖框上显示绯月表情增强插件（仅在miaola.info域名下生效）">[?]</span>
       </label><br>
       <label>
         <input name="autoChangeIdColorEnabled" type="checkbox" data-disabled="[data-name=openAutoChangeSmColorPage]"> 自动更换ID颜色
@@ -282,6 +282,10 @@ export const show = function () {
       <label class="pd_cfg_ml">
         <input name="navBarAlwaysTopEnabled" type="checkbox"> 保持导航栏置顶
         <span class="pd_cfg_tips" title="保持顶部导航栏置顶（旧版本浏览器可能无法生效）">[?]</span>
+      </label><br>
+      <label>
+        <input name="showGuGuZhenInFastNavEnabled" type="checkbox" ${Info.isInSpecialDomain ? '' : 'disabled'}> 快捷导航显示咕咕镇
+        <span class="pd_cfg_tips" title="在快捷导航中显示咕咕镇的链接">[?]</span>
       </label>
     </fieldset>
   </div>

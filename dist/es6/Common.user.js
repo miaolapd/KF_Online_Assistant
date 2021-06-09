@@ -14,7 +14,7 @@
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
 // @include     https://*kfgal.com/*
-// @version     14.1.9
+// @version     14.2.0
 // @grant       none
 // @run-at      document-end
 // @license     MIT
@@ -101,7 +101,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 版本号
-const version = '14.1.9';
+const version = '14.2.0';
 
 /**
  * 导出模块
@@ -779,6 +779,8 @@ const Config = exports.Config = {
     adminMemberEnabled: false,
     // 是否保持顶部导航栏置顶，true：开启；false：关闭
     navBarAlwaysTopEnabled: true,
+    // 是否在快捷导航中显示咕咕镇的链接，true：开启；false：关闭
+    showGuGuZhenInFastNavEnabled: false,
 
     // 是否开启关注用户的功能，true：开启；false：关闭
     followUserEnabled: false,
@@ -1164,7 +1166,7 @@ const show = exports.show = function () {
       </label>
       <label class="pd_cfg_ml">
         <input name="kfSmileEnhanceExtensionEnabled" type="checkbox" ${_Info2.default.isInSpecialDomain ? '' : 'disabled'}> 开启绯月表情增强插件
-        <span class="pd_cfg_tips" title="在发帖框上显示绯月表情增强插件（仅在miaola.info域名下生效），该插件由eddie32开发">[?]</span>
+        <span class="pd_cfg_tips" title="在发帖框上显示绯月表情增强插件（仅在miaola.info域名下生效）">[?]</span>
       </label><br>
       <label>
         <input name="autoChangeIdColorEnabled" type="checkbox" data-disabled="[data-name=openAutoChangeSmColorPage]"> 自动更换ID颜色
@@ -1272,6 +1274,10 @@ const show = exports.show = function () {
       <label class="pd_cfg_ml">
         <input name="navBarAlwaysTopEnabled" type="checkbox"> 保持导航栏置顶
         <span class="pd_cfg_tips" title="保持顶部导航栏置顶（旧版本浏览器可能无法生效）">[?]</span>
+      </label><br>
+      <label>
+        <input name="showGuGuZhenInFastNavEnabled" type="checkbox" ${_Info2.default.isInSpecialDomain ? '' : 'disabled'}> 快捷导航显示咕咕镇
+        <span class="pd_cfg_tips" title="在快捷导航中显示咕咕镇的链接">[?]</span>
       </label>
     </fieldset>
   </div>
@@ -9119,11 +9125,11 @@ const blockThread = exports.blockThread = function () {
  * 为顶部导航栏添加快捷导航菜单
  */
 const addFastNavMenu = exports.addFastNavMenu = function () {
-    let $menuBtn = $('#alldiv > .drow:nth-child(2) > .dcol > .topmenuo > .topmenuo1 > .topmenuo3:last-child > a[href="fyg_sjcdwj.php?go=play"]');
+    let $menuBtn = $('#alldiv > .drow:nth-child(2) > .dcol > .topmenuo > .topmenuo1 > .topmenuo3:last-child > a:contains("小游戏")');
     if (!$menuBtn.length) return;
     $menuBtn.text('快捷导航').attr('href', 'javascript:;').after(`
 <ul class="topmenuo2">
-  <li><a href="fyg_sjcdwj.php?go=play" target="_blank">咕咕镇</a></li>
+  ${_Info2.default.isInSpecialDomain && !Config.showGuGuZhenInFastNavEnabled ? '<li><a href="javascript:alert(\'你可以在首页最下方的友情链接找到它\');">小游戏</a></li>' : '<li><a href="fyg_sjcdwj.php?go=play" target="_blank">咕咕镇</a></li>'}
   <li><a href="search.php?authorid=${_Info2.default.uid}">我的主题</a></li>
   <li><a href="personal.php?action=post">我的回复</a></li>
   <li><a href="profile.php?action=favor">收藏</a></li>

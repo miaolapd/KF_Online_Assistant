@@ -869,11 +869,11 @@ export const blockThread = function () {
  * 为顶部导航栏添加快捷导航菜单
  */
 export const addFastNavMenu = function () {
-        let $menuBtn = $('#alldiv > .drow:nth-child(2) > .dcol > .topmenuo > .topmenuo1 > .topmenuo3:last-child > a[href="fyg_sjcdwj.php?go=play"]');
+        let $menuBtn = $('#alldiv > .drow:nth-child(2) > .dcol > .topmenuo > .topmenuo1 > .topmenuo3:last-child > a:contains("小游戏")');
         if (!$menuBtn.length) return;
         $menuBtn.text('快捷导航').attr('href', 'javascript:;').after(`
 <ul class="topmenuo2">
-  <li><a href="fyg_sjcdwj.php?go=play" target="_blank">咕咕镇</a></li>
+  ${Info.isInSpecialDomain && !Config.showGuGuZhenInFastNavEnabled ? '<li><a href="javascript:alert(\'你可以在首页最下方的友情链接找到它\');">小游戏</a></li>' : '<li><a href="fyg_sjcdwj.php?go=play" target="_blank">咕咕镇</a></li>'}
   <li><a href="search.php?authorid=${Info.uid}">我的主题</a></li>
   <li><a href="personal.php?action=post">我的回复</a></li>
   <li><a href="profile.php?action=favor">收藏</a></li>
