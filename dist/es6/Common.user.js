@@ -14,7 +14,7 @@
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
 // @include     https://*kfgal.com/*
-// @version     14.2.0
+// @version     14.2.1
 // @grant       none
 // @run-at      document-end
 // @license     MIT
@@ -101,7 +101,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 版本号
-const version = '14.2.0';
+const version = '14.2.1';
 
 /**
  * 导出模块
@@ -238,6 +238,9 @@ const init = function () {
         Other.addAutoChangeIdColorButton();
     } else if (location.pathname === '/guanjianci.php') {
         Other.highlightUnReadAtTipsMsg();
+        if (Config.adminMemberEnabled) {
+            Other.addGuanJianCiUserNameLink();
+        }
     } else if (/\/profile\.php\?action=modify$/i.test(location.href)) {
         Other.syncModifyPerPageFloorNum();
         if (_Info2.default.isInSpecialDomain) Other.addAvatarChangeAlert();
@@ -7410,7 +7413,7 @@ const destroy = exports.destroy = function () {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.handleProfilePage = exports.addUserNameLinkInRankPage = exports.addAvatarChangeAlert = exports.syncModifyPerPageFloorNum = exports.addAutoChangeIdColorButton = exports.addMsgSelectButton = exports.modifyMyPostLink = exports.addFollowAndBlockAndMemoUserLink = exports.addFastDrawMoneyLink = exports.highlightUnReadAtTipsMsg = exports.addFastGotoThreadPageLink = exports.highlightNewPost = undefined;
+exports.addGuanJianCiUserNameLink = exports.handleProfilePage = exports.addUserNameLinkInRankPage = exports.addAvatarChangeAlert = exports.syncModifyPerPageFloorNum = exports.addAutoChangeIdColorButton = exports.addMsgSelectButton = exports.modifyMyPostLink = exports.addFollowAndBlockAndMemoUserLink = exports.addFastDrawMoneyLink = exports.highlightUnReadAtTipsMsg = exports.addFastGotoThreadPageLink = exports.highlightNewPost = undefined;
 
 var _Info = require('./Info');
 
@@ -7833,6 +7836,19 @@ const handleProfilePage = exports.handleProfilePage = function () {
         if (parseInt(month) === now.getMonth() + 1 && parseInt(day) === now.getDate() && parseInt(year) <= now.getFullYear()) html = `<span class="pd_custom_tips pd_highlight" title="今天是该用户注册${now.getFullYear() - parseInt(year)}周年纪念日">${date}</span>`;
         return '注册时间：' + html;
     })).css('vertical-align', 'top');
+};
+
+/**
+ * 为关键词页面链接用户名链接
+ */
+const addGuanJianCiUserNameLink = exports.addGuanJianCiUserNameLink = function () {
+    $('.kf_share1 > tbody > tr:gt(1) > td.kf_share2:last-child').each(function () {
+        let $this = $(this);
+        let userName = $this.text().trim();
+        if (userName) {
+            $this.html(`<a href="profile.php?action=show&username=${userName}">${userName}</a>`);
+        }
+    });
 };
 
 },{"./Bank":2,"./Config":3,"./ConfigDialog":4,"./Const":5,"./Info":8,"./Msg":13,"./Public":16,"./TmpLog":20,"./Util":21}],15:[function(require,module,exports){
@@ -9270,7 +9286,7 @@ const bindSearchTypeSelectMenuClick = exports.bindSearchTypeSelectMenuClick = fu
         let type = $menu.data('type');
         $searchTypeList = $(`
 <ul class="pd_search_type_list">
-  <li>标题</li><li>作者</li><li>关键词</li><li${!Config.adminMemberEnabled ? 'hidden' : ''}>用户名</li>
+  <li>标题</li><li>作者</li><li>关键词</li><li ${!Config.adminMemberEnabled ? 'hidden' : ''}>用户名</li>
 </ul>`).appendTo('body');
         let offset = $menu.offset();
         $searchTypeList.css('top', offset.top + $menu.height() + 2).css('left', offset.left + 1);

@@ -20,7 +20,7 @@ import * as SelfRate from './module/SelfRate';
 import * as ConfigDialog from './module/ConfigDialog';
 
 // 版本号
-const version = '14.2.0';
+const version = '14.2.1';
 
 /**
  * 导出模块
@@ -157,6 +157,9 @@ const init = function () {
         Other.addAutoChangeIdColorButton();
     } else if (location.pathname === '/guanjianci.php') {
         Other.highlightUnReadAtTipsMsg();
+        if (Config.adminMemberEnabled) {
+            Other.addGuanJianCiUserNameLink();
+        }
     } else if (/\/profile\.php\?action=modify$/i.test(location.href)) {
         Other.syncModifyPerPageFloorNum();
         if (Info.isInSpecialDomain) Other.addAvatarChangeAlert();

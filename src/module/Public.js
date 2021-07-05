@@ -1027,7 +1027,7 @@ export const bindSearchTypeSelectMenuClick = function () {
         let type = $menu.data('type');
         $searchTypeList = $(`
 <ul class="pd_search_type_list">
-  <li>标题</li><li>作者</li><li>关键词</li><li${!Config.adminMemberEnabled ? 'hidden' : ''}>用户名</li>
+  <li>标题</li><li>作者</li><li>关键词</li><li ${!Config.adminMemberEnabled ? 'hidden' : ''}>用户名</li>
 </ul>`).appendTo('body');
         let offset = $menu.offset();
         $searchTypeList.css('top', offset.top + $menu.height() + 2).css('left', offset.left + 1);

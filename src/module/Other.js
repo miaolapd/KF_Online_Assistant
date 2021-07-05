@@ -442,3 +442,16 @@ export const handleProfilePage = function () {
             })
     ).css('vertical-align', 'top');
 };
+
+/**
+ * 为关键词页面链接用户名链接
+ */
+export const addGuanJianCiUserNameLink = function () {
+    $('.kf_share1 > tbody > tr:gt(1) > td.kf_share2:last-child').each(function () {
+        let $this = $(this);
+        let userName = $this.text().trim();
+        if (userName) {
+            $this.html(`<a href="profile.php?action=show&username=${userName}">${userName}</a>`);
+        }
+    });
+};

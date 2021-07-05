@@ -15,7 +15,7 @@
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
 // @include     https://*kfgal.com/*
-// @version     14.2.0
+// @version     14.2.1
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_deleteValue
@@ -104,7 +104,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 版本号
-var version = '14.2.0';
+var version = '14.2.1';
 
 /**
  * 导出模块
@@ -243,6 +243,9 @@ var init = function init() {
         Other.addAutoChangeIdColorButton();
     } else if (location.pathname === '/guanjianci.php') {
         Other.highlightUnReadAtTipsMsg();
+        if (Config.adminMemberEnabled) {
+            Other.addGuanJianCiUserNameLink();
+        }
     } else if (/\/profile\.php\?action=modify$/i.test(location.href)) {
         Other.syncModifyPerPageFloorNum();
         if (_Info2.default.isInSpecialDomain) Other.addAvatarChangeAlert();
@@ -8662,7 +8665,7 @@ var destroy = exports.destroy = function destroy() {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.handleProfilePage = exports.addUserNameLinkInRankPage = exports.addAvatarChangeAlert = exports.syncModifyPerPageFloorNum = exports.addAutoChangeIdColorButton = exports.addMsgSelectButton = exports.modifyMyPostLink = exports.addFollowAndBlockAndMemoUserLink = exports.addFastDrawMoneyLink = exports.highlightUnReadAtTipsMsg = exports.addFastGotoThreadPageLink = exports.highlightNewPost = undefined;
+exports.addGuanJianCiUserNameLink = exports.handleProfilePage = exports.addUserNameLinkInRankPage = exports.addAvatarChangeAlert = exports.syncModifyPerPageFloorNum = exports.addAutoChangeIdColorButton = exports.addMsgSelectButton = exports.modifyMyPostLink = exports.addFollowAndBlockAndMemoUserLink = exports.addFastDrawMoneyLink = exports.highlightUnReadAtTipsMsg = exports.addFastGotoThreadPageLink = exports.highlightNewPost = undefined;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
@@ -9146,6 +9149,19 @@ var handleProfilePage = exports.handleProfilePage = function handleProfilePage()
         if (parseInt(month) === now.getMonth() + 1 && parseInt(day) === now.getDate() && parseInt(year) <= now.getFullYear()) html = '<span class="pd_custom_tips pd_highlight" title="\u4ECA\u5929\u662F\u8BE5\u7528\u6237\u6CE8\u518C' + (now.getFullYear() - parseInt(year)) + '\u5468\u5E74\u7EAA\u5FF5\u65E5">' + date + '</span>';
         return '注册时间：' + html;
     })).css('vertical-align', 'top');
+};
+
+/**
+ * 为关键词页面链接用户名链接
+ */
+var addGuanJianCiUserNameLink = exports.addGuanJianCiUserNameLink = function addGuanJianCiUserNameLink() {
+    $('.kf_share1 > tbody > tr:gt(1) > td.kf_share2:last-child').each(function () {
+        var $this = $(this);
+        var userName = $this.text().trim();
+        if (userName) {
+            $this.html('<a href="profile.php?action=show&username=' + userName + '">' + userName + '</a>');
+        }
+    });
 };
 
 },{"./Bank":2,"./Config":3,"./ConfigDialog":4,"./Const":5,"./Info":8,"./Msg":13,"./Public":16,"./TmpLog":20,"./Util":21}],15:[function(require,module,exports){
@@ -10633,7 +10649,7 @@ var bindSearchTypeSelectMenuClick = exports.bindSearchTypeSelectMenuClick = func
             return;
         }
         var type = $menu.data('type');
-        $searchTypeList = $('\n<ul class="pd_search_type_list">\n  <li>\u6807\u9898</li><li>\u4F5C\u8005</li><li>\u5173\u952E\u8BCD</li><li' + (!Config.adminMemberEnabled ? 'hidden' : '') + '>\u7528\u6237\u540D</li>\n</ul>').appendTo('body');
+        $searchTypeList = $('\n<ul class="pd_search_type_list">\n  <li>\u6807\u9898</li><li>\u4F5C\u8005</li><li>\u5173\u952E\u8BCD</li><li ' + (!Config.adminMemberEnabled ? 'hidden' : '') + '>\u7528\u6237\u540D</li>\n</ul>').appendTo('body');
         var offset = $menu.offset();
         $searchTypeList.css('top', offset.top + $menu.height() + 2).css('left', offset.left + 1);
         if (type === 'dialog') {
