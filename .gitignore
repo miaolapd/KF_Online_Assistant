@@ -1,0 +1,13 @@
+.idea/
+node_modules/
+wiki/
+vps/
+push.sh
+copy.bat
+copyScripts.bat
+build.bat
+buildCustomScripts.bat
+watch.bat
+myGulpFile.js
+package-lock.json
+gulp.cmd

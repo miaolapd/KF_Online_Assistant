@@ -1,0 +1,41 @@
+{
+  "name": "kf_online_assistant",
+  "version": "1.0.0",
+  "description": "KFOL必备！为绯月Galgame论坛增加了大量人性化、自动化的功能，更多功能开发中……",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-scripts": "cd scripts && babel es6 -d es5"
+  },
+  "keywords": [
+    "KFOL",
+    "KF Online Assistant"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miaolapd/KF_Online_Assistant.git"
+  },
+  "author": "miaolapd",
+  "license": "MIT",
+  "bugs": {
+    "url": "http://bbs.ikfol.com/read.php?tid=508450"
+  },
+  "homepage": "https://github.com/miaolapd/KF_Online_Assistant",
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.26.2",
+    "babel-preset-es2015": "6.24.1",
+    "babelify": "8.0.0",
+    "browserify": "16.2.2",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.3.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "run-sequence": "^2.2.1",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0",
+    "watchify": "^3.11.0"
+  }
+}
