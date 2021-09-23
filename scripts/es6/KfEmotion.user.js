@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/5415
-// @version     6.4.3
+// @version     6.4.4
 // @author      eddie32
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
 // @icon        https://sticker.inari.site/favicon.ico
@@ -26,7 +26,8 @@
 const version = '6.4.3';
 // 网站是否为KfMobile
 const isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
-
+// PC端是否也总是启用外部字体
+const isAlwaysInari = false; //改为true即可启用
 // 灰企鹅
 const KfSmileList = [];
 const KfSmileCodeList = [];
@@ -483,6 +484,12 @@ const createContainer = function (textArea) {
     });
 };
 
+// code区域支持ASCII画显示
+    let codepenEle = document.getElementsByClassName("pd_code_area")
+     for(let code of codepenEle){
+        code.style.fontFamily= "MS PGothic";
+    }
+
 /**
  * 添加CSS
  */
@@ -504,13 +511,45 @@ const appendCss = function () {
     position: absolute; max-width: 150px; max-height: 150px; background-color: #fcfcfc; border: 3px solid rgba(242, 242, 242, 0.6);
     border-radius: 2px; box-shadow: 0 0 3px rgb(102, 102, 102);
   }
+  .pd_code_area{ line-height:14px; }/* 设置code的DIV行距行高14px */
 </style>
 `);
+    
+    if (isAlwaysInari == true) {
+        $('head').append(`
+<style>
+  @font-face{
+    font-family: "MS PGothic";
+    src: url("https://sticker.inari.site/home/MS-PGothic.ttf");
+  }
+  .pre-scrollable{ line-height:14px ;font-family: MS PGothic; }/* 设置code的DIV行距行高14px 字体为MS PGothic */
+  .kfe-container { padding: 5px; vertical-align: middle; font: 12px/1.7em "sans-serif"; }
+  .kfe-menu { margin-bottom: 5px; }
+  .kfe-sub-menu { margin: 0 5px; text-decoration: none; border-bottom: 2px solid transparent; }
+  .kfe-sub-menu:hover, .kfe-sub-menu:focus { text-decoration: none; border-color: deeppink; }
+  a.kfe-sub-menu-active { color: black }
+  .kfe-smile-panel { display: none; height: 136px; padding: 5px 3px; overflow-y: auto; border-top: 1px solid #ddd; }
+  .kfe-smile-panel[data-key="Shortcut"] { height: auto; }
+  .kfe-smile { display: inline-block; max-width: 60px; max-height: 60px; cursor: pointer; }
+  .kfe-smile-text { display: inline-block; padding: 3px 5px; }
+  .kfe-smile-text:hover { color: #fff !important; background-color: #2b2b2b; text-decoration: none; }
+  .kfe-close-panel { cursor: pointer; }
+  .kfe-zoom-in {
+    position: absolute; max-width: 150px; max-height: 150px; background-color: #fcfcfc; border: 3px solid rgba(242, 242, 242, 0.6);
+    border-radius: 2px; box-shadow: 0 0 3px rgb(102, 102, 102);
+  }
+</style>
+`);
+   }
+    
     if (isKfMobile) {
         $('head').append(`
 <style>
   #readPage .kfe-container, #writeMessagePage .kfe-container { margin-top: -10px; }
   .kfe-menu { white-space: nowrap; overflow-x: auto; }
+   @font-face{font-family: "MS PGothic";
+    src: url("https://sticker.inari.site/home/MS-PGothic.ttf");}
+  .pre-scrollable{ line-height:14px ;font-family: MS PGothic; }/* 设置code的DIV行距行高14px 字体为MS PGothic */
 </style>
 `);
     }
