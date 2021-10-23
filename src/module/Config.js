@@ -62,7 +62,7 @@ export const Config = {
     // 在帖子页数快捷链接中显示页数链接的最大数量
     maxFastGotoThreadPageNum: 5,
     // 帖子每页楼层数量，用于电梯直达和帖子页数快捷链接等功能，如果修改了论坛设置里的“文章列表每页个数”，请在此修改成相同的数目
-    perPageFloorNum: 10,
+    perPageFloorNum: 20,
     // 是否在版块页面中高亮今日新发表帖子的发表时间，true：开启；false：关闭
     highlightNewPostEnabled: true,
 

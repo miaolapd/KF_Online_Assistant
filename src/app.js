@@ -20,7 +20,7 @@ import * as SelfRate from './module/SelfRate';
 import * as ConfigDialog from './module/ConfigDialog';
 
 // 版本号
-const version = '14.2.3';
+const version = '14.3.0';
 
 /**
  * 导出模块
@@ -64,7 +64,7 @@ const init = function () {
     exportModule();
     initConfig();
     Public.checkBrowserType();
-    Public.modifyDomainTips();
+    //Public.modifyDomainTips();
     Public.appendCss();
     Public.addConfigAndLogDialogLink();
     if (Config.animationEffectOffEnabled) $.fx.off = true;
@@ -72,23 +72,23 @@ const init = function () {
     if (Config.customScriptEnabled) Script.runCustomScript('start');
     Public.repairBbsErrorCode();
     window.addEventListener('beforeunload', Public.preventCloseWindowWhenActioning);
-    if (Config.showSearchLinkEnabled) Public.addSearchDialogLink();
-    Public.bindSearchTypeSelectMenuClick();
+    //if (Config.showSearchLinkEnabled) Public.addSearchDialogLink(); //临时屏蔽
+    //Public.bindSearchTypeSelectMenuClick(); //临时屏蔽
     Public.makeSearchByBelowTwoKeyWordAvailable();
     if (Config.addFastNavMenuEnabled) Public.addFastNavMenu();
     Info.$userMenu.find('a[href^="login.php?action=quit"]').click(() => confirm('是否退出账号？'));
     if (Config.changeNewTipsColorEnabled) Public.changeNewTipsColor();
 
-    Public.handleSideBarLink();
-    if (parseInt(Util.getCookie(Const.lootCompleteCookieName)) === 2) {
-        $('#pdLoot').addClass('pd_rightbox1_gray');
-    }
+    //Public.handleSideBarLink(); //临时屏蔽
+    // if (parseInt(Util.getCookie(Const.lootCompleteCookieName)) === 2) {
+    //     $('#pdLoot').addClass('pd_rightbox1_gray');
+    // } //临时屏蔽
 
     if (Info.isInHomePage) {
-        if (Config.smLevelUpAlertEnabled) Index.smLevelUpAlert();
-        if (Config.smRankChangeAlertEnabled) Index.smRankChangeAlert();
+        //if (Config.smLevelUpAlertEnabled) Index.smLevelUpAlert(); //临时屏蔽
+        //if (Config.smRankChangeAlertEnabled) Index.smRankChangeAlert(); //临时屏蔽
         if (Config.homePageThreadFastGotoLinkEnabled) Index.addThreadFastGotoLink();
-        Index.addPromoteHaloInterval();
+        //Index.addPromoteHaloInterval(); //临时屏蔽
     } else if (location.pathname === '/read.php') {
         if (Config.turnPageViaKeyboardEnabled) Public.turnPageViaKeyboard();
         Read.fastGotoFloor();
@@ -152,7 +152,7 @@ const init = function () {
         Other.handleProfilePage();
         Other.addFollowAndBlockAndMemoUserLink();
     } else if (/\/personal\.php\?action=post/i.test(location.href)) {
-        if (Config.perPageFloorNum === 10) Other.modifyMyPostLink();
+        if (Config.perPageFloorNum === 20) Other.modifyMyPostLink();
     } else if (location.pathname === '/kf_growup.php') {
         Other.addAutoChangeIdColorButton();
     } else if (location.pathname === '/guanjianci.php') {
@@ -193,9 +193,6 @@ const init = function () {
             if (Config.kfSmileEnhanceExtensionEnabled) Post.importKfSmileEnhanceExtension();
             Post.replaceSiteLink();
         }
-    }
-    if (location.host.endsWith('.miaola.info')) {
-        Public.showChangeDomainTips();
     }
 
     $(document).clearQueue('AutoAction');

@@ -386,7 +386,7 @@ export const syncModifyPerPageFloorNum = function () {
     const syncConfig = function () {
         let perPageFloorNum = parseInt($('select[name="p_num"]').val());
         if (isNaN(perPageFloorNum)) return;
-        if (!perPageFloorNum) perPageFloorNum = 10;
+        if (!perPageFloorNum) perPageFloorNum = 20;
         if (perPageFloorNum !== Config.perPageFloorNum) {
             Config.perPageFloorNum = perPageFloorNum;
             writeConfig();

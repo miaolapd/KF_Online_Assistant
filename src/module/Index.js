@@ -91,11 +91,14 @@ export const smRankChangeAlert = function () {
  * 在首页帖子链接旁添加快速跳转至页末的链接
  */
 export const addThreadFastGotoLink = function () {
-    $('#alldiv > .drow:last-child').on('mouseenter', 'li.indexlbtit2 > a, li.rightlbtit > a', function () {
+    $('#alldiv > .drow:last-child').on('click', 'span.indexlbtc_s, span.k_fr', function (e) {
         let $this = $(this);
-        $this.css('position', 'relative').prepend(`<a class="pd_thread_goto" href="${$this.attr('href')}&page=e#a"></a>`);
-    }).on('mouseleave', 'li.indexlbtit2 > a, li.rightlbtit > a', function () {
-        $(this).css('position', 'static').find('.pd_thread_goto').remove();
+        let url = $this.parent('a').attr('href');
+        if (url) {
+            e.preventDefault();
+            location.href = url + '&page=e#a';
+            return false;
+        }
     });
 };
 

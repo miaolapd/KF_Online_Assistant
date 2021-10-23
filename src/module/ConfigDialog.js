@@ -104,14 +104,14 @@ export const show = function () {
     </fieldset>
     <fieldset>
       <legend>首页相关</legend>
-      <label>
+      <label hidden>
         <input name="smLevelUpAlertEnabled" type="checkbox"> 神秘等级升级提醒
         <span class="pd_cfg_tips" title="在神秘等级升级后进行提醒，只在首页生效">[?]</span>
       </label>
-      <label class="pd_cfg_ml">
+      <label class="pd_cfg_ml" hidden>
         <input name="smRankChangeAlertEnabled" type="checkbox"> 系数排名变化提醒
         <span class="pd_cfg_tips" title="在神秘系数排名发生变化时进行提醒，只在首页生效">[?]</span>
-      </label><br>
+      </label><br hidden>
       <label>
         <input name="homePageThreadFastGotoLinkEnabled" type="checkbox"> 为首页帖子加上跳转至页末链接
         <span class="pd_cfg_tips" title="开启此功能后，点击首页帖子链接右侧的回复时间部分即可快速跳转至帖子页末">[?]</span>

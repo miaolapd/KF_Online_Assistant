@@ -175,10 +175,9 @@ export const appendCss = function () {
   .pd_thread_page a { color: #444; padding: 0 3px; }
   .pd_thread_page a:hover { color: #51d; }
   .pd_card_chk { position: absolute; bottom: -8px; left: 1px; }
-  .indexlbtit2 .pd_thread_goto, .rightlbtit .pd_thread_goto {
-    position: absolute; top: 0; right: 0; margin: 0; padding: 0; width: 65px; border: none;
+  .pd_thread_goto {
+    position: absolute; top: 0; right: 0; box-sizing: border-box; width: 100%; height: 100%; visibility: hidden; z-index: 1;
   }
-  .indexlbtit2 .pd_thread_goto:hover, .rightlbtit .pd_thread_goto:hover { border: none; }
   .pd_id_color_select > td { position: relative; cursor: pointer; }
   .pd_id_color_select > td > input { position: absolute; top: 18px; left: 10px; }
   #pdPropertiesArea td { position: relative; }
@@ -645,12 +644,11 @@ export const getDailyBonus = function () {
 export const followUsers = function () {
     if (!Config.followUserList.length) return;
     if (Info.isInHomePage && Config.highlightFollowUserThreadInHPEnabled) {
-        return; // 临时
-        $('.b_tit4 > a, .b_tit4_1 > a').each(function () {
+        $('.indexlbtc > a').each(function () {
             let $this = $(this);
-            let matches = /》by：(.+)/.exec($this.attr('title'));
-            if (!matches) return;
-            if (Util.inFollowOrBlockUserList(matches[1], Config.followUserList) > -1) {
+            let userName = $this.attr('uname');
+            if (!userName) return;
+            if (Util.inFollowOrBlockUserList(userName, Config.followUserList) > -1) {
                 $this.addClass('pd_highlight');
             }
         });
@@ -699,19 +697,18 @@ export const blockUsers = function () {
     if (!Config.blockUserList.length) return;
     let num = 0;
     if (Info.isInHomePage) {
-        return; // 临时
-        $('.b_tit4 > a, .b_tit4_1 > a').each(function () {
+        $('.indexlbtc > a').each(function () {
             let $this = $(this);
-            let matches = /》by：(.+)/.exec($this.attr('title'));
-            if (!matches) return;
-            let index = Util.inFollowOrBlockUserList(matches[1], Config.blockUserList);
+            let userName = $this.attr('uname');
+            if (!userName) return;
+            let index = Util.inFollowOrBlockUserList(userName, Config.blockUserList);
             if (index > -1 && Config.blockUserList[index].type < 2) {
                 num++;
-                $this.parent('li').remove();
+                $this.parent('.indexlbtc').remove();
             }
         });
     } else if (location.pathname === '/thread.php') {
-        let fid = parseInt($('input[name="f_fid"]:first').val());
+        let fid = parseInt($('input[name="f_fid"]:not([value="all"])').val());
         if (!fid) return;
         if (Config.blockUserForumType === 1 && !Config.blockUserFidList.includes(fid)) return;
         else if (Config.blockUserForumType === 2 && Config.blockUserFidList.includes(fid)) return;
@@ -833,7 +830,8 @@ export const blockThread = function () {
             if (matches) {
                 if (isBlock(matches[1], '')) {
                     tmpNum++;
-                    $this.parent('li').remove();
+                    $this.next('br').remove();
+                    $this.remove();
                 }
             }
         });
@@ -842,10 +840,23 @@ export const blockThread = function () {
 
     let num = 0;
     if (Info.isInHomePage) {
-        num += blockRecommendThread($('.indexlbtit2 a, .rightlbtit a'));
+        num += blockRecommendThread($('.rightboxa a'));
+        $('.indexlbtc a').each(function () {
+            let $this = $(this);
+            let title = $this.attr('title');
+            if (!title) return;
+            let matches = /^《(.+)》$/.exec(title);
+            if (matches) {
+                let uname = $this.attr('uname');
+                if (isBlock(matches[1], uname)) {
+                    num++;
+                    $this.parent('.indexlbtc').remove();
+                }
+            }
+        });
     } else if (location.pathname === '/thread.php') {
-        num += blockRecommendThread($('.rightlbtit a'));
-        let fid = parseInt($('input[name="f_fid"]:first').val());
+        num += blockRecommendThread($('.rightboxa a'));
+        let fid = parseInt($('input[name="f_fid"]:not([value="all"])').val());
         if (!fid) return;
         $('.threadtit1 a[href^="read.php"]').each(function () {
             let $this = $(this);
@@ -872,7 +883,7 @@ export const blockThread = function () {
         }
     }
     else {
-        num += blockRecommendThread($('.rightlbtit a'));
+        num += blockRecommendThread($('.rightboxa a'));
     }
     if (num > 0) console.log(`【屏蔽帖子】共有${num}个帖子被屏蔽`);
 };
@@ -881,22 +892,25 @@ export const blockThread = function () {
  * 为顶部导航栏添加快捷导航菜单
  */
 export const addFastNavMenu = function () {
-        let $menuBtn = $('#alldiv > .drow:nth-child(2) > .dcol > .topmenuo > .topmenuo1 > .topmenuo3:last-child > a:contains("小游戏")');
+        let $menuBtn = $('#alldiv > .drow:nth-child(2) > .dcol > .topmenuo > .topmenuo1 > .topmenuo3:last-child > a:contains("游戏介绍")');
         if (!$menuBtn.length) return;
-        $menuBtn.text('快捷导航').attr('href', 'javascript:;').after(`
-<ul class="topmenuo2">
-  ${Info.isInSpecialDomain && !Config.showGuGuZhenInFastNavEnabled ? '<li><a href="javascript:alert(\'你可以在首页最下方的友情链接找到它\');">小游戏</a></li>' : '<li><a href="fyg_sjcdwj.php?go=play" target="_blank">咕咕镇</a></li>'}
-  <li><a href="search.php?authorid=${Info.uid}">我的主题</a></li>
-  <li><a href="personal.php?action=post">我的回复</a></li>
-  <li><a href="profile.php?action=favor">收藏</a></li>
-  <li><a href="profile.php?action=friend">好友列表</a></li>
-  <li><a href="kf_fw_ig_index.php">争夺奖励</a></li>
-  <li><a href="kf_fw_ig_mybp.php">我的物品</a></li>
-  <li><a href="kf_fw_ig_halo.php">战力光环</a></li>
-  <li><a href="kf_fw_ig_shop.php">物品商店</a></li>
-  ${Info.isInSpecialDomain ? '<li><a href="https://m.miaola.work/" target="_blank">手机版</a></li>' : ''}
-  ${Const.customFastNavMenuContent}
-</ul>`);
+        $menuBtn.parent().after(`
+<li class="topmenuo3">
+  <a href="javascript:;" style="width:100px;">快捷导航</a>
+  <ul class="topmenuo2">
+      ${Info.isInSpecialDomain && !Config.showGuGuZhenInFastNavEnabled ? '' : '<li><a href="fyg_sjcdwj.php?go=play" target="_blank">咕咕镇</a></li>'}
+      <li><a href="search.php?authorid=${Info.uid}">我的主题</a></li>
+      <li><a href="personal.php?action=post">我的回复</a></li>
+      <li><a href="profile.php?action=favor">收藏</a></li>
+      <li><a href="profile.php?action=friend">好友列表</a></li>
+      <li><a href="kf_fw_ig_index.php">争夺奖励</a></li>
+      <li><a href="kf_fw_ig_mybp.php">我的物品</a></li>
+      <li><a href="kf_fw_ig_halo.php">战力光环</a></li>
+      <li><a href="kf_fw_ig_shop.php">物品商店</a></li>
+      ${Info.isInSpecialDomain ? '<li><a href="https://m.miaola.work/" target="_blank">手机版</a></li>' : ''}
+      ${Const.customFastNavMenuContent}
+  </ul>
+</li>`);
 
         if (Config.adminMemberEnabled) {
             $('#alldiv > .drow:nth-child(2) > .dcol > .topmenuo > .topmenuo1 > .topmenuo3:nth-last-child(4) > a:contains("聊天交流")').next('ul').append(
@@ -1134,7 +1148,7 @@ export const addSearchDialogLink = function () {
                 'target': '_blank',
             }).off('submit');
 
-            let fid = parseInt($('input[name="f_fid"]:first, input[name="fid"]:first').val());
+            let fid = parseInt($('input[name="f_fid"]:not([value="all"]), input[name="fid"]:first').val());
             if (fid) {
                 $dialog.find('[name="searchRange"]').click(function () {
                     let $this = $(this);
@@ -1346,19 +1360,9 @@ export const addSlowActionChecked = function ($area) {
 /**
  * 修改域名更换提示区域
  */
+/*
 export const modifyDomainTips = function () {
     $('#alldiv > .drow:first-child').has('div:contains("主域名更换")')
         .insertBefore('#alldiv > .drow:last-child').addClass('pd_domain_tips')
         .parent().find('> .drow:first-child').css('margin-top', '40px');
-};
-
-/**
- * 添加域名更换提示
- */
-export const showChangeDomainTips = function () {
-    $('#alldiv > .drow:first-child').before(`
-<div class="pd_change_domain_tips_area">
-  重要提示：<strong>miaola.info</strong>域名将于近期失效，请各位KFer改用<a href="https://kf.miaola.work/"><strong>kf.miaola.work</strong></a>访问！
-</div>
-    `);
-};
+};*/
