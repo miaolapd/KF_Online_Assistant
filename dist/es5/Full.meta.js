@@ -16,7 +16,7 @@
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
 // @include     https://*kfgal.com/*
-// @version     14.3.1
+// @version     14.3.2
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_deleteValue

@@ -15,7 +15,7 @@
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
 // @include     https://*kfgal.com/*
-// @version     14.3.1
+// @version     14.3.2
 // @grant       none
 // @run-at      document-end
 // @license     MIT
@@ -102,7 +102,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 版本号
-const version = '14.3.1';
+const version = '14.3.2';
 
 /**
  * 导出模块
@@ -10279,7 +10279,7 @@ const modifyKFOtherDomainLink = exports.modifyKFOtherDomainLink = function () {
         let $this = $(this);
         let url = $this.attr('href');
         if (/m\.miaola\.(info|work)\//i.test(url)) return;
-        let matches = /^(https?:\/\/(?:[\w\.]+?\.)?(?:2dgal|ddgal|9gal|9baka|9moe|kfgal|2dkf|ikfol|kfacg|fygal|bakabbs|365gal|365galgame|kforz|kfmax|miaola|koyuki)\.\w+?\/)\w+\.php/i.exec(url);
+        let matches = /^(https?:\/\/(?:[\w\.]+?\.)?(?:2dgal|ddgal|9gal|9baka|9moe|kfgal|2dkf|ikfol|kfacg|fygal|bakabbs|365gal|365galgame|kforz|kfmax|9shenmi|miaola|koyuki)\.\w+?\/)\w+\.php/i.exec(url);
         if (matches) $this.attr('href', url.replace(matches[1], Util.getHostNameUrl()));
     });
 };

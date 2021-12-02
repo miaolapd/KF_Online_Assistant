@@ -80,7 +80,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 版本号
-var version = '14.3.1';
+var version = '14.3.2';
 
 /**
  * 导出模块
@@ -11538,7 +11538,7 @@ var modifyKFOtherDomainLink = exports.modifyKFOtherDomainLink = function modifyK
         var $this = $(this);
         var url = $this.attr('href');
         if (/m\.miaola\.(info|work)\//i.test(url)) return;
-        var matches = /^(https?:\/\/(?:[\w\.]+?\.)?(?:2dgal|ddgal|9gal|9baka|9moe|kfgal|2dkf|ikfol|kfacg|fygal|bakabbs|365gal|365galgame|kforz|kfmax|miaola|koyuki)\.\w+?\/)\w+\.php/i.exec(url);
+        var matches = /^(https?:\/\/(?:[\w\.]+?\.)?(?:2dgal|ddgal|9gal|9baka|9moe|kfgal|2dkf|ikfol|kfacg|fygal|bakabbs|365gal|365galgame|kforz|kfmax|9shenmi|miaola|koyuki)\.\w+?\/)\w+\.php/i.exec(url);
         if (matches) $this.attr('href', url.replace(matches[1], Util.getHostNameUrl()));
     });
 };
