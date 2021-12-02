@@ -8,6 +8,7 @@
 // @updateURL   https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/es5/Common.meta.js
 // @downloadURL https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/es5/Common.user.js
 // @require     https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/lib/polyfill.min.js?V6.26.0
+// @include     https://*9shenmi.com/*
 // @include     https://*kfmax.com/*
 // @include     https://*kforz.com/*
 // @include     https://*bakabbs.com/*
@@ -15,7 +16,7 @@
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
 // @include     https://*kfgal.com/*
-// @version     14.3.0
+// @version     14.3.1
 // @grant       none
 // @run-at      document-end
 // @license     MIT

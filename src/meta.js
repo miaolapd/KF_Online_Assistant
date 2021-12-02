@@ -7,6 +7,7 @@
 // @description KFOL必备！为绯月ScarletMoon论坛增加了大量人性化、自动化的功能，更多功能开发中……
 // @pd-update-url-placeholder
 // @pd-require
+// @include     https://*9shenmi.com/*
 // @include     https://*kfmax.com/*
 // @include     https://*kforz.com/*
 // @include     https://*bakabbs.com/*
@@ -14,7 +15,7 @@
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
 // @include     https://*kfgal.com/*
-// @version     14.3.0
+// @version     14.3.1
 // @grant       none
 // @run-at      document-end
 // @license     MIT

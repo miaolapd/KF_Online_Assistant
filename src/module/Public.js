@@ -1360,9 +1360,8 @@ export const addSlowActionChecked = function ($area) {
 /**
  * 修改域名更换提示区域
  */
-/*
 export const modifyDomainTips = function () {
     $('#alldiv > .drow:first-child').has('div:contains("主域名更换")')
         .insertBefore('#alldiv > .drow:last-child').addClass('pd_domain_tips')
         .parent().find('> .drow:first-child').css('margin-top', '40px');
-};*/
+};

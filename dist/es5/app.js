@@ -80,7 +80,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 版本号
-var version = '14.3.0';
+var version = '14.3.1';
 
 /**
  * 导出模块
@@ -124,7 +124,7 @@ var init = function init() {
     exportModule();
     (0, _Config.init)();
     Public.checkBrowserType();
-    //Public.modifyDomainTips();
+    Public.modifyDomainTips();
     Public.appendCss();
     Public.addConfigAndLogDialogLink();
     if (Config.animationEffectOffEnabled) $.fx.off = true;
@@ -9569,7 +9569,7 @@ var replaceSiteLink = exports.replaceSiteLink = function replaceSiteLink() {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.addSlowActionChecked = exports.changeNewTipsColor = exports.showCommonImportOrExportLogDialog = exports.showCommonImportOrExportConfigDialog = exports.turnPageViaKeyboard = exports.repairBbsErrorCode = exports.addSearchDialogLink = exports.makeSearchByBelowTwoKeyWordAvailable = exports.bindSearchTypeSelectMenuClick = exports.bindElementTitleClick = exports.showElementTitleTips = exports.changeIdColor = exports.addFastNavMenu = exports.blockThread = exports.blockUsers = exports.followUsers = exports.getDailyBonus = exports.startTimingMode = exports.getNextTimingIntervalInfo = exports.addPolyfill = exports.showFormatLog = exports.preventCloseWindowWhenActioning = exports.handleSideBarLink = exports.addConfigAndLogDialogLink = exports.appendCss = exports.checkBrowserType = exports.getSafeId = exports.getUidAndUserName = undefined;
+exports.modifyDomainTips = exports.addSlowActionChecked = exports.changeNewTipsColor = exports.showCommonImportOrExportLogDialog = exports.showCommonImportOrExportConfigDialog = exports.turnPageViaKeyboard = exports.repairBbsErrorCode = exports.addSearchDialogLink = exports.makeSearchByBelowTwoKeyWordAvailable = exports.bindSearchTypeSelectMenuClick = exports.bindElementTitleClick = exports.showElementTitleTips = exports.changeIdColor = exports.addFastNavMenu = exports.blockThread = exports.blockUsers = exports.followUsers = exports.getDailyBonus = exports.startTimingMode = exports.getNextTimingIntervalInfo = exports.addPolyfill = exports.showFormatLog = exports.preventCloseWindowWhenActioning = exports.handleSideBarLink = exports.addConfigAndLogDialogLink = exports.appendCss = exports.checkBrowserType = exports.getSafeId = exports.getUidAndUserName = undefined;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
@@ -10901,12 +10901,9 @@ var addSlowActionChecked = exports.addSlowActionChecked = function addSlowAction
 /**
  * 修改域名更换提示区域
  */
-/*
-export const modifyDomainTips = function () {
-    $('#alldiv > .drow:first-child').has('div:contains("主域名更换")')
-        .insertBefore('#alldiv > .drow:last-child').addClass('pd_domain_tips')
-        .parent().find('> .drow:first-child').css('margin-top', '40px');
-};*/
+var modifyDomainTips = exports.modifyDomainTips = function modifyDomainTips() {
+    $('#alldiv > .drow:first-child').has('div:contains("主域名更换")').insertBefore('#alldiv > .drow:last-child').addClass('pd_domain_tips').parent().find('> .drow:first-child').css('margin-top', '40px');
+};
 
 },{"./Config":3,"./ConfigDialog":4,"./Const":5,"./Dialog":6,"./Info":8,"./Item":9,"./Log":10,"./LogDialog":11,"./Loot":12,"./Msg":13,"./Read":17,"./Script":18,"./TmpLog":20,"./Util":21}],17:[function(require,module,exports){
 /* 帖子模块 */

@@ -20,7 +20,7 @@ import * as SelfRate from './module/SelfRate';
 import * as ConfigDialog from './module/ConfigDialog';
 
 // 版本号
-const version = '14.3.0';
+const version = '14.3.1';
 
 /**
  * 导出模块
@@ -64,7 +64,7 @@ const init = function () {
     exportModule();
     initConfig();
     Public.checkBrowserType();
-    //Public.modifyDomainTips();
+    Public.modifyDomainTips();
     Public.appendCss();
     Public.addConfigAndLogDialogLink();
     if (Config.animationEffectOffEnabled) $.fx.off = true;
