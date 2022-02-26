@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/5415
-// @version     6.4.3
+// @version     6.4.4
 // @author      eddie32
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
 // @icon        https://sticker.inari.site/favicon.ico
@@ -12,6 +12,7 @@
 // @include     https://*365galgame.com/*
 // @include     https://kfol.moe.edu.rs/*
 // @include     https://*miaola.info/*
+// @include     https://*miaola.work/*
 // @copyright   2014-2017, eddie32
 // @grant       none
 // @license     MIT
@@ -25,10 +26,9 @@
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var version = '6.4.3';
+var version = '6.4.4';
 // 网站是否为KfMobile
 var isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
-
 // 灰企鹅
 var KfSmileList = [];
 var KfSmileCodeList = [];
@@ -178,7 +178,7 @@ if (!localStorage.userimgst) {
     try {
         UserSmileList = JSON.parse(localStorage.userimgst);
         for (var _i29 = 0; _i29 < UserSmileList.length; _i29++) {
-            UsersSmileList.push(UserSmileList[_i29] + '?num=' + (_i29 + 1));
+            UsersSmileList.push(UserSmileList[_i29] + '#num=' + (_i29 + 1));
         }
     } catch (ex) {
         console.log(ex);
@@ -324,11 +324,11 @@ var createContainer = function createContainer(textArea) {
         var addList = [];
         for (var mt = 0; mt < userimgaddrmt.length; mt++) {
             //含http/https协议前缀的完整图片url，请确保未开启防盗链
-            if (/(http:|https:).*.(png|jpg|jpeg|gif|webp|bmp|tif)$/i.test(userimgaddrmt[mt])) {
+            if (/(http:|https:).*.(png|jpg|jpeg|gif|webp|bmp|tif)+.*$/i.test(userimgaddrmt[mt])) {
                 addList.push(userimgaddrmt[mt]);
             }
             //任意无协议前缀的图片url，默认增加https协议前缀
-            else if (/[a-zA-Z0-9\-\.]+\.+[a-zA-Z]+\/.*.(png|jpg|jpeg|gif|webp|bmp|tif)$/i.test(userimgaddrmt[mt])) {
+            else if (/[a-zA-Z0-9\-\.]+\.+[a-zA-Z]+\/.*.(png|jpg|jpeg|gif|webp|bmp|tif)+.*$/i.test(userimgaddrmt[mt])) {
                     addList.push('https://' + userimgaddrmt[mt]);
                 }
                 //由sticker.inari.site托管的用户贴纸组
@@ -376,7 +376,7 @@ var createContainer = function createContainer(textArea) {
             } else if (userimgu <= _UserSmileList.length) {
                 var usreplace = prompt("请输入用于替换的图片url", "https://sticker.inari.site/inari.png");
                 var j = userimgu;
-                if (/(http:\/\/|https:\/\/).*.(png|jpg|jpeg|gif|webp|bmp|tif)$/i.test(usreplace)) {
+                if (/(http:\/\/|https:\/\/).*.(png|jpg|jpeg|gif|webp|bmp|tif)+.*$/i.test(usreplace)) {
                     if (confirm('确定替换序号为【' + userimgu + '】的贴纸吗？这是最后一次确认！')) {
                         _UserSmileList[j - 1] = usreplace;
                         localStorage.setItem('userimgst', JSON.stringify(_UserSmileList));
