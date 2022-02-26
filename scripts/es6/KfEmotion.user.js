@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/5415
-// @version     6.4.3
+// @version     6.4.4
 // @author      eddie32
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
 // @icon        https://sticker.inari.site/favicon.ico
@@ -23,10 +23,9 @@
 // ==/UserScript==
 'use strict';
 // 版本号
-const version = '6.4.3';
+const version = '6.4.4';
 // 网站是否为KfMobile
 const isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
-
 // 灰企鹅
 const KfSmileList = [];
 const KfSmileCodeList = [];
@@ -177,7 +176,7 @@ else {
     try {
         UserSmileList = JSON.parse(localStorage.userimgst);
         for (let i = 0; i < UserSmileList.length; i++){
-            UsersSmileList.push(`${UserSmileList[i]}?num=${i+1}`);
+            UsersSmileList.push(`${UserSmileList[i]}#num=${i+1}`);
         }
     }
     catch (ex) {
@@ -364,11 +363,11 @@ const createContainer = function (textArea) {
         let addList = [];
         for (let mt = 0; mt < userimgaddrmt.length; mt++) {
             //含http/https协议前缀的完整图片url，请确保未开启防盗链
-            if (/(http:|https:).*.(png|jpg|jpeg|gif|webp|bmp|tif)$/i.test(userimgaddrmt[mt])) {
+            if (/(http:|https:).*.(png|jpg|jpeg|gif|webp|bmp|tif)+.*$/i.test(userimgaddrmt[mt])) {
                 addList.push(userimgaddrmt[mt]);
             }
             //任意无协议前缀的图片url，默认增加https协议前缀
-            else if (/[a-zA-Z0-9\-\.]+\.+[a-zA-Z]+\/.*.(png|jpg|jpeg|gif|webp|bmp|tif)$/i.test(userimgaddrmt[mt])) {
+            else if (/[a-zA-Z0-9\-\.]+\.+[a-zA-Z]+\/.*.(png|jpg|jpeg|gif|webp|bmp|tif)+.*$/i.test(userimgaddrmt[mt])) {
                 addList.push('https://'+userimgaddrmt[mt]);
             }
             //由sticker.inari.site托管的用户贴纸组
@@ -420,7 +419,7 @@ const createContainer = function (textArea) {
               else if (userimgu <= UserSmileList.length) {
                 let usreplace = prompt("请输入用于替换的图片url", "https://sticker.inari.site/inari.png");
                     let j = userimgu;
-                    if (/(http:\/\/|https:\/\/).*.(png|jpg|jpeg|gif|webp|bmp|tif)$/i.test(usreplace)) {
+                    if (/(http:\/\/|https:\/\/).*.(png|jpg|jpeg|gif|webp|bmp|tif)+.*$/i.test(usreplace)) {
                         if (confirm('确定替换序号为【'+userimgu+'】的贴纸吗？这是最后一次确认！')) {
                         UserSmileList[j - 1] = usreplace;
                         localStorage.setItem('userimgst', JSON.stringify(UserSmileList));
