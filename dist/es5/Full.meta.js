@@ -8,15 +8,14 @@
 // @updateURL   https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/es5/Full.meta.js
 // @downloadURL https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/es5/Full.user.js
 // @require     https://gitee.com/miaolapd/KF_Online_Assistant/raw/master/dist/lib/polyfill.min.js?V6.26.0
+// @include     https://*kfpromax.com/*
 // @include     https://*9shenmi.com/*
 // @include     https://*kfmax.com/*
-// @include     https://*kforz.com/*
 // @include     https://*bakabbs.com/*
 // @include     https://*365gal.com/*
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
-// @include     https://*kfgal.com/*
-// @version     14.3.2
+// @version     14.3.3
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_deleteValue

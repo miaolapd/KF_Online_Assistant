@@ -24,7 +24,7 @@ __注：如发现脚本无法生效或功能异常，请尝试安装其它版本
 3. __Edge：__ 安装[Tampermonkey](https://www.microsoft.com/store/apps/9nblggh5162s)扩展，然后访问脚本下载地址安装脚本即可
 4. __Opera：__ 安装[Violent monkey](https://addons.opera.com/extensions/details/violent-monkey/)扩展 或 [Tampermonkey](https://addons.opera.com/extensions/details/tampermonkey-beta/)扩展，然后访问脚本下载地址安装脚本即可
 5. __傲游浏览器：__ 安装[暴力猴](http://extension.maxthon.cn/detail/index.php?view_id=1680)扩展，然后访问脚本下载地址安装脚本即可
-6. __自带脚本的反向代理服务器：__ 无需安装任何扩展即可使用KFOL助手，[详情请见此贴](https://bbs.9shenmi.com/read.php?tid=540148&sf=1ba)
+6. __自带脚本的反向代理服务器：__ 无需安装任何扩展即可使用KFOL助手，[详情请见此贴](https://bbs.kfpromax.com/read.php?tid=540148&sf=1ba)
 
 ## 使用说明
 安装完脚本后请点击论坛页面右上角用户菜单里的助手设置链接，打开助手设置界面进行相应设置，如不清楚各选项的意思可将鼠标停留在其之后的问号上即可获得相应提示 __（自动领取每日奖励等功能默认关闭，请自行开启）__  
@@ -43,7 +43,7 @@ __存储类型选择非默认时，请勿随便删除脚本，否则会导致设
 执行`gulp watch`，可监视源文件的改动并立即进行编译；
 
 ## 讨论帖
-https://bbs.9shenmi.com/read.php?tid=508450&sf=140
+https://bbs.kfpromax.com/read.php?tid=508450&sf=140
 
 ## License
 [MIT](http://opensource.org/licenses/MIT)
