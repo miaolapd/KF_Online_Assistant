@@ -1,11 +1,13 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/5415
-// @version     6.4.4
+// @version     6.4.5
 // @author      eddie32
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
 // @icon        https://sticker.inari.site/favicon.ico
 // @homepage    https://mistakey.top/KFStickers
+// @include     https://*kfpromax.com/*
+// @include     https://*9shenmi.com/*
 // @include     https://*kfmax.com/*
 // @include     https://*bakabbs.com/*
 // @include     https://*365gal.com/*
@@ -23,9 +25,19 @@
 // ==/UserScript==
 'use strict';
 // 版本号
-const version = '6.4.4';
+const version = '6.4.5';
 // 网站是否为KfMobile
 const isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
+// 在论坛资源区，对于表情贴纸增强插件所属域名的图片，直接显示，而不是显示【请手动点击打开本图片】
+document.body.querySelectorAll('.readtext a').forEach(i=>{
+    if(i.innerHTML==='<span class=\"k_f18\">请手动点击打开本图片</span>'){
+        let p=document.createElement("img");
+        p.src=i.href;
+        if(p.src.match(/https:\/\/sticker.inari.site/)){
+            i.parentElement.replaceChild(p,i);
+        }
+    }
+})
 // 灰企鹅
 const KfSmileList = [];
 const KfSmileCodeList = [];
