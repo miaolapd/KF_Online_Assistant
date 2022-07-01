@@ -28,12 +28,15 @@
 const version = '6.4.5';
 // 网站是否为KfMobile
 const isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
-// 在论坛资源区，对于表情贴纸增强插件所属域名的图片，直接显示，而不是显示【请手动点击打开本图片】
+// 在论坛资源区，直接显示表情贴纸增强插件所属域名的图片，而不是显示【请手动点击打开本图片】
 document.body.querySelectorAll('.readtext a').forEach(i=>{
     if(i.innerHTML==='<span class=\"k_f18\">请手动点击打开本图片</span>'){
         let p=document.createElement("img");
         p.src=i.href;
         if(p.src.match(/https:\/\/sticker.inari.site/)){
+            i.parentElement.replaceChild(p,i);
+        }
+        else if(p.src.match(/http:\/\/tb2.bdstatic.com\/tb\/editor\/images\/face/)){
             i.parentElement.replaceChild(p,i);
         }
     }
