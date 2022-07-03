@@ -8243,13 +8243,13 @@ const addFillTitleBtn = exports.addFillTitleBtn = function () {
 };
 
 /**
- * 将发帖框内的站内链接替换为官方站点的链接
+ * 将发帖框内的站内链接替换为官方站点的链接（bbs.kfpromax.com）
  */
 const replaceSiteLink = exports.replaceSiteLink = function () {
     $('form[name="FORM"]').submit(function () {
         let $textArea = $(this).find('textarea[name="atc_content"]');
         if (!$textArea.length) return;
-        $textArea.val($textArea.val().replace(new RegExp(`${location.protocol}//${location.hostname.replace(/\./g, '\\.')}/(\\w+)\\.php`, 'g'), 'https://bbs.kforz.com/$1.php'));
+        $textArea.val($textArea.val().replace(new RegExp(`${location.protocol}//${location.hostname.replace(/\./g, '\\.')}/(\\w+)\\.php`, 'g'), 'https://bbs.kfpromax.com/$1.php'));
     });
 };
 

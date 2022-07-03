@@ -369,7 +369,7 @@ export const addFillTitleBtn = function () {
 };
 
 /**
- * 将发帖框内的站内链接替换为官方站点的链接
+ * 将发帖框内的站内链接替换为官方站点的链接（bbs.kfpromax.com）
  */
 export const replaceSiteLink = function () {
     $('form[name="FORM"]').submit(function () {
@@ -378,7 +378,7 @@ export const replaceSiteLink = function () {
             $textArea.val(
                 $textArea.val().replace(
                     new RegExp(`${location.protocol}//${location.hostname.replace(/\./g, '\\.')}/(\\w+)\\.php`, 'g'),
-                    'https://bbs.kforz.com/$1.php'
+                    'https://bbs.kfpromax.com/$1.php'
                 )
             )
         }
