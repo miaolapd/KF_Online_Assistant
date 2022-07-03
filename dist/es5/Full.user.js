@@ -11930,7 +11930,7 @@ var replaceReadImage = exports.replaceReadImage = function replaceReadImage() {
         var $parent = $this.parent('a');
         var imgUrl = $parent.attr('href');
         if (imgUrl) {
-            $parent.html('<img class="pd_kf18" src="' + imgUrl + '" />');
+            $parent.html('<img class="pd_kf18" alt="[\u56FE\u7247]" src="' + imgUrl + '" />');
         }
     });
 };

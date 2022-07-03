@@ -976,7 +976,7 @@ export const replaceReadImage = function () {
       let $parent = $this.parent('a');
       let imgUrl = $parent.attr('href');
       if (imgUrl) {
-          $parent.html(`<img class="pd_kf18" src="${imgUrl}" />`)
+          $parent.html(`<img class="pd_kf18" alt="[图片]" src="${imgUrl}" />`)
       }
   });
 };
