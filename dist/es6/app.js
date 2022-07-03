@@ -80,7 +80,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 版本号
-const version = '14.3.4';
+const version = '14.3.5';
 
 /**
  * 导出模块
@@ -164,7 +164,7 @@ const init = function () {
         //Read.addStatAndBuyThreadBtn(); //临时屏蔽
         Read.handleBuyThreadBtn();
         Read.addCopyBuyersListOption();
-        Read.replaceReadImage();
+        if (Config.autoReplaceManualOpenImgLinkEnabled) Read.replaceReadImage();
         if (Config.userMemoEnabled) Read.addUserMemo();
         Read.addCopyCodeLink();
         Read.addMoreSmileLink();
@@ -737,6 +737,8 @@ const Config = exports.Config = {
     autoSavePostContentWhenSubmitEnabled: false,
     // 是否在发帖框上显示绯月表情增强插件（仅在miaola.work域名下生效），true：开启；false：关闭
     kfSmileEnhanceExtensionEnabled: false,
+    // 是否自动将“请手动点击打开本图片”链接替换为实际图片，true：开启；false：关闭
+    autoReplaceManualOpenImgLinkEnabled: true,
 
     // 默认的消息显示时间（秒），设置为-1表示永久显示
     defShowMsgDuration: -1,
@@ -1193,6 +1195,10 @@ const show = exports.show = function () {
       <label class="pd_cfg_ml">
         <input name="autoSavePostContentWhenSubmitEnabled" type="checkbox"> 提交时保存发帖内容
         <span class="pd_cfg_tips" title="在提交时自动保存发帖内容，以便在出现意外情况时能够恢复发帖内容（需在不关闭当前标签页的情况下才能起效）">[?]</span>
+      </label><br>
+      <label>
+        <input name="autoReplaceManualOpenImgLinkEnabled" type="checkbox"> 自动替换手动打开图片链接
+        <span class="pd_cfg_tips" title="自动将资源板块帖子中的“请手动点击打开本图片”链接替换为实际图片">[?]</span>
       </label>
     </fieldset>
     <fieldset>

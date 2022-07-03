@@ -94,6 +94,8 @@ export const Config = {
     autoSavePostContentWhenSubmitEnabled: false,
     // 是否在发帖框上显示绯月表情增强插件（仅在miaola.work域名下生效），true：开启；false：关闭
     kfSmileEnhanceExtensionEnabled: false,
+    // 是否自动将“请手动点击打开本图片”链接替换为实际图片，true：开启；false：关闭
+    autoReplaceManualOpenImgLinkEnabled: true,
 
     // 默认的消息显示时间（秒），设置为-1表示永久显示
     defShowMsgDuration: -1,

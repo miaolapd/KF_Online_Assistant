@@ -20,7 +20,7 @@ import * as SelfRate from './module/SelfRate';
 import * as ConfigDialog from './module/ConfigDialog';
 
 // 版本号
-const version = '14.3.4';
+const version = '14.3.5';
 
 /**
  * 导出模块
@@ -104,7 +104,7 @@ const init = function () {
         //Read.addStatAndBuyThreadBtn(); //临时屏蔽
         Read.handleBuyThreadBtn();
         Read.addCopyBuyersListOption();
-        Read.replaceReadImage();
+        if (Config.autoReplaceManualOpenImgLinkEnabled) Read.replaceReadImage();
         if (Config.userMemoEnabled) Read.addUserMemo();
         Read.addCopyCodeLink();
         Read.addMoreSmileLink();
