@@ -966,3 +966,17 @@ export const addSignTips = function () {
         $this.attr('title', $this.text()).addClass('pd_custom_tips');
     });
 };
+
+/**
+ * 将手动打开图片链接替换为真实图片
+ */
+export const replaceReadImage = function () {
+  $('.readtext span.k_f18').each(function () {
+      let $this = $(this);
+      let $parent = $this.parent('a');
+      let imgUrl = $parent.attr('href');
+      if (imgUrl) {
+          $parent.html(`<img class="pd_kf18" src="${imgUrl}" />`)
+      }
+  });
+};

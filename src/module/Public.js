@@ -138,7 +138,7 @@ export const appendCss = function () {
   .pd_multi_quote_chk { margin-right: 2px; float: right; }
   .pd_fast_goto_floor { margin-right: 10px !important; line-height: 32px; }
   .pd_user_memo { font-size: 12px; color: #999; margin-left: 5px; }
-  .readtext img[onclick] { width: auto; max-width: 850px; }
+  .readtext img[onclick], .pd_kf18 { width: auto; max-width: 850px; }
   .read_fds { text-align: left !important; font-weight: normal !important; font-style: normal !important; }
   .pd_code_area { max-height: 550px; margin-top: 1em; overflow-y: auto; font-size: 12px; font-family: Consolas, "Courier New"; }
   .pd_code_area .pd_copy_code { position: absolute; margin-top: -1em; min-width: 5em; text-align: center; background-color: #fffbf4; height: 20px; }

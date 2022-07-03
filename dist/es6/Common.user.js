@@ -14,7 +14,7 @@
 // @include     https://*365gal.com/*
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
-// @version     14.3.3
+// @version     14.3.4
 // @grant       none
 // @run-at      document-end
 // @license     MIT
@@ -101,7 +101,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 版本号
-const version = '14.3.3';
+const version = '14.3.4';
 
 /**
  * 导出模块
@@ -185,6 +185,7 @@ const init = function () {
         //Read.addStatAndBuyThreadBtn(); //临时屏蔽
         Read.handleBuyThreadBtn();
         Read.addCopyBuyersListOption();
+        Read.replaceReadImage();
         if (Config.userMemoEnabled) Read.addUserMemo();
         Read.addCopyCodeLink();
         Read.addMoreSmileLink();
@@ -8432,7 +8433,7 @@ const appendCss = exports.appendCss = function () {
   .pd_multi_quote_chk { margin-right: 2px; float: right; }
   .pd_fast_goto_floor { margin-right: 10px !important; line-height: 32px; }
   .pd_user_memo { font-size: 12px; color: #999; margin-left: 5px; }
-  .readtext img[onclick] { width: auto; max-width: 850px; }
+  .readtext img[onclick], .pd_kf18 { width: auto; max-width: 850px; }
   .read_fds { text-align: left !important; font-weight: normal !important; font-style: normal !important; }
   .pd_code_area { max-height: 550px; margin-top: 1em; overflow-y: auto; font-size: 12px; font-family: Consolas, "Courier New"; }
   .pd_code_area .pd_copy_code { position: absolute; margin-top: -1em; min-width: 5em; text-align: center; background-color: #fffbf4; height: 20px; }
@@ -9626,7 +9627,7 @@ const modifyDomainTips = exports.modifyDomainTips = function () {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.addSignTips = exports.showBuyThreadLogDialog = exports.recordBuyThreadLog = exports.clearBuyThreadLog = exports.writeBuyThreadLog = exports.readBuyThreadLog = exports.getThreadTitle = exports.showAttachImageOutsideSellBox = exports.parseMediaTag = exports.addMoreSmileLink = exports.addCopyCodeLink = exports.addUserMemo = exports.modifyKFOtherDomainLink = exports.addMultiQuoteButton = exports.getMultiQuoteData = exports.handleBuyThreadBtn = exports.buyThreads = exports.showStatFloorDialog = exports.statFloor = exports.addStatAndBuyThreadBtn = exports.addCopyBuyersListOption = exports.adjustThreadContentFontSize = exports.modifyMySmColor = exports.modifyFloorSmColor = exports.fastGotoFloor = exports.addFastGotoFloorInput = exports.addFloorGotoLink = undefined;
+exports.replaceReadImage = exports.addSignTips = exports.showBuyThreadLogDialog = exports.recordBuyThreadLog = exports.clearBuyThreadLog = exports.writeBuyThreadLog = exports.readBuyThreadLog = exports.getThreadTitle = exports.showAttachImageOutsideSellBox = exports.parseMediaTag = exports.addMoreSmileLink = exports.addCopyCodeLink = exports.addUserMemo = exports.modifyKFOtherDomainLink = exports.addMultiQuoteButton = exports.getMultiQuoteData = exports.handleBuyThreadBtn = exports.buyThreads = exports.showStatFloorDialog = exports.statFloor = exports.addStatAndBuyThreadBtn = exports.addCopyBuyersListOption = exports.adjustThreadContentFontSize = exports.modifyMySmColor = exports.modifyFloorSmColor = exports.fastGotoFloor = exports.addFastGotoFloorInput = exports.addFloorGotoLink = undefined;
 
 var _Info = require('./Info');
 
@@ -10567,6 +10568,20 @@ const addSignTips = exports.addSignTips = function () {
     $('.readtext > table > tbody > tr > td:nth-child(2) > div > div:nth-child(2) > span:nth-child(3)').each(function () {
         let $this = $(this);
         $this.attr('title', $this.text()).addClass('pd_custom_tips');
+    });
+};
+
+/**
+ * 将手动打开图片链接替换为真实图片
+ */
+const replaceReadImage = exports.replaceReadImage = function () {
+    $('.readtext span.k_f18').each(function () {
+        let $this = $(this);
+        let $parent = $this.parent('a');
+        let imgUrl = $parent.attr('href');
+        if (imgUrl) {
+            $parent.html(`<img class="pd_kf18" src="${imgUrl}" />`);
+        }
     });
 };
 
