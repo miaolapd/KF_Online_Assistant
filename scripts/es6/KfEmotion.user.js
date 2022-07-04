@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/5415
-// @version     6.4.4
+// @version     6.6.6
 // @author      eddie32
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
 // @icon        https://sticker.inari.site/favicon.ico
@@ -23,9 +23,10 @@
 // ==/UserScript==
 'use strict';
 // 版本号
-const version = '6.4.4';
+const version = '6.6.6';
 // 网站是否为KfMobile
 const isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
+
 // 灰企鹅
 const KfSmileList = [];
 const KfSmileCodeList = [];
@@ -35,20 +36,10 @@ for (let i = 1; i < 49; i++) {
     KfSmileList.push(`/${kfImgPath}/post/smile/em/em${(i) > 9 ? i : ('0' + i)}.gif`);
     KfSmileCodeList.push(`[s:${i + 9}]`);
 }
-// 追加，与KF自带用文字截图贴纸【追加小企鹅】做了简单的分隔提醒
+// 追加部分，与KF自带用文字截图贴纸【追加小企鹅】做了简单的分隔提醒
 for (let i = 0; i < 204; i++) {
     KfSmileList.push(`https://sticker.inari.site/pesoguin/${i}.gif`);
     KfSmileCodeList.push(`[img]https://sticker.inari.site/pesoguin/${i}.gif[/img]`);
-}
-
-// 图片搭配自定义文字
-const PtSmileList = [];
-const PtSmileCodeList = [];
-PtSmileList.push(`https://sticker.inari.site/PicText/Pt.png`);
-PtSmileCodeList.push(`[align=center][img]此处替换为自定义图片url[/img][/align][align=center][backcolor=#FFFFFF][size=3]  [b]在此输入自定义文字[/b]  [/size][/backcolor][/align]`);
-for (let i = 1; i < 38; i++) {
-    PtSmileList.push(`https://sticker.inari.site/PicText/${i}.webp`);
-    PtSmileCodeList.push(`[align=center][img]https://sticker.inari.site/PicText/${i}.webp[/img][/align][align=center][backcolor=#FFFFFF][size=3]  [b]请在此处输入自定义文字[/b]  [/size][/backcolor][/align]`);
 }
 
 // 常用表情
@@ -193,13 +184,14 @@ const MenuList = {
         datatype: 'plain',
         title: '快捷',
         addr: [
-            '[sell=100][/sell]', '[quote][/quote]', '[hide=100][/hide]', '[code][/code]', '[strike][/strike]', '[fly][/fly]','[color=#00FF00][/color]', 
+            '[sell=100][/sell]', '[quote][/quote]', '[hide=100][/hide]', '[code][/code]', '[strike][/strike]', '[fly][/fly]','[color=#00FF00][/color]',
             '[b][/b]', '[u][/u]', '[i][/i]', '[hr]', '[backcolor=][/backcolor]', '[url=][/url]','[img][/img]','[audio]请填写HTML5音频地址[/audio]',
-            '[video]请填写HTML5视频地址[/video]','[table][/table]','[tr][/tr]','[td][/td]','[align=left][/align]','[align=center][/align]','[align=right][/align]'
+            '[video]请填写HTML5视频地址[/video]','[table][/table]','[tr][/tr]','[td][/td]','[align=left][/align]','[align=center][/align]','[align=right][/align]',
+            '[align=center][img]此处替换为自定义图片url[/img][/align][align=center][backcolor=#FFFFFF][size=3]  [b]在此输入自定义文字[/b]  [/size][/backcolor][/align]'
         ],
         ref: [
             '出售贴sell=售价', '引用', '隐藏hide=神秘等级', '插入代码', '删除线', '跑马灯', '文字颜色', '粗体', '下划线','斜体', '水平线', '背景色', '插入链接', '插入图片',
-            '插入音频','插入视频','插入表格','插入表格行','插入表格列','左对齐','居中','右对齐'
+            '插入音频','插入视频','插入表格','插入表格行','插入表格列','左对齐','居中','右对齐','自定义图片搭配文字'
         ]
     },
     Emoji: {
@@ -224,7 +216,6 @@ const MenuList = {
             '(ﾟДﾟ)', '(；°ほ°)', 'ε=ε=ε=┏(゜ロ゜;)┛', '⎝≧⏝⏝≦⎠', 'ヽ(✿ﾟ▽ﾟ)ノ', '|•ω•`)', '小学生は最高だぜ！！', '焔に舞い上がるスパークよ、邪悪な異性交際に、天罰を与え！'
         ]
     },
-    PtSmile:  {datatype: 'imageLink', title: '图文', addr: PtSmileList, ref: PtSmileCodeList},
     Common:   {datatype: 'image', title: '常用', addr: CommonSmileList},
     Acfun:    {datatype: 'image', title: 'ACFUN', addr: AcSmileList},
     S1Maj:    {datatype: 'image', title: 'S1', addr: S1SmileList},
@@ -327,6 +318,8 @@ const createContainer = function (textArea) {
     <input type="button" class="kfe-user-r" value="查">
     <input type="button" class="kfe-user-u" value="改">
     <input type="button" class="kfe-user-d" value="删">
+    <input type="button" class="kfe-user-y" value="云">
+    <input type="button" class="kfe-user-a" value="令">
   </div>
 </div>
 `).insertBefore($(textArea));
@@ -375,11 +368,11 @@ const createContainer = function (textArea) {
                 addList.push('https://sticker.inari.site/usr/'+userimgaddrmt[mt]);
             }
         }
-        
+
         if (addList.length < userimgaddrmt.length){
             alert('含有非法输入，请检查是否有图片url错误');
         }
-        
+
         if (addList.length > 0) {
             let userSmileList = [];
             if (localStorage.userimgst) {
@@ -436,7 +429,7 @@ const createContainer = function (textArea) {
             else {
                 alert('非法输入，请检查！');
             }
-            
+
     }).on('click', '.kfe-user-d', function (e) {
         e.preventDefault();
         if (confirm('要删除自定义表情贴纸？')) {
@@ -477,6 +470,213 @@ const createContainer = function (textArea) {
              }
           }
         }
+    }).on('click', '.kfe-user-y', function (e) {
+       e.preventDefault();
+         if (localStorage.logindata!=null){
+         let tokendata = localStorage.logindata;
+         let tokenList = JSON.parse(tokendata);
+         let syncid=tokenList[0];
+         let synctoken=tokenList[1];
+         if (confirm('【确定】同步云端数据到本地，【取消】同步本地数据到云端')) {
+              //第一步：创建需要的对象
+              let dlRequest = new XMLHttpRequest();
+              //第二步：打开连接
+              dlRequest.open('POST', 'https://api.inari.site/?s=App.User_User.picsdata&user_id='+syncid+'&token='+synctoken, true);
+              //设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
+              dlRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+              //发送请求 将情头体写在send中
+              dlRequest.send('name=teswe&ee=ef');
+              //请求后的回调接口，可将请求成功后要执行的程序写在其中
+              dlRequest.onreadystatechange = function () {
+                //验证请求是否发送成功
+                if (dlRequest.readyState == 4 && dlRequest.status == 200) {
+                  //获取到服务端返回的数据
+                  let dljson = dlRequest.responseText;
+                  let download=JSON.parse(dljson);
+                  if (download.ret==200){
+                    if (confirm('确定同步【云端数据到本地】吗？这是最后一次确认！')) {
+                      let dldata=download.data;
+                      let dlpicsList=dldata.picsdata;
+                      if (dlpicsList !=""){
+                      let UserSmileList = dlpicsList.split(',');
+                      localStorage.setItem('userimgst',JSON.stringify(UserSmileList));
+                      alert("已同步云端数据到本地，请刷新！");
+                      }
+                      else{
+                          alert("云端数据为空！同步到本地操作已取消！");
+                      }
+                    }
+                    else{
+                        alert("云端数据同步到本地操作已取消！");
+                    }
+                  }
+                  else{
+                    alert('Token已失效，请重新登录！');
+                  }
+               }
+           };
+       }
+       else{
+         if (confirm('确定同步【本地数据到云端】吗？这是最后一次确认！')) {
+             if (localStorage.userimgst!=null) {
+               let userimgst = localStorage.userimgst;
+               let UserSmileList = JSON.parse(userimgst);
+               let upRequest = new XMLHttpRequest();
+               upRequest.open('POST', 'https://api.inari.site/?s=App.User_User.picsupdate&user_id='+syncid+'&token='+synctoken+'&picsdata='+UserSmileList, true);
+               upRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+               upRequest.send('name=teswe&ee=ef');
+               upRequest.onreadystatechange = function () {
+                 if (upRequest.readyState == 4 && upRequest.status == 200) {
+                     let upjson = upRequest.responseText;
+                     console.log(upjson);
+                     let upload=JSON.parse(upjson);
+                     console.log(upload.data);
+                     if (upload.ret==200){
+                         alert("已同步本地数据到云端！");
+                     }
+                     else{
+                         alert('Token已失效，请重新登录！');
+                     }
+                  }
+               }
+            }
+            else{
+              alert("本地数据为空！同步到云端操作已取消！");
+            }
+         }
+         else{
+           alert("本地数据同步到云端操作已取消！");
+         }
+       }
+     }
+     else{
+         alert('未找到有效Token，请先登录！');
+     }
+    }).on('click', '.kfe-user-a', function (e) {
+       e.preventDefault();
+       if (confirm('【确定】登录已有账号，【取消】进行账号注册')) {
+         let username = prompt("用户名",'username');
+         if (username.length>=1&&username.length<=50){
+           let password = prompt("密码",'password');
+           if (password.length>=6&&password.length<=20){
+              //调用登录api
+              let loginRequest = new XMLHttpRequest();
+              loginRequest.open('POST', 'https://api.inari.site/?s=App.User_User.Login&username='+username+'&password='+password, true);
+              loginRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+              loginRequest.send('name=teswe&ee=ef');
+              loginRequest.onreadystatechange = function () {
+                if (loginRequest.readyState == 4 && loginRequest.status == 200) {
+                  let loginjson = loginRequest.responseText;
+                  console.log(loginjson);
+                  let login=JSON.parse(loginjson);
+                  console.log(login.data);
+                  //200状态码
+                  if (login.ret==200){
+                      let logindata=login.data;
+                      //登入成功
+                      if (logindata.is_login==true){
+                        //账号id与token储存
+                        localStorage.removeItem('logindata');
+                        let logindarray=[logindata.user_id,logindata.token];
+                        localStorage.setItem('logindata',JSON.stringify(logindarray));
+                        alert('登入成功，现在你可以进行同步操作了！');
+                      }
+                      //登入失败
+                      else if(logindata.is_login==false){
+                        alert('Oops！用户名或密码错误！请检查！');
+                      }
+                  }
+                  //400状态码
+                  else if (login.ret==400) {
+                    alert('Oops！该账号还没有注册，请注册！');
+                  }
+                  else{
+                    alert('Oops！这是一个重定向错误或服务器内部错误，它不应该发生！');
+                  }
+                 }
+               }
+             }
+             else{
+               alert('密码长度不合规，密码位数应在6-20位范围');
+             }
+           }
+           else {
+             alert('用户名长度不合规，用户名位数应在1-50位范围');
+           }
+       }
+       else{
+           let regname = prompt("用户名，1-50位，只支持英文、数字和有限的特殊符号如@_",'username');
+           if (regname.length>=1&&regname.length<=20){
+              let regpswd1 = prompt("输入6-20位密码，只支持英文、数字和有限的特殊符号如@_",'password');
+              let regpswd2 = prompt("确认密码",'password');
+              if (regpswd1.length>=6&&regpswd1.length<=20){
+                 if (regpswd1==regpswd2){
+                    //调用注册api
+                    let regRequest = new XMLHttpRequest();
+                    regRequest.open('POST', 'https://api.inari.site/?s=App.User_User.Register&username='+regname+'&password='+regpswd2, true);
+                    regRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                    regRequest.send('name=teswe&ee=ef');
+                    regRequest.onreadystatechange = function () {
+                       if (regRequest.readyState == 4 && regRequest.status == 200) {
+                          let regjson = regRequest.responseText;
+                          console.log(regjson);
+                          let reg=JSON.parse(regjson);
+                          //注册成功
+                          if (reg.ret==200){
+                             let rgd=reg.data;
+                             alert('注册成功！UID'+rgd.user_id+',现在为您登录！');
+                             //调用登录api
+                             let loginRequest = new XMLHttpRequest();
+                             loginRequest.open('POST', 'https://api.inari.site/?s=App.User_User.Login&username='+regname+'&password='+regpswd2, true);
+                             loginRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                             loginRequest.send('name=teswe&ee=ef');
+                             loginRequest.onreadystatechange = function () {
+                                let loginjson = loginRequest.responseText;
+                                let login=JSON.parse(loginjson);
+                                let logindata=login.data;
+                                console.log(login.data);
+                                //200状态码
+                                if (login.ret==200){
+                                   //登入成功
+                                   if (logindata.is_login==true){
+                                      //账号id与token储存
+                                      localStorage.removeItem('logindata');
+                                      let logindarray=[logindata.user_id,logindata.token];
+                                      localStorage.setItem('logindata',JSON.stringify(logindarray));
+                                      alert('自动登入成功，现在你可以进行同步操作了！')
+                                   }
+                                   //登入失败
+                                   else if(logindata.is_login==false){
+                                      alert('Oops！自动登入失败，它不应该发生！');
+                                   }
+                                }
+                                else{
+                                   alert('Oops！出现了一个重定向错误或服务器内部错误，它不应该发生！');
+                                }
+                             }
+                          }
+                          //注册失败
+                          else if (reg.ret!=200){
+                             alert('Oops！'+reg.msg+'注册失败！');
+                          }
+                       }
+                       else if(regRequest.readyState == 4 && regRequest.status != 200){
+                           alert('用户名或密码不合规，只支持英文、数字和有限的特殊符号如@_');
+                       }
+                    }
+                 }
+               else{
+                  alert("两次密码不一致，注册操作已取消！");
+               }
+            }
+            else{
+               alert("密码长度不合规，须在6-20位范围内，注册操作已取消！")
+            }
+         }
+         else{
+            alert("用户名长度不合规，须在1-50位范围内，注册操作已取消！");
+         }
+      }
     }).find('.kfe-close-panel').click(function () {
         $container.find('.kfe-smile-panel').hide();
     });
