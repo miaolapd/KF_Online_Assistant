@@ -732,7 +732,7 @@ const createContainer = function (textArea) {
                                             if (getokenjson.ret==200){
                                                 let tkdata=getokenjson.data;
                                                 let gtoken=tkdata.tutoken;
-                                                if (gtoken !=null){
+                                                if (gtoken !=""){
                                                     localStorage.removeItem('logindata');
                                                     let gtokenarray=[logindata.user_id,logindata.token,gtoken];
                                                     localStorage.setItem('logindata',JSON.stringify(gtokenarray));
