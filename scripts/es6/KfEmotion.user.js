@@ -27,32 +27,21 @@ const version = '6.6.6';
 // 网站是否为KfMobile
 const isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
 // 看板娘图片自定义
-const kanbanmsume = "https://kf.miaola.work/ys/in/read_75675456.gif";
+const kanbanmsume = "/ys/in/read_75675456.gif";
 // 看板娘大小/粘贴预览图大小自定义,支持%或px/em
-const previewsizepc = "42%";
-const previewsizemb = "64%";
+const previewsize = "42%";
 // 文本区域粘贴图片预览区
-function imgurl() { let imgpreview = document.createElement("div");
-      if(localStorage.imgpvpc!=null){let imgpvpc=localStorage.imgpvpc;let imgpvpcpush = JSON.parse(imgpvpc);
-      imgpreview.innerHTML = '<div id = "imgpreview" style = "position:fixed;left:'+imgpvpcpush[0]+';top:'+imgpvpcpush[1]+';z-index:88;cursor:pointer;" ><img class="imgpreview" src = '+kanbanmsume+' width = '+previewsizepc+' height = '+previewsizepc+' ></div>';
-}else if(localStorage.imgpvmb!=null){let imgpvmb=localStorage.imgpvmb;let imgpvmbpush = JSON.parse(imgpvmb);
-      imgpreview.innerHTML = '<div id = "imgpreview" style = "position:fixed;left:'+imgpvmbpush[0]+';top:'+imgpvmbpush[1]+';z-index:88;cursor:pointer;" ><img class="imgpreview" src = '+kanbanmsume+' width = '+previewsizemb+' height = '+previewsizemb+' ></div>';
-}else{if(isKfMobile==true){
-      imgpreview.innerHTML = '<div id = "imgpreview" style = "position:fixed;left:5px;top:40px;z-index:88;cursor:pointer;" ><img class="imgpreview" src = '+kanbanmsume+' width = '+previewsizemb+' height = '+previewsizemb+' ></div>';
-}else{imgpreview.innerHTML = '<div id = "imgpreview" style = "position:fixed;left:5px;top:40px;z-index:88;cursor:pointer;" ><img class="imgpreview" src = '+kanbanmsume+' width = '+previewsizepc+' height = '+previewsizepc+' ></div>';
+function imgurl() {
+let imgpreview = document.createElement("div");if(isKfMobile==true){
+      imgpreview.innerHTML = '<div id = "imgpreview" style = "position:fixed;left:5px;bottom:5px;z-index:88;cursor:pointer;" ><img class="imgpreview" src = "https://sticker.inari.site/favicon.ico" width = '+previewsize+' height = '+previewsize+' ></div>';
+}else{if(localStorage.imgpvpc!=null){let imgpvpc=localStorage.imgpvpc;let imgpvpcpush = JSON.parse(imgpvpc);
+      imgpreview.innerHTML = '<div id = "imgpreview" style = "position:fixed;left:'+imgpvpcpush[0]+';top:'+imgpvpcpush[1]+';z-index:88;cursor:pointer;" ><img class="imgpreview" src = '+kanbanmsume+' width = '+previewsize+' height = '+previewsize+' ></div>';
+}else{imgpreview.innerHTML = '<div id = "imgpreview" style = "position:fixed;left:5px;top:40px;z-index:88;cursor:pointer;" ><img class="imgpreview" src = '+kanbanmsume+' width = '+previewsize+' height = '+previewsize+' ></div>';
 }}document.body.appendChild(imgpreview);}imgurl();
 // 可拖拽看板娘,会记录拖拽位置
 let imgpv = document.getElementById("imgpreview");
 window.onload = function(){ drag(imgpv);};
-imgpv.addEventListener('touchmove', function(event){
-  event.preventDefault();
-  if (event.targetTouches.length == 1) {
-    let touch = event.targetTouches[0];
-    imgpv.style.left = touch.pageX + 'px';
-    imgpv.style.top = touch.pageY + 'px';
-    let imgpvmbpull =[imgpv.style.left,imgpv.style.top];
-    localStorage.setItem('imgpvmb',JSON.stringify(imgpvmbpull));
-}}, false);function drag(obj){
+function drag(obj){
 obj.onmousedown = function(event){
   obj.setCapture && obj.setCapture();
   event = event ||window.event
@@ -400,7 +389,9 @@ const createContainer = function (textArea) {
                 $(".imgpreview").attr('src', target.result)
             }, 400)
             setTimeout(() => {
-                $(".imgpreview").attr('src', kanbanmsume)
+                if(isKfMobile==true){
+                  $(".imgpreview").attr('src', 'https://sticker.inari.site/favicon.ico')}
+                  else{$(".imgpreview").attr('src', kanbanmsume)}
             }, 5000)
         }
         reader.readAsDataURL(files);
