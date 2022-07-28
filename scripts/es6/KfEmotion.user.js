@@ -89,14 +89,6 @@ for (let i = 0; i < x.length; i++) {
     x[i].src = x[i].src.replace(/http:\/\/o6smnd6uw.bkt.clouddn.com\/lovelive\/Lovelive2nd/g, "https://sticker.inari.site/lovelive/Lovelive2nd");
     x[i].src = x[i].src.replace(/http:\/\/smilell2.eclosionstudio.com\/Small\/Lovelive2nd/g, "https://sticker.inari.site/lovelive/Lovelive2nd");
 }
-// 在KF论坛，直接显示表情贴纸增强插件所属域名的图片，而不是显示【请手动点击打开本图片】
-document.body.querySelectorAll('.readtext a').forEach(i => {
-    if (i.innerHTML === '<span class=\"k_f18\">请手动点击打开本图片</span>') {
-        let p = document.createElement("img"); p.src = i.href;
-        if (p.src.match(/https:\/\/sticker.inari.site/)) { i.parentElement.replaceChild(p, i); }
-        else if (p.src.match(/http:\/\/tb2.bdstatic.com\/tb\/editor\/images\/face/)) { i.parentElement.replaceChild(p, i); }
-    }
-});
 // 复用字符串
 const
 notbindText = "图片上传将使用游客上传！已登录，现在你可以进行同步操作了！",
