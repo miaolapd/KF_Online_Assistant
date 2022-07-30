@@ -918,7 +918,8 @@ function imgbindfunc() {
     $.ajax({ url: imgapi + 'tokens', type: 'POST', dataType: 'json', data: formData, contentType: "application/json", processData: false, })
         .done(data => {
             if (data.status == true) {
-                let tokendata = data.data, token = tokendata.token, tokenarray = [syncid, synctoken, token];
+                let tokenTList = JSON.parse(localStorage.logindata), synctid = tokenTList[0], syncttoken = tokenTList[1];
+                let tokendata = data.data, token = tokendata.token, tokenarray = [synctid, syncttoken, token];
                 localStorage.setItem('logindata', JSON.stringify(tokenarray)); let tokenRequest = new XMLHttpRequest();
                 tokenRequest.open('POST', 'https://api.inari.site/?s=App.User_User.tupdate&user_id=' + syncid + '&token=' + synctoken + '&tupdate=' + token, true);
                 tokenRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
