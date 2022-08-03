@@ -1629,8 +1629,8 @@ const appendCss = function () {
    .kfe-shop_footer a{color: #707072;font-size: 10px;}
    .pd_custom_script_header { margin: 7px 0; padding: 5px; background-color: #e8e8e8; border-radius: 5px; }
    .pd_custom_script_content { display: none; width: 750px; height: 350px; white-space: pre; }
-   .Heditm { border-style: none;display: inline-block; text-align: center;width: 26px;height: 20px;}
-   .Heditms { border-style: none;display: inline-block; text-align: center;width: 26px;height: 20px;}
+   .Heditm { border-style: none;display: inline-block; text-align: center;width: 26px;height: 20px;cursor: pointer;}
+   .Heditms { border-style: none;display: inline-block; text-align: center;width: 26px;height: 20px;cursor: pointer;}
    .KfeHtmlEditer img {max-width:500px}
    .KfeHtmlEditer video {max-width:500px}
    </style>`);
