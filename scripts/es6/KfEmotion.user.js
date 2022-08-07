@@ -3,7 +3,7 @@
 // @namespace   https://greasyfork.org/users/729911
 // @version     6.42
 // @author      eddie32,喵拉布丁,mistakey(Hazukikaguya)
-// @description KF论坛专用的回复表情/插图扩展插件，支持可视化编辑，支持在发帖时快速输入自定义表情和论坛BBCODE
+// @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
 // @icon        https://sticker.inari.site/favicon.ico
 // @homepage    https://github.com/HazukiKaguya/Stickers_PlusPlus
 // @include     https://*kfpromax.com/*
@@ -18,7 +18,6 @@
 // @grant       none
 // @license     MIT
 // @run-at      document-end
-// @require     https://kf.miaola.work/jquery.min.user.js?V2.2.4
 // @modifier-source https://raw.githubusercontent.com/miaolapd/KF_Online_Assistant/master/scripts/es6/KfEmotion.user.js
 // ==/UserScript==
 
@@ -27,13 +26,30 @@
  * 各种设置
  */
 'use strict';
-// jQuery隔离
-this.$ = this.jQuery = jQuery.noConflict(true);
-// 网站是否为Mobile
-const isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
-// 检测多重引用
-const mqcheck = ["&multiquote"]; let isMQ = false;
-for (let i = 0; i < mqcheck.length; i++) { if (window.location.href.indexOf(mqcheck[i]) > -1) { isMQ = true; } }
+// 默认配置
+const updatelog = '版本V6.42, 本次更新日志: \n 支持在线表情组获取&创作者投稿贴纸组，为KF增加实时可视化编辑，代码重构分离function，修复bugs.',
+    defaultSConf = {
+        "version": "2.0.0",
+        "kanbansize": "64",
+        "kanbanimg": "https://sticker.inari.site/truenight.gif",
+        "imgapi": "https://up.inari.site/api/v1/",
+        "cloudapi": "https://api.inari.site/?s=App.User.",
+        "onlineraw": "https://api.inari.site/?s=App.Sticker.",
+        "notauthed": false,
+        "realedit": false,
+        "markdown": false,
+        "lcimglists": false,
+        "olimglists": []
+    },
+    mqcheck = ["&multiquote"],
+    uploadfile = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAAAVCAYAAADGpvm7AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMGSURBVFhH7ZkxduIwEIZ/71lsCl5OYJ8Ap6Gi3c6UcIAt9wCmjLttqWgwJ8An4FFg30U7Y0kgWTaBgEkRf+/pkcgjaTRI848TTxAY6J1f6nOgZ3oNdLWK4HkRVpXqeCXVCpHnIbph8d3cIz+5dfv66F5+/InmAMZZiLQUEGKPhU+du3kd+PlO2jyDHx7oCtt1AYQzvHOAGxxOz7uKQ45m3kaw4jz5oNMtsK+P93MYAv0iVKArrCISg2hFP5mofiNZXURBPatFRLbbc5o71vPmaBsu1zPsWhfZYW7asH+letSBnDfAkjIHsliO0/u/K0ffFocvnugCyyDA8Q8LiGxlGpK/tzjHQaENIkWpxnLLkwxxU9Vpw7/x72wjyhQhBcWqJOrqIkaW5IbdDOt4SV524y/2ZFuC3Ab02P3CTiGf0rKXPKnj4FQ79JAoBS0oEKb0k4nqT3L1O/WkIb/giJBk2sadQ9qGwjQlP6gvEZcZNblIaF5zLRd3jc758qTDTxN3fzVqrNl9z17a+r94okPMHJn28T6j41Ec0X1rd9hk9JFMMZEdBhNMKdLINnYKUfWwvJbqqp+5Ml8wJi/7pHvtYMwrH2AWLT2Iob2ARXWip/Q1jQP5ewPpoEblvuBKCvhkvpeg87vRAvs01Dw10OWRF3jDqCvR+SN6yoe+/czL8YpqCy5xz/mzbiqnatR834rln9nUy49CBdrHSEbAvvZ6sw4F3FhdSwuajvRQU+HEx1OPL4/1SU6m5mwlzO+C7gD4EhTrrawWDKrt+qoYPo7ay+HkrN0KRV/iiIcSioZAaTG0hUHb2mLRJiDUKSg2jvA6AqLtjLWlTWOs8tsSNN1Hzd2PKVKPiWGbjwzbNkX4kjrobYgMUCwDlWu4fGtc1TMh0pxKqEDnJRapBHnjurTiL7DnFEBFUWDktfjAJdLH5TawHUXWzIGbaYs//BbXsPP+jlFyKahMeqPeS46kkae5JG2+Vd7992gu9EmfkJY3BHXgTA9Vx0AbQ6BfxBDoFzH8z/AlAP8BmM5ocebFmOwAAAAASUVORK5CYII=`,
+    notbindText = "图片上传将使用游客上传！已登录，现在你可以进行同步操作了！",
+    lengtherrText = "长度不合规，位数应在以下范围内：",
+    imguperrText = "图片上传失败，可能是网络原因。",
+    guestupimgText = "游客上传成功！建议绑定up.inari.site图床账号到云同步账号！",
+    kanbanerrText = "当前存在多个文本区，无法确认上传区域，看板娘点击上传暂不可用！",
+    resText = "已重置，请刷新！"
+;
 // 本地贴纸数据源
 let LocalRaws = [
     { "id": 1, "desc": "AC娘表情贴纸，属于AcSmileList，AC娘。", "cover": "https://sticker.inari.site/acfun/1/1.png", "name": "_Acfun", "title": 'AC娘', "addr": "_AcSmileList", "numstart": [1, 1001, 2001], "numend": [55, 1041, 2056], "url1": ["https://sticker.inari.site/acfun/1/", "https://sticker.inari.site/acfun/2/", "https://sticker.inari.site/acfun/3/"], "url2": [".png", ".png", ".png"] },
@@ -46,26 +62,9 @@ let LocalRaws = [
     { "id": 8, "desc": "少女☆歌剧。去吧，两人一起，摘下那颗星。", "cover": "https://sticker.inari.site/revstar/revstar (1).png", "name": "_Revue", "title": '少歌', "addr": "_RevueSmileList", "numstart": [1], "numend": [41], "url1": ["https://sticker.inari.site/revstar/revstar ("], "url2": [").png"] },
     { "id": 9, "desc": "公主连结Re:Dive。いま、新たな冒険の幕が上がる——", "cover": "https://sticker.inari.site/redive/sticker (1).png", "name": "_Redive", "title": 'PCR', "addr": "_RediveSmileList", "numstart": [1], "numend": [49], "url1": ["https://sticker.inari.site/redive/sticker ("], "url2": [").png"] },
     { "id": 10, "desc": "BanG Dream！噜~ キラキラ☆ドキドキ~ ふえぇ~", "cover": "https://sticker.inari.site/bangdream/bangdream (1).png", "name": "_Bandori", "title": '邦邦', "addr": "_BandoriSmileList", "numstart": [1], "numend": [41], "url1": ["https://sticker.inari.site/bangdream/bangdream ("], "url2": [").png"] },
-];
-// 默认配置&载入个性化配置
-const defaultSConf = {
-    "version": "2.0.0",
-    "kanbansize": "64",
-    "kanbanimg": "https://sticker.inari.site/truenight.gif",
-    "imgapi": "https://up.inari.site/api/v1/",
-    "cloudapi": "https://api.inari.site/?s=App.User.",
-    "onlineraw": "https://api.inari.site/?s=App.Sticker.",
-    "notauthed": false,
-    "realedit": false,
-    "markdown": false,
-    "lcimglists": false,
-    "olimglists": []
-};
-let loadcustom = true, customize = defaultSConf;
-if (!localStorage.StickerConf) {
-    loadcustom = false;
-    localStorage.setItem('StickerConf', JSON.stringify(defaultSConf));
-}
+], customize = defaultSConf,userimgst,loconsticker,loadcustom = true;
+// 客制化配置
+if (!localStorage.StickerConf) { loadcustom = false; localStorage.setItem('StickerConf', JSON.stringify(defaultSConf)); }
 else { customize = JSON.parse(localStorage.StickerConf); };
 if (customize.version != defaultSConf.version) {
     console.log("个性化配置版本不匹配，自动进行兼容性变更！");
@@ -83,32 +82,32 @@ if (customize.version != defaultSConf.version) {
     localStorage.setItem('StickerConf', JSON.stringify(customize));
     localStorage.removeItem('onlineraws'); localStorage.removeItem('Alertless'); sessionStorage.removeItem('localSmile'); sessionStorage.removeItem('OnlineSmile');
     console.log("兼容性变更完成！");
-}
-let OnlineRaws = [], realedit = customize.realedit, realeditcheck = '';
-if (localStorage.onlineraws) { OnlineRaws = JSON.parse(localStorage.onlineraws); }
+};
+!localStorage.userimgst ? userimgst = `["https://sticker.inari.site/null.jpg"]` : userimgst = localStorage.userimgst;
+!customize.lcimglists ? loconsticker = [] : loconsticker = customize.lcimglists;
+
+
+/**
+ * 初始化杂项
+ */
+const UserSmileList = JSON.parse(userimgst), imgapi = customize.imgapi, cloudapi = customize.cloudapi,
+    FinalList = [], FinalRaw = [], KfSmileList = [], KfSmileCodeList = [], RandomSmileList = [], UsersSmileList = [], MenuList = {};
+let isMQ = false, realedits = true, realedit = customize.realedit,
+    kfImgPath, olAuth = sessionStorage.OnlineSmile, locAuth = sessionStorage.localSmile,
+    OnlineRaws = [], uupath = [], localSmile = [], realeditcheck = '',OnlineSmile,code_htm,code_num,OnlineRawslists,olhaved;
 if (realedit && isMQ == false) { realeditcheck = 'checked' }
-// const
-const
-    imgapi = customize.imgapi, cloudapi = customize.cloudapi,
-    FinalList = [], FinalRaw = [],
-    notbindText = "图片上传将使用游客上传！已登录，现在你可以进行同步操作了！",
-    lengtherrText = "长度不合规，位数应在以下范围内：",
-    imguperrText = "图片上传失败，可能是网络原因。",
-    guestupimgText = "游客上传成功！建议绑定up.inari.site图床账号到云同步账号！",
-    kanbanerrText = "当前存在多个文本区，无法确认上传区域，看板娘点击上传暂不可用！",
-    resText = "已重置，请刷新！",
-    updatelog = 'V2.0.2 : 为不支持所见即所得模式的论坛添加实时编辑模式，修复若干bug。',
-    uploadfile = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAAAVCAYAAADGpvm7AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMGSURBVFhH7ZkxduIwEIZ/71lsCl5OYJ8Ap6Gi3c6UcIAt9wCmjLttqWgwJ8An4FFg30U7Y0kgWTaBgEkRf+/pkcgjaTRI848TTxAY6J1f6nOgZ3oNdLWK4HkRVpXqeCXVCpHnIbph8d3cIz+5dfv66F5+/InmAMZZiLQUEGKPhU+du3kd+PlO2jyDHx7oCtt1AYQzvHOAGxxOz7uKQ45m3kaw4jz5oNMtsK+P93MYAv0iVKArrCISg2hFP5mofiNZXURBPatFRLbbc5o71vPmaBsu1zPsWhfZYW7asH+letSBnDfAkjIHsliO0/u/K0ffFocvnugCyyDA8Q8LiGxlGpK/tzjHQaENIkWpxnLLkwxxU9Vpw7/x72wjyhQhBcWqJOrqIkaW5IbdDOt4SV524y/2ZFuC3Ab02P3CTiGf0rKXPKnj4FQ79JAoBS0oEKb0k4nqT3L1O/WkIb/giJBk2sadQ9qGwjQlP6gvEZcZNblIaF5zLRd3jc758qTDTxN3fzVqrNl9z17a+r94okPMHJn28T6j41Ec0X1rd9hk9JFMMZEdBhNMKdLINnYKUfWwvJbqqp+5Ml8wJi/7pHvtYMwrH2AWLT2Iob2ARXWip/Q1jQP5ewPpoEblvuBKCvhkvpeg87vRAvs01Dw10OWRF3jDqCvR+SN6yoe+/czL8YpqCy5xz/mzbiqnatR834rln9nUy49CBdrHSEbAvvZ6sw4F3FhdSwuajvRQU+HEx1OPL4/1SU6m5mwlzO+C7gD4EhTrrawWDKrt+qoYPo7ay+HkrN0KRV/iiIcSioZAaTG0hUHb2mLRJiDUKSg2jvA6AqLtjLWlTWOs8tsSNN1Hzd2PKVKPiWGbjwzbNkX4kjrobYgMUCwDlWu4fGtc1TMh0pxKqEDnJRapBHnjurTiL7DnFEBFUWDktfjAJdLH5TawHUXWzIGbaYs//BbXkfe+jlFyKahMeqPeS46kkae5JG2+Vd7992gu9EmfkJY3BHXgTA9Vx0AbQ6BfxBDoFzH8z/AlAP8BmM5ocebFmOwAAAAASUVORK5CYII=`
-    ;
+if (localStorage.onlineraws) { OnlineRaws = JSON.parse(localStorage.onlineraws); }
+// 网站是否为KfMobile
+const isKfMobile = typeof Info !== 'undefined' && typeof Info.imgPath !== 'undefined';
+kfImgPath = typeof imgpath !== 'undefined' ? imgpath : ''; if (isKfMobile) kfImgPath = Info.imgPath;
+// 检测多重引用
+for (let i = 0; i < mqcheck.length; i++) { if (window.location.href.indexOf(mqcheck[i]) > -1) { isMQ = true; } }
 
 
 /**
  * 初始化表情图片
  */
 // 灰企鹅
-const KfSmileList = [], KfSmileCodeList = [];
-
-let kfImgPath = typeof imgpath !== 'undefined' ? imgpath : '';
 if (isKfMobile) kfImgPath = Info.imgPath; for (let i = 1; i < 49; i++) {
     KfSmileList.push(`/${kfImgPath}/post/smile/em/em${(i) > 9 ? i : ('0' + i)}.gif`); KfSmileCodeList.push(`[s:${i + 9}]`);
 }
@@ -118,15 +117,13 @@ for (let i = 1; i < 204; i++) {
 }
 
 // 随机
-const RandomSmileList = []; RandomSmileList.push(`https://sticker.inari.site/yukika/${Math.ceil(Math.random() * 6)}.jpg`);
+RandomSmileList.push(`https://sticker.inari.site/yukika/${Math.ceil(Math.random() * 6)}.jpg`);
 for (let i = 0; i < 29; i++) { RandomSmileList.push(`https://sticker.inari.site/rwebp/${Math.ceil(Math.random() * 6930)}.webp`); }
 for (let i = 1; i < 10; i++) { RandomSmileList.push(`https://sticker.inari.site/rgif/${Math.ceil(Math.random() * 2555)}.gif`); }
 // 自定义
 !localStorage.userimgst ? userimgst = `["https://sticker.inari.site/null.jpg"]` : userimgst = localStorage.userimgst;
-const UserSmileList = JSON.parse(userimgst); const UsersSmileList = [];
 for (let i = 0; i < UserSmileList.length; i++) { UsersSmileList.push(`${UserSmileList[i]}#num=${i + 1}`); }
 // 来自本地数据源的表情贴纸
-let locAuth = sessionStorage.localSmile, localSmile = [];
 !customize.lcimglists ? loconsticker = [] : loconsticker = customize.lcimglists;
 for (let t = 0; t < loconsticker.length; t++) { localSmile[t] = LocalRaws[loconsticker[t]]; }
 if (locAuth == null) {
@@ -142,7 +139,6 @@ if (locAuth == null) {
 }
 localSmile = JSON.parse(sessionStorage.localSmile)
 // 来自在线数据源的表情贴纸
-let olAuth = sessionStorage.OnlineSmile;
 if (olAuth == null) {
     let onlineSmile = OnlineRaws;
     for (let s = 0; s < onlineSmile.length; s++) {
@@ -159,8 +155,6 @@ OnlineSmile = JSON.parse(sessionStorage.OnlineSmile)
 /**
  * 表情菜单
 */
-const MenuList = {}
-
 MenuList['KfSmile'] = { datatype: 'imageLink', title: '小企鹅', desc: 'KF论坛的小企鹅表情', addr: KfSmileList, ref: KfSmileCodeList };
 MenuList['Shortcut'] = {
     datatype: 'plain', title: '快捷', desc: '发帖实用BBcode',
@@ -323,20 +317,48 @@ const KfeDialogHtml = `
      <a target="_blank" href="https://stickers.inari.site/terms">Terms Of Service/服务条款</a> | <a target="_blank" href="https://stickers.inari.site/rules">Privacy Policy/隐私策略</a> | <a target="_blank" href="https://stickers.inari.site/qa">Q&A/常见问题</a> |
      ©mistakey&nbsp;&nbsp;
    </div></div></form>
- `;
-const KfeItemHtml = `
+ `,
+KfeUploadHtml = `<form><div class="kfe-shop_box" id="Kfe-shop-dialog" style="display: block; top: 8px; left: 336px;">
+    <sheader><logo>&nbsp;&nbsp;&nbsp;表情贴纸商店 | Sticker Shop</logo><span class="kfe-close-shop">×&nbsp;&nbsp;</span></sheader>
+    <div class="kfe-shop_main" ><br>
+    <div class="Kfe-list-content">
+    <h3>开发文档: 标准化数据源格式</h3>
+    <p>{"id":int,"desc":"这里是描述，鼠标移到该分组时会显示","cover":"url","name":"_Name","title":"展示的名字","addr":"_NameList","numstart":[int,int,...],"numend":[int,int,...],"url1":["url前1","url前2",...],"url2":["url后1","url后1",...]};</p>
+    </div>
+    </div>
+    <div class="sticker-pages"><div class="Kfe-list-pagination">
+    </div>
+    </div>
+    <div class="kfe-shop_footer">
+    <a target="_blank" href="https://stickers.inari.site/terms">Terms Of Service/服务条款</a> | <a target="_blank" href="https://stickers.inari.site/rules">Privacy Policy/隐私策略</a> | <a target="_blank" href="https://stickers.inari.site/qa">Q&A/常见问题</a> |
+    ©mistakey&nbsp;&nbsp;</div>
+</div></form>`,
+  KfelogedUp=`<form method="POST" action="https://api.inari.site/?s=App.Examples_Upload.Go" target="NoRefreash" enctype="multipart/form-data">
+    <p><b>检测到已登录，可以在此直接上传表情贴纸组压缩包(最大50M)并获取返回值</b></p>
+    <input class='Kfe-pagination-nowpage-button' type="file" name="file">
+    <input class='Kfe-pagination-nowpage-button' type="submit"></form>
+    <iframe src="" frameborder="0" name="NoRefreash" style="width:100%;height:42px"></iframe>`,
+   KfeunlogUp=`<p><b>未登录或登录失效，登录后创作者可以直接在此上传表情贴纸组压缩包并获取返回值</b></p>`,
+   KfetextUp=`<h3>请按如下格式填写""内的内容，然后邮件内容至 <a herf="mailto:Hazukikaguya@office.inari.site">Hazukikaguya@office.inari.site</a></h3><p>
+    名称: "这里填写展示在商店页面的描述名称"<br>
+    作者: "这里填写作者"<br>
+    描述: "这里是描述，鼠标移到该分组时会显示"<br>
+    标题: "这里填写启用后展示的名字（如邦邦/S1/AC娘 这种简短的）"<br>
+    封面: "这里填写展示在商店页面的封面图片的url链接，建议使用邮件附件"<br>
+    链接: "这里填写可下载帖纸组的url/压缩包。登录用户可在此页面上传压缩包并复制返回值，但还是建议创作者直接使用邮件附件"</p>`,
+KfeItemHtml = `
  <div class="sticker-item">
  <div class="sticker-item-img"><img style="width: 50px; height: 50px;"/></div>
  <div class="sticker-item-name"></div>
  </div>
- `;
-const KfePaginationItemHtml = `
+ `,
+  KfePaginationItemHtml = `
  <div class="Kfe-pagination-item-button"></div>
- `;
-const KfeNowPageHtml = `
+ `,
+ KfeNowPageHtml = `
  <div class="Kfe-pagination-nowpage-button"></div>
- `;
-const prevNextPageHtml = `
+ `,
+ prevNextPageHtml = `
  <div class="Kfe-pagination-prev-next"></div>
  `;
 $(document).on("click", "#Kfe-shop-dialog .sticker-item", function (e) {
@@ -385,7 +407,7 @@ const createContainer = function (textArea) {
      <input type="button" class="kfe-user-g" value="表情组设置">&nbsp;
      <span class="kfe-close-panel" title="表情增强插件，版本${defaultSConf.version},理论支持所有存在纯文本模式且支持BBcode的支持图片外链的论坛。\n 本次更新日志：${updatelog}" style="cursor: pointer;"><b>⑨</b></span>
      ${getSubMenuHtml()}<span class="kfe-close-panel">[-]</span>&nbsp;<input type="checkbox" class="realeditclick" id="realedit" value="realedit" ${realeditcheck}>可视化编辑
- 
+
      <div class="kfe-diy-panel" style="display:none">
      <input type="button" class="kfe-user-c" value="添加贴纸">&nbsp;
      <input type="button" class="kfe-user-r" value="导出贴纸">&nbsp;
@@ -413,7 +435,7 @@ const createContainer = function (textArea) {
      <div class="kfe-bqz-panel" style="display:none">
      <input type="button" class="kfe-user-loc" value="启用的本地表情">&nbsp;
      <input type="button" class="kfe-user-oln" value="浏览表情组商店">&nbsp;
-     <input type="button" class="kfe-user-raw" value="商店数据源设置">&nbsp;
+     <input type="button" class="kfe-user-raw" value="向贴纸商店投稿">&nbsp;
      <div class="kfe-loc-panel" style="display:none"><table><tr>
      <td><li><input type="checkbox" class="locbt" id="ng0" value="0">AC娘</li></td>
      <td><li><input type="checkbox" class="locbt" id="ng1" value="1">S1麻将脸</li></td>
@@ -427,7 +449,7 @@ const createContainer = function (textArea) {
      <td><li><input type="checkbox" class="locbt" id="ng5" value="5">小红豆</li></td>
      <td><input type="button" class="kfe-loc-close"value="关闭列表" ></td></tr>
      </table></div></div></div>
- 
+
      <div class="KfeHtmlEditerP" id="Htmlediterpannel" style="display:none;text-align:left;width=100%" >
      <div class="KfeHtmlediterF" id="Htmlediter">
          <button class="Heditm" data-edit="undo" title="撤销(Ctrl+Z)">↩️</button>
@@ -459,13 +481,13 @@ const createContainer = function (textArea) {
          <button class="Heditm" data-edit="fontSize:7"><b>L</b></button>
        </span>
          <button class="Heditm" data-edit="removeFormat" title="清除选中文本的格式"><b>⨯</b></button>
-         
-             
+
+
      </div>
      <div class="KfeHtmlEditer" id="Htmleditarea" contenteditable="true" spellcheck="false" style="height: 300px;overflow:auto;background:white;border:1px dashed #000;outline:none;margin: 0px; height: 300px;margin: 0px; " ></div>
- 
+
      </div>
- 
+
      </div>`).insertBefore($(textArea));
     if (isKfMobile == true) {
         $(`<button class="btn btn-secondary upload-image-btn ml-1" title="上传图片" onclick="$('.kfe-user-p').click();">
@@ -606,12 +628,7 @@ const createContainer = function (textArea) {
         e.preventDefault();
         KfeShowDialog();
     }).on('click', '.kfe-user-raw', function (e) {
-        e.preventDefault();
-        let theonlineraw = prompt("在线表情组商店数据仓库源设置，默认使用inari源", 'https://api.inari.site/?s=App.Sticker.');
-        let safeornot = confirm("是否显示未经审核的表情贴纸组？");
-        if (theonlineraw) customize.onlineraw = theonlineraw;
-        customize.notauthed = safeornot;
-        localStorage.setItem('StickerConf', JSON.stringify(customize));
+        e.preventDefault();KfeShowUpload();
     }).on('click', '.kfe-user-cfg', function (e) {
         e.preventDefault();
         // 载入个性化设置状态
@@ -878,7 +895,6 @@ for (let i = 0; i < x.length; i++) {
     x[i].src = x[i].src.replace(/http:\/\/smilell2.eclosionstudio.com\/Small\/Lovelive2nd/g, "https://sticker.inari.site/lovelive/Lovelive2nd");
 }
 // 修复实时编辑模式下phpwind的回复某楼
-let realedits = true, uupath = [];
 $(document).on('click', "a[title='回复此楼']", function (e) {
     let rpstr = e.target.getAttribute("onclick");
     rpstr = rpstr.replace(/postreply\('*([^\'\"]*)','[^\'\"]*'\);/g, '$1');
@@ -1142,7 +1158,7 @@ function searchtag(tagname, str, action, type) {
         firsttag++;
         let findstr = str.substr(firsttag, end - firsttag);
         str = str.substr(0, begin) + eval(action)(style, findstr, tagname) + str.substr(end + foot_len);
-        strpos = begin;} 
+        strpos = begin;}
     while (begin != -1); return str;
 }
 function tableshow(style, str) {
@@ -1302,6 +1318,29 @@ const KfeLoadSticker = function (thePage) {
         }
         else if (PageRequest.readyState == 4 && PageRequest.status != 200) { alert('发生错误！错误状态码：' + PageRequest.status) }
     }
+}
+const KfeShowUpload = function () {
+    let $dialog = $("#Kfe-shop-dialog")[0]; $("body").append(KfeUploadHtml); let $root = $("#Kfe-shop-dialog .Kfe-list-content");
+    if (localStorage.logindata != null) {
+        let tokenList = JSON.parse(localStorage.logindata), syncid = tokenList[0], synctoken = tokenList[1];
+        let upRequest = new XMLHttpRequest();
+        upRequest.open('POST', 'https://api.inari.site/?s=App.User_User.CheckSession&user_id=' + syncid + '&token=' + synctoken, true);
+        upRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        upRequest.send('name=teswe&ee=ef'); upRequest.onreadystatechange = function () {
+            if (upRequest.readyState == 4 && upRequest.status == 200) {
+                let upjson = upRequest.responseText, upload = JSON.parse(upjson);
+                if (upload.ret == 200) {
+                    let logornot = upload.data.is_login;
+                    if (logornot == true) { $root.append($(KfelogedUp)); }
+                    else { $root.append($(KfeunlogUp)); }
+                }
+                else { $root.append($(KfePunlogUp)); }
+            }
+            else if (upRequest.readyState == 4 && upRequest.status != 200) { $root.append($(KfeunlogUp)); }
+        }
+    }
+    else { $root.append($(KfeunlogUp)); };
+    $root.append($(KfetextUp));
 }
 const loadStickerList = function (items) {
     let $root = $("#Kfe-shop-dialog .Kfe-list-content"); $root.empty();
@@ -1624,7 +1663,7 @@ const appendCss = function () {
    .Kfe-pagination-item-button {border-style: none;display: inline-block; text-align: center; margin: 5px;}
    .Kfe-pagination-nowpage-button {    border: 1px solid #e5e5e5;color: #00b84f;min-width: 30px;display: inline-block; text-align: center; margin: 5px;}
    .Kfe-pagination-prev-next {border-style: none;display: inline-block; text-align: center; margin: 5px;}
-   .sticker-pages {background-color: #fcfcfc;padding: 8px 0 6px 10px;position: relative;color: #707072;font-size: 10px;margin: 0;text-align: center;display: inline-block;width: 100%; }
+   .sticker-pages {background-color: #fcfcfc;padding: 8px 0 6px 10px;position: relative;color: #707072;font-size: 10px;margin: 0;text-align: center;width: 100%; }
    .kfe-shop_footer {background-color: #f7f7fc;border-top: 1px solid #e6e6e6;padding: 8px 0 6px 10px;position: relative;color: #707072;font-size: 10px;margin: 0;}
    .kfe-shop_footer a{color: #707072;font-size: 10px;}
    .pd_custom_script_header { margin: 7px 0; padding: 5px; background-color: #e8e8e8; border-radius: 5px; }
