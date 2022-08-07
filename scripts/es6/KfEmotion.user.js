@@ -404,7 +404,7 @@ const createContainer = function (textArea) {
      <input type="button" class="kfe-user-y" value="云同步">
      <input type="button" class="kfe-user-i" value="自定义">
      <input type="button" class="kfe-user-g" value="表情组设置">&nbsp;
-     <span class="kfe-close-panel" title="表情增强插件，版本${defaultSConf.version},理论支持所有存在纯文本模式且支持BBcode的支持图片外链的论坛。\n 本次更新日志：${updatelog}" style="cursor: pointer;"><b>⑨</b></span>
+     <span class="kfe-close-panel" title="KF表情增强插件by eddie32,喵拉布丁,mistakey(Hazukikaguya)，${updatelog}" style="cursor: pointer;"><b>⑨</b></span>
      ${getSubMenuHtml()}<span class="kfe-close-panel">[-]</span>&nbsp;<input type="checkbox" class="realeditclick" id="realedit" value="realedit" ${realeditcheck}>可视化编辑
 
      <div class="kfe-diy-panel" style="display:none">
