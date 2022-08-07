@@ -28,28 +28,27 @@
 'use strict';
 // 默认配置
 const updatelog = '版本V6.42, 本次更新日志: \n 支持在线表情组获取&创作者投稿贴纸组，为KF增加实时可视化编辑，代码重构分离function，修复bugs.',
-    defaultSConf = {
-        "version": "2.0.0",
-        "kanbansize": "64",
-        "kanbanimg": "https://sticker.inari.site/truenight.gif",
-        "imgapi": "https://up.inari.site/api/v1/",
-        "cloudapi": "https://api.inari.site/?s=App.User.",
-        "onlineraw": "https://api.inari.site/?s=App.Sticker.",
-        "notauthed": false,
-        "realedit": false,
-        "markdown": false,
-        "lcimglists": false,
-        "olimglists": []
-    },
-    mqcheck = ["&multiquote"],
-    uploadfile = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAAAVCAYAAADGpvm7AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMGSURBVFhH7ZkxduIwEIZ/71lsCl5OYJ8Ap6Gi3c6UcIAt9wCmjLttqWgwJ8An4FFg30U7Y0kgWTaBgEkRf+/pkcgjaTRI848TTxAY6J1f6nOgZ3oNdLWK4HkRVpXqeCXVCpHnIbph8d3cIz+5dfv66F5+/InmAMZZiLQUEGKPhU+du3kd+PlO2jyDHx7oCtt1AYQzvHOAGxxOz7uKQ45m3kaw4jz5oNMtsK+P93MYAv0iVKArrCISg2hFP5mofiNZXURBPatFRLbbc5o71vPmaBsu1zPsWhfZYW7asH+letSBnDfAkjIHsliO0/u/K0ffFocvnugCyyDA8Q8LiGxlGpK/tzjHQaENIkWpxnLLkwxxU9Vpw7/x72wjyhQhBcWqJOrqIkaW5IbdDOt4SV524y/2ZFuC3Ab02P3CTiGf0rKXPKnj4FQ79JAoBS0oEKb0k4nqT3L1O/WkIb/giJBk2sadQ9qGwjQlP6gvEZcZNblIaF5zLRd3jc758qTDTxN3fzVqrNl9z17a+r94okPMHJn28T6j41Ec0X1rd9hk9JFMMZEdBhNMKdLINnYKUfWwvJbqqp+5Ml8wJi/7pHvtYMwrH2AWLT2Iob2ARXWip/Q1jQP5ewPpoEblvuBKCvhkvpeg87vRAvs01Dw10OWRF3jDqCvR+SN6yoe+/czL8YpqCy5xz/mzbiqnatR834rln9nUy49CBdrHSEbAvvZ6sw4F3FhdSwuajvRQU+HEx1OPL4/1SU6m5mwlzO+C7gD4EhTrrawWDKrt+qoYPo7ay+HkrN0KRV/iiIcSioZAaTG0hUHb2mLRJiDUKSg2jvA6AqLtjLWlTWOs8tsSNN1Hzd2PKVKPiWGbjwzbNkX4kjrobYgMUCwDlWu4fGtc1TMh0pxKqEDnJRapBHnjurTiL7DnFEBFUWDktfjAJdLH5TawHUXWzIGbaYs//BbXsPP+jlFyKahMeqPeS46kkae5JG2+Vd7992gu9EmfkJY3BHXgTA9Vx0AbQ6BfxBDoFzH8z/AlAP8BmM5ocebFmOwAAAAASUVORK5CYII=`,
-    notbindText = "图片上传将使用游客上传！已登录，现在你可以进行同步操作了！",
-    lengtherrText = "长度不合规，位数应在以下范围内：",
-    imguperrText = "图片上传失败，可能是网络原因。",
-    guestupimgText = "游客上传成功！建议绑定up.inari.site图床账号到云同步账号！",
-    kanbanerrText = "当前存在多个文本区，无法确认上传区域，看板娘点击上传暂不可用！",
-    resText = "已重置，请刷新！"
-;
+   defaultSConf = {
+   "version": "2.0.0",
+   "kanbansize": "64",
+   "kanbanimg": "https://sticker.inari.site/truenight.gif",
+   "imgapi": "https://up.inari.site/api/v1/",
+   "cloudapi": "https://api.inari.site/?s=App.User.",
+   "onlineraw": "https://api.inari.site/?s=App.Sticker.",
+   "notauthed": false,
+   "realedit": false,
+   "markdown": false,
+   "lcimglists": false,
+   "olimglists": []
+   },
+   mqcheck = ["&multiquote"],
+   uploadfile = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAAAVCAYAAADGpvm7AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMGSURBVFhH7ZkxduIwEIZ/71lsCl5OYJ8Ap6Gi3c6UcIAt9wCmjLttqWgwJ8An4FFg30U7Y0kgWTaBgEkRf+/pkcgjaTRI848TTxAY6J1f6nOgZ3oNdLWK4HkRVpXqeCXVCpHnIbph8d3cIz+5dfv66F5+/InmAMZZiLQUEGKPhU+du3kd+PlO2jyDHx7oCtt1AYQzvHOAGxxOz7uKQ45m3kaw4jz5oNMtsK+P93MYAv0iVKArrCISg2hFP5mofiNZXURBPatFRLbbc5o71vPmaBsu1zPsWhfZYW7asH+letSBnDfAkjIHsliO0/u/K0ffFocvnugCyyDA8Q8LiGxlGpK/tzjHQaENIkWpxnLLkwxxU9Vpw7/x72wjyhQhBcWqJOrqIkaW5IbdDOt4SV524y/2ZFuC3Ab02P3CTiGf0rKXPKnj4FQ79JAoBS0oEKb0k4nqT3L1O/WkIb/giJBk2sadQ9qGwjQlP6gvEZcZNblIaF5zLRd3jc758qTDTxN3fzVqrNl9z17a+r94okPMHJn28T6j41Ec0X1rd9hk9JFMMZEdBhNMKdLINnYKUfWwvJbqqp+5Ml8wJi/7pHvtYMwrH2AWLT2Iob2ARXWip/Q1jQP5ewPpoEblvuBKCvhkvpeg87vRAvs01Dw10OWRF3jDqCvR+SN6yoe+/czL8YpqCy5xz/mzbiqnatR834rln9nUy49CBdrHSEbAvvZ6sw4F3FhdSwuajvRQU+HEx1OPL4/1SU6m5mwlzO+C7gD4EhTrrawWDKrt+qoYPo7ay+HkrN0KRV/iiIcSioZAaTG0hUHb2mLRJiDUKSg2jvA6AqLtjLWlTWOs8tsSNN1Hzd2PKVKPiWGbjwzbNkX4kjrobYgMUCwDlWu4fGtc1TMh0pxKqEDnJRapBHnjurTiL7DnFEBFUWDktfjAJdLH5TawHUXWzIGbaYs//BbXsPP+jlFyKahMeqPeS46kkae5JG2+Vd7992gu9EmfkJY3BHXgTA9Vx0AbQ6BfxBDoFzH8z/AlAP8BmM5ocebFmOwAAAAASUVORK5CYII=`,
+   notbindText = "图片上传将使用游客上传！已登录，现在你可以进行同步操作了！",
+   lengtherrText = "长度不合规，位数应在以下范围内：",
+   imguperrText = "图片上传失败，可能是网络原因。",
+   guestupimgText = "游客上传成功！建议绑定up.inari.site图床账号到云同步账号！",
+   kanbanerrText = "当前存在多个文本区，无法确认上传区域，看板娘点击上传暂不可用！",
+   resText = "已重置，请刷新！";
 // 本地贴纸数据源
 let LocalRaws = [
     { "id": 1, "desc": "AC娘表情贴纸，属于AcSmileList，AC娘。", "cover": "https://sticker.inari.site/acfun/1/1.png", "name": "_Acfun", "title": 'AC娘', "addr": "_AcSmileList", "numstart": [1, 1001, 2001], "numend": [55, 1041, 2056], "url1": ["https://sticker.inari.site/acfun/1/", "https://sticker.inari.site/acfun/2/", "https://sticker.inari.site/acfun/3/"], "url2": [".png", ".png", ".png"] },
@@ -69,7 +68,7 @@ else { customize = JSON.parse(localStorage.StickerConf); };
 if (customize.version != defaultSConf.version) {
     console.log("个性化配置版本不匹配，自动进行兼容性变更！");
     customize.version = defaultSConf.version;
-    if (!customize.kanbanimg) customized.kanbanimg = defaultSConf.kanbanimg;
+    if (!customize.kanbanimg) customize.kanbanimg = defaultSConf.kanbanimg;
     if (!customize.kanbansize) customize.kanbansize = defaultSConf.kanbansize;
     if (!customize.imgapi) customize.imgapi = defaultSConf.imgapi;
     if (!customize.cloudapi) customize.cloudapi = defaultSConf.cloudapi;
@@ -92,8 +91,8 @@ if (customize.version != defaultSConf.version) {
  */
 const UserSmileList = JSON.parse(userimgst), imgapi = customize.imgapi, cloudapi = customize.cloudapi,
     FinalList = [], FinalRaw = [], KfSmileList = [], KfSmileCodeList = [], RandomSmileList = [], UsersSmileList = [], MenuList = {};
-let isMQ = false, realedits = true, realedit = customize.realedit,
-    kfImgPath, olAuth = sessionStorage.OnlineSmile, locAuth = sessionStorage.localSmile,
+let isMQ = false, isMobile = false, realedits = true, realedit = customize.realedit,
+    $realtimeView, kfImgPath, olAuth = sessionStorage.OnlineSmile, locAuth = sessionStorage.localSmile,
     OnlineRaws = [], uupath = [], localSmile = [], realeditcheck = '',OnlineSmile,code_htm,code_num,OnlineRawslists,olhaved;
 if (realedit && isMQ == false) { realeditcheck = 'checked' }
 if (localStorage.onlineraws) { OnlineRaws = JSON.parse(localStorage.onlineraws); }
@@ -772,7 +771,7 @@ const createContainer = function (textArea) {
         let $panel = $(`#Htmlediterpannel`);
         let $tempRHArea = $container.find(`#Htmleditarea`);
         if (e.target.checked) {
-            TeContent = bb2html(textArea.value);
+            let TeContent = bb2html(textArea.value);
             $tempRHArea[0].innerHTML = TeContent;
             $panel.show(); $('textarea').hide(); $('#editor-button').hide(); customize.realedit = true, realedit = true;
             localStorage.setItem('StickerConf', JSON.stringify(customize));
@@ -834,6 +833,7 @@ const createContainer = function (textArea) {
         customize.imgapi = e.target.value;
         localStorage.setItem('StickerConf', JSON.stringify(customize));
     }).on('blur', '#olimglists', function (e) {
+        let TempList,TempLists;
         e.target.value == "" ? TempLists = [] : TempList = qc(e.target.value.match(/\d+/g).map(o => +o));
         $.ajax({ url: customize.onlineraw + 'GetListR&page=1&perpage=1', type: 'POST', contentType: false, processData: false, })
             .done(data => {
@@ -1022,8 +1022,8 @@ function html2bb(str) {
     str = str.replace(/<(\/)?strong>/ig, '[$1b]');
     str = str.replace(/<(\/)?em>/ig, '[$1i]');
     str = str.replace(/<(\/)?blockquote([^>]*)>/ig, '[$1blockquote]');
-    str = str.replace(/<img[^>]*src=[\'\"\s]*([^\'\"]+)[^>]*>/ig, '[img]' + '$1' + '[/img]');
-    str = str.replace(/<a[^>]*href=[\'\"\s]*([^\'\"]*)[^>]*>(.+?)<\/a>/ig, '[url=$1]' + '$2' + '[/url]');
+    str = str.replace(/<img[^>]*src=[\'\"\s]*([^\'\"]+)[^>]*>/ig, '[img]$1[/img]');
+    str = str.replace(/<a[^>]*href=[\'\"\s]*([^\'\"]*)[^>]*>(.+?)<\/a>/ig, '[url=$1]$2[/url]');
     str = str.replace(/<h([1-6]+)([^>]*)>(.*?)<\/h\1>/ig, function ($1, $2, $3, $4) { return h($3, $4, $2); });
     str = searchtag('table', str, 'table', 1);
     str = searchtag('font', str, 'Font', 1);
@@ -1032,7 +1032,7 @@ function html2bb(str) {
     str = searchtag('span', str, 'dsc', 1);
     str = searchtag('ol', str, 'list', 1);
     str = searchtag('ul', str, 'list', 1);
-    for (i in code_htm) { str = str.replace("[\twind_phpcode_" + i + "\t]", code_htm[i]); }
+    for (let i in code_htm) { str = str.replace("[\twind_phpcode_" + i + "\t]", code_htm[i]); }
     str = str.replace(/&nbsp;/ig, ' ');
     str = str.replace(/<br[^>]*>/ig, '\n');
     str = str.replace(/<[^>]*?>/ig, '');
@@ -1066,12 +1066,12 @@ function bb2html(str) {
     str = str.replace(/\[(attachment|upload)=(\d+)\]/ig, function ($1, $2, $3) { return attpath($3, $2); });
     str = str.replace(/\[s:(\d+)\]/ig, function ($1, $2) { return smilepath($2); });
     str = str.replace(/\[img\]([^\[]*)\[\/img\]/ig, '<img src="$1" border="0" />');
-    str = str.replace(/\[url=([^\]]+)\]([^\[]+)\[\/url\]/ig, '<a href="$1">' + '$2' + '</a>');
+    str = str.replace(/\[url=([^\]]+)\]([^\[]+)\[\/url\]/ig, '<a href="$1">$2</a>');
     str = searchtag('table', str, 'tableshow', 2);
     str = str.replace(/\[\/align\]/ig, '</p>');
     str = str.replace(/\[(\/)?h([1-6])\]/ig, '<$1h$2>');
     str = str.replace(/\[align=(left|center|right|justify)\]/ig, '<p align="$1">');
-    for (i in code_htm) { str = str.replace("[\twind_phpcode_" + i + "\t]", code_htm[i]); }
+    for (let i in code_htm) { str = str.replace("[\twind_phpcode_" + i + "\t]", code_htm[i]); }
     return str;
 }
 // 杂项
@@ -1089,14 +1089,14 @@ function attpath(attid, type) {
             path = imgpath + '/' + stylepath + '/file/zip.gif';
         }
         let img = imgmaxwh(path, 320);
-        if (img.width == 0) { return '<img src="' + path + '" type="' + type + '_' + attid + '" width="' + "240" + '" />'; }
+        if (img.width == 0) { return '<img src="' + path + '" type="' + type + '_' + attid + '" width="240" />'; }
         else { return '<img src="' + path + '" type="' + type + '_' + attid + '" width="' + img.width + '" />'; }
     }
 }
 function smilepath(NewCode) {
     let NewCodes = NewCode - 9;
-    if (NewCode < 19) { return '<img src="/' + kfImgPath + '/post/smile/em/em0' + NewCodes + '.gif' + '" smile="' + NewCode + '" />'; }
-    else { return '<img src="/' + kfImgPath + '/post/smile/em/em' + NewCodes + '.gif' + '" smile="' + NewCode + '" />'; }
+    if (NewCode < 19) { return '<img src="/' + kfImgPath + '/post/smile/em/em0' + NewCodes + '.gif" smile="' + NewCode + '" />'; }
+    else { return '<img src="/' + kfImgPath + '/post/smile/em/em' + NewCodes + '.gif" smile="' + NewCode + '" />'; }
 }
 function h(style, code, size) { size = 7 - size; code = '[size=' + size + '][b]' + code + '[/b][/size]'; return p(style, code); }
 function p(style, code) {
@@ -1190,7 +1190,7 @@ function table(style, str) {
     str = searchtag('th', str, 'td', 1);
     let styles = ['width=', 'width:'], s = '';;
     style = style.toLowerCase();
-    for (i in styles) {
+    for (let i in styles) {
         if (style.indexOf(styles[i]) == -1) { continue; }
         s = '=' + findvalue(style, styles[i]); break;
     }
@@ -1221,7 +1221,7 @@ function Font(style, str) {
     let styles = new Array();
     styles = { 'size': 'size=', 'color': 'color=', 'font': 'face=', 'backcolor': 'background-color:' };
     style = style.toLowerCase();
-    for (st in styles) {
+    for (let st in styles) {
         let begin = style.indexOf(styles[st]);
         if (begin == -1) { continue; }
         let value = findvalue(style, styles[st]);
@@ -1339,8 +1339,7 @@ const KfeShowUpload = function () {
             else if (upRequest.readyState == 4 && upRequest.status != 200) { $root.append($(KfeunlogUp)); }
         }
     }
-    else { $root.append($(KfeunlogUp)); };
-    $root.append($(KfetextUp));
+    else { $root.append($(KfeunlogUp)); };$root.append($(KfetextUp));
 }
 const loadStickerList = function (items) {
     let $root = $("#Kfe-shop-dialog .Kfe-list-content"); $root.empty();
@@ -1469,7 +1468,7 @@ function imgbindfunc() {
                 let tokenTList = JSON.parse(localStorage.logindata), synctid = tokenTList[0], syncttoken = tokenTList[1];
                 let tokendata = data.data, token = tokendata.token, tokenarray = [synctid, syncttoken, token];
                 localStorage.setItem('logindata', JSON.stringify(tokenarray)); let tokenRequest = new XMLHttpRequest();
-                tokenRequest.open('POST', 'https://api.inari.site/?s=App.User_User.tupdate&user_id=' + syncid + '&token=' + synctoken + '&tupdate=' + token, true);
+                tokenRequest.open('POST', 'https://api.inari.site/?s=App.User_User.tupdate&user_id=' + synctid + '&token=' + syncttoken + '&tupdate=' + token, true);
                 tokenRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 tokenRequest.send('name=teswe&ee=ef'); tokenRequest.onreadystatechange = function () {
                     if (tokenRequest.readyState == 4 && tokenRequest.status == 200) {
