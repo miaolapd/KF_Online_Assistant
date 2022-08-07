@@ -61,10 +61,10 @@ let LocalRaws = [
     { "id": 8, "desc": "少女☆歌剧。去吧，两人一起，摘下那颗星。", "cover": "https://sticker.inari.site/revstar/revstar (1).png", "name": "_Revue", "title": '少歌', "addr": "_RevueSmileList", "numstart": [1], "numend": [41], "url1": ["https://sticker.inari.site/revstar/revstar ("], "url2": [").png"] },
     { "id": 9, "desc": "公主连结Re:Dive。いま、新たな冒険の幕が上がる——", "cover": "https://sticker.inari.site/redive/sticker (1).png", "name": "_Redive", "title": 'PCR', "addr": "_RediveSmileList", "numstart": [1], "numend": [49], "url1": ["https://sticker.inari.site/redive/sticker ("], "url2": [").png"] },
     { "id": 10, "desc": "BanG Dream！噜~ キラキラ☆ドキドキ~ ふえぇ~", "cover": "https://sticker.inari.site/bangdream/bangdream (1).png", "name": "_Bandori", "title": '邦邦', "addr": "_BandoriSmileList", "numstart": [1], "numend": [41], "url1": ["https://sticker.inari.site/bangdream/bangdream ("], "url2": [").png"] },
-], customize = defaultSConf,userimgst,loconsticker,loadcustom = true;
+], customize = defaultSConf,userimgst,loconsticker,loadcustom;
 // 客制化配置
 if (!localStorage.StickerConf) { loadcustom = false; localStorage.setItem('StickerConf', JSON.stringify(defaultSConf)); }
-else { customize = JSON.parse(localStorage.StickerConf); };
+else { loadcustom = true;customize = JSON.parse(localStorage.StickerConf); };
 if (customize.version != defaultSConf.version) {
     console.log("个性化配置版本不匹配，自动进行兼容性变更！");
     customize.version = defaultSConf.version;
@@ -91,8 +91,8 @@ if (customize.version != defaultSConf.version) {
  */
 const UserSmileList = JSON.parse(userimgst), imgapi = customize.imgapi, cloudapi = customize.cloudapi,
     FinalList = [], FinalRaw = [], KfSmileList = [], KfSmileCodeList = [], RandomSmileList = [], UsersSmileList = [], MenuList = {};
-let isMQ = false, isMobile = false, realedits = true, realedit = customize.realedit,
-    $realtimeView, kfImgPath, olAuth = sessionStorage.OnlineSmile, locAuth = sessionStorage.localSmile,
+let isMQ = false, realedits = true, realedit = customize.realedit,
+    kfImgPath, olAuth = sessionStorage.OnlineSmile, locAuth = sessionStorage.localSmile,
     OnlineRaws = [], uupath = [], localSmile = [], realeditcheck = '',OnlineSmile,code_htm,code_num,OnlineRawslists,olhaved;
 if (realedit && isMQ == false) { realeditcheck = 'checked' }
 if (localStorage.onlineraws) { OnlineRaws = JSON.parse(localStorage.onlineraws); }
