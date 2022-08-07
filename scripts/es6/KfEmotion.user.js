@@ -62,7 +62,7 @@ let LocalRaws = [
     { "id": 8, "desc": "少女☆歌剧。去吧，两人一起，摘下那颗星。", "cover": "https://sticker.inari.site/revstar/revstar (1).png", "name": "_Revue", "title": '少歌', "addr": "_RevueSmileList", "numstart": [1], "numend": [41], "url1": ["https://sticker.inari.site/revstar/revstar ("], "url2": [").png"] },
     { "id": 9, "desc": "公主连结Re:Dive。いま、新たな冒険の幕が上がる——", "cover": "https://sticker.inari.site/redive/sticker (1).png", "name": "_Redive", "title": 'PCR', "addr": "_RediveSmileList", "numstart": [1], "numend": [49], "url1": ["https://sticker.inari.site/redive/sticker ("], "url2": [").png"] },
     { "id": 10, "desc": "BanG Dream！噜~ キラキラ☆ドキドキ~ ふえぇ~", "cover": "https://sticker.inari.site/bangdream/bangdream (1).png", "name": "_Bandori", "title": '邦邦', "addr": "_BandoriSmileList", "numstart": [1], "numend": [41], "url1": ["https://sticker.inari.site/bangdream/bangdream ("], "url2": [").png"] },
-], customize = defaultSConf,userimgst,loconsticker;
+], customize = defaultSConf,userimgst,loconsticker,loadcustom = true;
 // 客制化配置
 if (!localStorage.StickerConf) { loadcustom = false; localStorage.setItem('StickerConf', JSON.stringify(defaultSConf)); }
 else { customize = JSON.parse(localStorage.StickerConf); };
@@ -92,8 +92,8 @@ if (customize.version != defaultSConf.version) {
  */
 const UserSmileList = JSON.parse(userimgst), imgapi = customize.imgapi, cloudapi = customize.cloudapi,
     FinalList = [], FinalRaw = [], KfSmileList = [], KfSmileCodeList = [], RandomSmileList = [], UsersSmileList = [], MenuList = {};
-let isMQ = false, isMobile = false, loadcustom = true, realedits = true, realedit = customize.realedit,
-    $realtimeView, kfImgPath, olAuth = sessionStorage.OnlineSmile, locAuth = sessionStorage.localSmile,
+let isMQ = false, realedits = true, realedit = customize.realedit,
+    kfImgPath, olAuth = sessionStorage.OnlineSmile, locAuth = sessionStorage.localSmile,
     OnlineRaws = [], uupath = [], localSmile = [], realeditcheck = '',OnlineSmile,code_htm,code_num,OnlineRawslists,olhaved;
 if (realedit && isMQ == false) { realeditcheck = 'checked' }
 if (localStorage.onlineraws) { OnlineRaws = JSON.parse(localStorage.onlineraws); }
@@ -1668,8 +1668,8 @@ const appendCss = function () {
    .kfe-shop_footer a{color: #707072;font-size: 10px;}
    .pd_custom_script_header { margin: 7px 0; padding: 5px; background-color: #e8e8e8; border-radius: 5px; }
    .pd_custom_script_content { display: none; width: 750px; height: 350px; white-space: pre; }
-   .Heditm { border-style: none;display: inline-block; text-align: center;width: 26px;height: 20px;}
-   .Heditms { border-style: none;display: inline-block; text-align: center;width: 26px;height: 20px;}
+   .Heditm { border-style: none;display: inline-block; text-align: center;width: 26px;height: 20px;cursor: pointer;}
+   .Heditms { border-style: none;display: inline-block; text-align: center;width: 26px;height: 20px;cursor: pointer;}
    .KfeHtmlEditer img {max-width:500px}
    .KfeHtmlEditer video {max-width:500px}
    </style>`);
