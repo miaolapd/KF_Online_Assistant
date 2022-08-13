@@ -946,9 +946,9 @@ function imgmaxwh(url, maxwh) {
     return img;
 }
 function smilepath(NewCode) {
-    temp = NewCode - 9;
-    if (NewCode < 19) { return '<img src="/' + kfImgPath + '/post/smile/em/em0' + temp + '.gif" smile="' + NewCode + '" />'; }
-    else { return '<img src="/' + kfImgPath + '/post/smile/em/em' + temp + '.gif" smile="' + NewCode + '" />'; }
+    let stemp = NewCode - 9;
+    if (NewCode < 19) { return '<img src="/' + kfImgPath + '/post/smile/em/em0' + stemp + '.gif" smile="' + NewCode + '" />'; }
+    else { return '<img src="/' + kfImgPath + '/post/smile/em/em' + stemp + '.gif" smile="' + NewCode + '" />'; }
 }
 function h(style, code, size) { size = 7 - size; code = '[size=' + size + '][b]' + code + '[/b][/size]'; return p(style, code); }
 function p(style, code) {
