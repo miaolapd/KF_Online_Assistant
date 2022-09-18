@@ -898,7 +898,8 @@ export const addFastNavMenu = function () {
 <li class="topmenuo3">
   <a href="javascript:;" style="width:100px;">快捷导航</a>
   <ul class="topmenuo2">
-      ${Info.isInSpecialDomain && !Config.showGuGuZhenInFastNavEnabled ? '' : '<li><a href="fyg_sjcdwj.php?go=play" target="_blank">咕咕镇</a></li>'}
+      ${Info.isInSpecialDomain && !Config.showGuGuZhenInFastNavEnabled ? '' : '<li><a href="fyg_sjcdwj.php?go=play&xl=2" target="_blank">咕咕镇</a></li>'}
+      ${Info.isInSpecialDomain && !Config.showGuGuZhenInFastNavEnabled ? '' : '<li><a href="fyg_sjcdwj.php?go=play&xl=1" target="_blank">咕咕镇2</a></li>'}
       <li><a href="search.php?authorid=${Info.uid}">我的主题</a></li>
       <li><a href="personal.php?action=post">我的回复</a></li>
       <li><a href="profile.php?action=favor">收藏</a></li>

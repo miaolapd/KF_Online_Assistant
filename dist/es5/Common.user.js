@@ -15,7 +15,7 @@
 // @include     https://*365gal.com/*
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
-// @version     14.3.5
+// @version     14.3.6
 // @grant       none
 // @run-at      document-end
 // @license     MIT
@@ -102,7 +102,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 版本号
-var version = '14.3.5';
+var version = '14.3.6';
 
 /**
  * 导出模块
@@ -10465,7 +10465,7 @@ var blockThread = exports.blockThread = function blockThread() {
 var addFastNavMenu = exports.addFastNavMenu = function addFastNavMenu() {
     var $menuBtn = $('#alldiv > .drow:nth-child(2) > .dcol > .topmenuo > .topmenuo1 > .topmenuo3:last-child > a:contains("游戏介绍")');
     if (!$menuBtn.length) return;
-    $menuBtn.parent().after('\n<li class="topmenuo3">\n  <a href="javascript:;" style="width:100px;">\u5FEB\u6377\u5BFC\u822A</a>\n  <ul class="topmenuo2">\n      ' + (_Info2.default.isInSpecialDomain && !Config.showGuGuZhenInFastNavEnabled ? '' : '<li><a href="fyg_sjcdwj.php?go=play" target="_blank">咕咕镇</a></li>') + '\n      <li><a href="search.php?authorid=' + _Info2.default.uid + '">\u6211\u7684\u4E3B\u9898</a></li>\n      <li><a href="personal.php?action=post">\u6211\u7684\u56DE\u590D</a></li>\n      <li><a href="profile.php?action=favor">\u6536\u85CF</a></li>\n      <li><a href="profile.php?action=friend">\u597D\u53CB\u5217\u8868</a></li>\n      <li><a href="kf_fw_ig_index.php">\u4E89\u593A\u5956\u52B1</a></li>\n      <li><a href="kf_fw_ig_mybp.php">\u6211\u7684\u7269\u54C1</a></li>\n      <li><a href="kf_fw_ig_halo.php">\u6218\u529B\u5149\u73AF</a></li>\n      <li><a href="kf_fw_ig_shop.php">\u7269\u54C1\u5546\u5E97</a></li>\n      ' + (_Info2.default.isInSpecialDomain ? '<li><a href="https://m.miaola.work/" target="_blank">手机版</a></li>' : '') + '\n      ' + _Const2.default.customFastNavMenuContent + '\n  </ul>\n</li>');
+    $menuBtn.parent().after('\n<li class="topmenuo3">\n  <a href="javascript:;" style="width:100px;">\u5FEB\u6377\u5BFC\u822A</a>\n  <ul class="topmenuo2">\n      ' + (_Info2.default.isInSpecialDomain && !Config.showGuGuZhenInFastNavEnabled ? '' : '<li><a href="fyg_sjcdwj.php?go=play&xl=2" target="_blank">咕咕镇</a></li>') + '\n      ' + (_Info2.default.isInSpecialDomain && !Config.showGuGuZhenInFastNavEnabled ? '' : '<li><a href="fyg_sjcdwj.php?go=play&xl=1" target="_blank">咕咕镇2</a></li>') + '\n      <li><a href="search.php?authorid=' + _Info2.default.uid + '">\u6211\u7684\u4E3B\u9898</a></li>\n      <li><a href="personal.php?action=post">\u6211\u7684\u56DE\u590D</a></li>\n      <li><a href="profile.php?action=favor">\u6536\u85CF</a></li>\n      <li><a href="profile.php?action=friend">\u597D\u53CB\u5217\u8868</a></li>\n      <li><a href="kf_fw_ig_index.php">\u4E89\u593A\u5956\u52B1</a></li>\n      <li><a href="kf_fw_ig_mybp.php">\u6211\u7684\u7269\u54C1</a></li>\n      <li><a href="kf_fw_ig_halo.php">\u6218\u529B\u5149\u73AF</a></li>\n      <li><a href="kf_fw_ig_shop.php">\u7269\u54C1\u5546\u5E97</a></li>\n      ' + (_Info2.default.isInSpecialDomain ? '<li><a href="https://m.miaola.work/" target="_blank">手机版</a></li>' : '') + '\n      ' + _Const2.default.customFastNavMenuContent + '\n  </ul>\n</li>');
 
     if (Config.adminMemberEnabled) {
         $('#alldiv > .drow:nth-child(2) > .dcol > .topmenuo > .topmenuo1 > .topmenuo3:nth-last-child(4) > a:contains("聊天交流")').next('ul').append('<li><a href="thread.php?fid=93">内部管理专用</a></li>');

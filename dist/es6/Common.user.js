@@ -14,7 +14,7 @@
 // @include     https://*365gal.com/*
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
-// @version     14.3.5
+// @version     14.3.6
 // @grant       none
 // @run-at      document-end
 // @license     MIT
@@ -101,7 +101,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 版本号
-const version = '14.3.5';
+const version = '14.3.6';
 
 /**
  * 导出模块
@@ -9180,7 +9180,8 @@ const addFastNavMenu = exports.addFastNavMenu = function () {
 <li class="topmenuo3">
   <a href="javascript:;" style="width:100px;">快捷导航</a>
   <ul class="topmenuo2">
-      ${_Info2.default.isInSpecialDomain && !Config.showGuGuZhenInFastNavEnabled ? '' : '<li><a href="fyg_sjcdwj.php?go=play" target="_blank">咕咕镇</a></li>'}
+      ${_Info2.default.isInSpecialDomain && !Config.showGuGuZhenInFastNavEnabled ? '' : '<li><a href="fyg_sjcdwj.php?go=play&xl=2" target="_blank">咕咕镇</a></li>'}
+      ${_Info2.default.isInSpecialDomain && !Config.showGuGuZhenInFastNavEnabled ? '' : '<li><a href="fyg_sjcdwj.php?go=play&xl=1" target="_blank">咕咕镇2</a></li>'}
       <li><a href="search.php?authorid=${_Info2.default.uid}">我的主题</a></li>
       <li><a href="personal.php?action=post">我的回复</a></li>
       <li><a href="profile.php?action=favor">收藏</a></li>
