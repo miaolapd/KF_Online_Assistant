@@ -407,7 +407,7 @@ const createContainer = function (textArea) {
       <table><tr><td>
       <li><input type="text" class="conftext" id="kanbanimg" value="">&nbsp;<input type="button" class="kfe-res-kanbanimg" value="默认">（看板娘图片URL）</li>
       <li><input type="number" class="conftext" id="kanbansize" value="">&nbsp;<input type="button" class="kfe-res-kanbansize" value="默认">（看板娘大小，移动端/2）</li>
-      <li><input type="number" class="conftext" id="kbopacity" value="">&nbsp;<input type="button" class="stickerpp-res-kbopacity" value="默认">（看板娘透明度百分比，取值0-100）</li>
+      <li><input type="number" class="conftext" id="kbopacity" value="">&nbsp;<input type="button" class="kfe-res-kbopacity" value="默认">（看板娘透明度百分比，取值0-100）</li>
       <li><input type="text" class="conftext" id="onlineraw" value="">&nbsp;<input type="button" class="kfe-res-onlineraw" value="默认">（在线贴纸仓库API）</li>
       <li><input type="text" class="conftext" id="imgapi" value="">&nbsp;<input type="button" class="kfe-res-imgapi" value="默认">（图片上传图床API）</li>
       <li><input type="text" class="conftext" id="olimglists" disabled="true" value="">&nbsp;<input type="button" class="kfe-res-olimglists" value="默认">（已选在线贴纸ID数组）</li>
