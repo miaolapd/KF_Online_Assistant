@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        绯月表情增强插件
 // @namespace   https://greasyfork.org/users/729911
-// @version     6.42.42
+// @version     6.42.43
 // @author      eddie32,喵拉布丁,mistakey(Hazukikaguya)
 // @description KF论坛专用的回复表情，插图扩展插件，在发帖时快速输入自定义表情和论坛BBCODE
 // @icon        https://sticker.inari.site/favicon.ico
@@ -29,10 +29,11 @@
  */
 'use strict';
 // 默认配置&本地贴纸源
-const updatelog = '版本V6.42.42, 本次更新日志: \n 实装看板娘触控拖动支持&云同步账号记住账号密码；优化看板娘拖动代码&其他代码。',
+const updatelog = '版本V6.42.43, 本次更新日志: \n 增加看板娘透明度设置，修复手机视图下上传图片按钮触发文本提交的问题。',
     defaultSConf = {
-        "version": "2.1.0",
+        "version": "2.1.6",
         "kanbansize": "64",
+        "kbopacity": "100",
         "kanbanimg": "https://sticker.inari.site/truenight.gif",
         "imgapi": "https://up.inari.site/api/v1/",
         "cloudapi": "https://api.inari.site/?s=App.User_User.",
@@ -272,20 +273,20 @@ let kfekanban = document.createElement("div");
 if (isKfMobile == true) {
     if (localStorage.imgmoveMb != null) {
         let imgmoveMb = JSON.parse(localStorage.imgmoveMb);
-        kfekanban.innerHTML = `<div id = "kfekanban" style = "position:fixed;left:${Math.floor(imgmoveMb[0] * ww)}px;top:${Math.floor(imgmoveMb[1] * wh)}px;z-index:88;cursor:pointer;" >
+        kfekanban.innerHTML = `<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + "%"});position:fixed;left:${Math.floor(imgmoveMb[0] * ww)}px;top:${Math.floor(imgmoveMb[1] * wh)}px;z-index:88;cursor:pointer;" >
   <img class="kfekanban" src = ${customize.kanbanimg} width =${Math.floor(customize.kanbansize / 2) + "%"} height =${Math.floor(customize.kanbansize / 2) + "%"}></div>`;
     } else {
-        kfekanban.innerHTML = `<div id = "kfekanban" style = "position:fixed;left:5px;top:300px;z-index:88;cursor:pointer;" >
+        kfekanban.innerHTML = `<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + "%"});position:fixed;left:5px;top:300px;z-index:88;cursor:pointer;" >
   <img class="kfekanban" src = ${customize.kanbanimg} width =${Math.floor(customize.kanbansize / 2) + "%"} height =${Math.floor(customize.kanbansize / 2) + "%"}></div>`;
     }
 }
 else {
     if (localStorage.imgmovePc != null) {
         let imgmovePc = JSON.parse(localStorage.imgmovePc);
-        kfekanban.innerHTML = `<div id = "kfekanban" style = "position:fixed;left:${Math.floor(imgmovePc[0] * ww)}px;top:${Math.floor(imgmovePc[1] * wh)}px;z-index:88;cursor:pointer;" >
+        kfekanban.innerHTML = `<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + "%"});position:fixed;left:${Math.floor(imgmovePc[0] * ww)}px;top:${Math.floor(imgmovePc[1] * wh)}px;z-index:88;cursor:pointer;" >
   <img class="kfekanban" src = ${customize.kanbanimg} width =${customize.kanbansize + "%"} height =${customize.kanbansize + "%"}></div>`;
     } else {
-        kfekanban.innerHTML = `<div id = "kfekanban" style = "position:fixed;left:5px;top:100px;z-index:88;cursor:pointer;" >
+        kfekanban.innerHTML = `<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + "%"});position:fixed;left:5px;top:100px;z-index:88;cursor:pointer;" >
   <img class="kfekanban" src = ${customize.kanbanimg} width =${customize.kanbansize + "%"} height =${customize.kanbansize + "%"}></div>`;
     }
 } document.body.appendChild(kfekanban);
@@ -406,6 +407,7 @@ const createContainer = function (textArea) {
       <table><tr><td>
       <li><input type="text" class="conftext" id="kanbanimg" value="">&nbsp;<input type="button" class="kfe-res-kanbanimg" value="默认">（看板娘图片URL）</li>
       <li><input type="number" class="conftext" id="kanbansize" value="">&nbsp;<input type="button" class="kfe-res-kanbansize" value="默认">（看板娘大小，移动端/2）</li>
+      <li><input type="number" class="conftext" id="kbopacity" value="">&nbsp;<input type="button" class="stickerpp-res-kbopacity" value="默认">（看板娘透明度百分比，取值0-100）</li>
       <li><input type="text" class="conftext" id="onlineraw" value="">&nbsp;<input type="button" class="kfe-res-onlineraw" value="默认">（在线贴纸仓库API）</li>
       <li><input type="text" class="conftext" id="imgapi" value="">&nbsp;<input type="button" class="kfe-res-imgapi" value="默认">（图片上传图床API）</li>
       <li><input type="text" class="conftext" id="olimglists" disabled="true" value="">&nbsp;<input type="button" class="kfe-res-olimglists" value="默认">（已选在线贴纸ID数组）</li>
@@ -595,6 +597,8 @@ const createContainer = function (textArea) {
         customize.kanbanimg = defaultSConf.kanbanimg; localStorage.setItem('StickerConf', JSON.stringify(customize)); alert(resT);
     }).on('click', '.kfe-res-kanbansize', function () {
         customize.kanbansize = defaultSConf.kanbansize; localStorage.setItem('StickerConf', JSON.stringify(customize)); alert(resT);
+    }).on('click', '.kfe-res-kbopacity', function () {
+        customize.kbopacity = defaultSConf.kbopacity; localStorage.setItem('StickerConf', JSON.stringify(customize)); alert(resT);
     }).on('click', '.kfe-res-onlineraw', function () {
         customize.onlineraw = defaultSConf.onlineraw; localStorage.setItem('StickerConf', JSON.stringify(customize)); alert(resT);
     }).on('click', '.kfe-res-imgapi', function () {
@@ -716,6 +720,8 @@ const createContainer = function (textArea) {
         customize.kanbanimg = e.target.value; localStorage.setItem('StickerConf', JSON.stringify(customize));
     }).on('blur', '#kanbansize', function (e) {
         customize.kanbansize = e.target.value; localStorage.setItem('StickerConf', JSON.stringify(customize));
+    }).on('blur', '#kbopacity', function (e) {
+        customize.kbopacity = e.target.value; localStorage.setItem('StickerConf', JSON.stringify(customize));
     }).on('blur', '#onlineraw', function (e) {
         customize.onlineraw = e.target.value; localStorage.setItem('StickerConf', JSON.stringify(customize));
     }).on('blur', '#imgapi', function (e) {
