@@ -120,6 +120,7 @@ if (customize.version != defaultSConf.version) {
     customize.cloudapi = defaultSConf.cloudapi;
     if (!customize.kanbanimg) customize.kanbanimg = defaultSConf.kanbanimg;
     if (!customize.kanbansize) customize.kanbansize = defaultSConf.kanbansize;
+    if (!customize.kbopacity) customize.kbopacity = defaultSConf.kbopacity;
     if (!customize.imgapi) customize.imgapi = defaultSConf.imgapi;
     //if (!customize.cloudapi) customize.cloudapi = defaultSConf.cloudapi;
     if (!customize.onlineraw) customize.onlineraw = defaultSConf.onlineraw;
@@ -528,6 +529,7 @@ var createContainer = function createContainer(textArea) {
         // 载入个性化
         $("#kanbanimg").attr("value", customize.kanbanimg);
         $("#kanbansize").attr("value", customize.kanbansize);
+        $("#kbopacity").attr("value", customize.kbopacity);
         $("#onlineraw").attr("value", customize.onlineraw);
         $("#imgapi").attr("value", customize.imgapi);
         $("#olimglists").attr("value", customize.olimglists);
