@@ -81,6 +81,7 @@ if (customize.version != defaultSConf.version) {
     customize.cloudapi = defaultSConf.cloudapi;
     if (!customize.kanbanimg) customize.kanbanimg = defaultSConf.kanbanimg;
     if (!customize.kanbansize) customize.kanbansize = defaultSConf.kanbansize;
+    if (!customize.kbopacity) customize.kbopacity = defaultSConf.kbopacity;
     if (!customize.imgapi) customize.imgapi = defaultSConf.imgapi;
     //if (!customize.cloudapi) customize.cloudapi = defaultSConf.cloudapi;
     if (!customize.onlineraw) customize.onlineraw = defaultSConf.onlineraw;
@@ -481,7 +482,7 @@ const createContainer = function (textArea) {
  
       </div>`).insertBefore($(textArea));
     if (isKfMobile == true) {
-        $(`<button class="btn btn-secondary upload-image-btn ml-1" title="上传图片" onclick="$('.kfe-user-p').click();">
+        $(`<button class="btn btn-secondary upload-image-btn ml-1" title="上传图片" onclick="$('.kfe-user-p').click();" type="button">
               <i class="fa fa-picture-o" aria-hidden="true"></i>上传图片</button>`).insertAfter($("#smileDropdownBtn"));
     }
     else { $(`<a>&nbsp;</a><input type="button" class="kfe-user-pt" value="上传图片" onclick="$('.kfe-user-p').click();">`).insertAfter($('[name="Submit"][value!="全站搜索"]')); }
@@ -582,6 +583,7 @@ const createContainer = function (textArea) {
         // 载入个性化
         $("#kanbanimg").attr("value", customize.kanbanimg);
         $("#kanbansize").attr("value", customize.kanbansize);
+        $("#kbopacity").attr("value", customize.kbopacity);
         $("#onlineraw").attr("value", customize.onlineraw);
         $("#imgapi").attr("value", customize.imgapi);
         $("#olimglists").attr("value", customize.olimglists);
