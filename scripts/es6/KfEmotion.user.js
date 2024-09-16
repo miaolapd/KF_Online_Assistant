@@ -481,7 +481,7 @@ const createContainer = function (textArea) {
  
       </div>`).insertBefore($(textArea));
     if (isKfMobile == true) {
-        $(`<button class="btn btn-secondary upload-image-btn ml-1" title="上传图片" onclick="$('.kfe-user-p').click();">
+        $(`<button class="btn btn-secondary upload-image-btn ml-1" title="上传图片" onclick="$('.kfe-user-p').click();" type="button">
               <i class="fa fa-picture-o" aria-hidden="true"></i>上传图片</button>`).insertAfter($("#smileDropdownBtn"));
     }
     else { $(`<a>&nbsp;</a><input type="button" class="kfe-user-pt" value="上传图片" onclick="$('.kfe-user-p').click();">`).insertAfter($('[name="Submit"][value!="全站搜索"]')); }
