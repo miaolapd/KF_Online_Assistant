@@ -274,20 +274,20 @@ let kfekanban = document.createElement("div");
 if (isKfMobile == true) {
     if (localStorage.imgmoveMb != null) {
         let imgmoveMb = JSON.parse(localStorage.imgmoveMb);
-        kfekanban.innerHTML = `<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + "%"});position:fixed;left:${Math.floor(imgmoveMb[0] * ww)}px;top:${Math.floor(imgmoveMb[1] * wh)}px;z-index:88;cursor:pointer;" >
+        kfekanban.innerHTML = `<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + '%'});position:fixed;left:${Math.floor(imgmoveMb[0] * ww)}px;top:${Math.floor(imgmoveMb[1] * wh)}px;z-index:88;cursor:pointer;" >
   <img class="kfekanban" src = ${customize.kanbanimg} width =${Math.floor(customize.kanbansize / 2) + "%"} height =${Math.floor(customize.kanbansize / 2) + "%"}></div>`;
     } else {
-        kfekanban.innerHTML = `<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + "%"});position:fixed;left:5px;top:300px;z-index:88;cursor:pointer;" >
+        kfekanban.innerHTML = `<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + '%'});position:fixed;left:5px;top:300px;z-index:88;cursor:pointer;" >
   <img class="kfekanban" src = ${customize.kanbanimg} width =${Math.floor(customize.kanbansize / 2) + "%"} height =${Math.floor(customize.kanbansize / 2) + "%"}></div>`;
     }
 }
 else {
     if (localStorage.imgmovePc != null) {
         let imgmovePc = JSON.parse(localStorage.imgmovePc);
-        kfekanban.innerHTML = `<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + "%"});position:fixed;left:${Math.floor(imgmovePc[0] * ww)}px;top:${Math.floor(imgmovePc[1] * wh)}px;z-index:88;cursor:pointer;" >
+        kfekanban.innerHTML = `<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + '%'});position:fixed;left:${Math.floor(imgmovePc[0] * ww)}px;top:${Math.floor(imgmovePc[1] * wh)}px;z-index:88;cursor:pointer;" >
   <img class="kfekanban" src = ${customize.kanbanimg} width =${customize.kanbansize + "%"} height =${customize.kanbansize + "%"}></div>`;
     } else {
-        kfekanban.innerHTML = `<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + "%"});position:fixed;left:5px;top:100px;z-index:88;cursor:pointer;" >
+        kfekanban.innerHTML = `<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + '%'});position:fixed;left:5px;top:100px;z-index:88;cursor:pointer;" >
   <img class="kfekanban" src = ${customize.kanbanimg} width =${customize.kanbansize + "%"} height =${customize.kanbansize + "%"}></div>`;
     }
 } document.body.appendChild(kfekanban);

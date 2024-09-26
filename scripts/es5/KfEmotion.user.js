@@ -322,16 +322,16 @@ var kfekanban = document.createElement("div");
 if (isKfMobile == true) {
     if (localStorage.imgmoveMb != null) {
         var imgmoveMb = JSON.parse(localStorage.imgmoveMb);
-        kfekanban.innerHTML = '<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + "%"});position:fixed;left:' + Math.floor(imgmoveMb[0] * ww) + 'px;top:' + Math.floor(imgmoveMb[1] * wh) + 'px;z-index:88;cursor:pointer;" >\n  <img class="kfekanban" src = ' + customize.kanbanimg + ' width =' + (Math.floor(customize.kanbansize / 2) + "%") + ' height =' + (Math.floor(customize.kanbansize / 2) + "%") + '></div>';
+        kfekanban.innerHTML = '<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + '%'});position:fixed;left:' + Math.floor(imgmoveMb[0] * ww) + 'px;top:' + Math.floor(imgmoveMb[1] * wh) + 'px;z-index:88;cursor:pointer;" >\n  <img class="kfekanban" src = ' + customize.kanbanimg + ' width =' + (Math.floor(customize.kanbansize / 2) + "%") + ' height =' + (Math.floor(customize.kanbansize / 2) + "%") + '></div>';
     } else {
-        kfekanban.innerHTML = '<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + "%"});position:fixed;left:5px;top:300px;z-index:88;cursor:pointer;" >\n  <img class="kfekanban" src = ' + customize.kanbanimg + ' width =' + (Math.floor(customize.kanbansize / 2) + "%") + ' height =' + (Math.floor(customize.kanbansize / 2) + "%") + '></div>';
+        kfekanban.innerHTML = '<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + '%'});position:fixed;left:5px;top:300px;z-index:88;cursor:pointer;" >\n  <img class="kfekanban" src = ' + customize.kanbanimg + ' width =' + (Math.floor(customize.kanbansize / 2) + "%") + ' height =' + (Math.floor(customize.kanbansize / 2) + "%") + '></div>';
     }
 } else {
     if (localStorage.imgmovePc != null) {
         var imgmovePc = JSON.parse(localStorage.imgmovePc);
-        kfekanban.innerHTML = '<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + "%"});position:fixed;left:' + Math.floor(imgmovePc[0] * ww) + 'px;top:' + Math.floor(imgmovePc[1] * wh) + 'px;z-index:88;cursor:pointer;" >\n  <img class="kfekanban" src = ' + customize.kanbanimg + ' width =' + (customize.kanbansize + "%") + ' height =' + (customize.kanbansize + "%") + '></div>';
+        kfekanban.innerHTML = '<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + '%'});position:fixed;left:' + Math.floor(imgmovePc[0] * ww) + 'px;top:' + Math.floor(imgmovePc[1] * wh) + 'px;z-index:88;cursor:pointer;" >\n  <img class="kfekanban" src = ' + customize.kanbanimg + ' width =' + (customize.kanbansize + "%") + ' height =' + (customize.kanbansize + "%") + '></div>';
     } else {
-        kfekanban.innerHTML = '<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + "%"});position:fixed;left:5px;top:100px;z-index:88;cursor:pointer;" >\n  <img class="kfekanban" src = ' + customize.kanbanimg + ' width =' + (customize.kanbansize + "%") + ' height =' + (customize.kanbansize + "%") + '></div>';
+        kfekanban.innerHTML = '<div id = "kfekanban" style = "filter:opacity(${customize.kbopacity + '%'});position:fixed;left:5px;top:100px;z-index:88;cursor:pointer;" >\n  <img class="kfekanban" src = ' + customize.kanbanimg + ' width =' + (customize.kanbansize + "%") + ' height =' + (customize.kanbansize + "%") + '></div>';
     }
 }document.body.appendChild(kfekanban);
 var imgpv = document.getElementById("kfekanban");window.onload = function () {
