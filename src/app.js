@@ -20,7 +20,7 @@ import * as SelfRate from './module/SelfRate';
 import * as ConfigDialog from './module/ConfigDialog';
 
 // 版本号
-const version = '14.3.6';
+const version = '15.0.0';
 
 /**
  * 导出模块

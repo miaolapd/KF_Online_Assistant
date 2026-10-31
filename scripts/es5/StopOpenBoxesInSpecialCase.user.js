@@ -9,11 +9,10 @@
 'use strict';
 
 addFunc('Item.openBoxes_success_', function (msg) {
-    // 停止批量打开盒子的指定种类的道具
-    var targetItemTypes = ['档案室钥匙', '整形优惠卷'];
-
-    var matches = /打开盒子获得了道具\[\s*(.+?)\s*]/.exec(msg);
-    if (matches && targetItemTypes.includes(matches[1])) {
-        $('.pd_countdown:last').closest('.pd_msg').data('stop', true);
-    }
+  // 停止批量打开盒子的指定种类的道具
+  var targetItemTypes = ['档案室钥匙', '整形优惠卷'];
+  var matches = /打开盒子获得了道具\[\s*(.+?)\s*]/.exec(msg);
+  if (matches && targetItemTypes.includes(matches[1])) {
+    $('.pd_countdown:last').closest('.pd_msg').data('stop', true);
+  }
 });

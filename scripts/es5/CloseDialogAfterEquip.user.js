@@ -10,7 +10,7 @@
 
 var Dialog = require('./Dialog');
 addFunc('Item.bindArmLinkClickEvent_equip_after_', function (obj) {
-    if (obj.type === 1) {
-        Dialog.close('pdChangeArmDialog');
-    }
+  if (obj.type === 1) {
+    Dialog.close('pdChangeArmDialog');
+  }
 });

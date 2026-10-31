@@ -15,7 +15,7 @@
 // @include     https://*365gal.com/*
 // @include     https://*365galgame.com/*
 // @include     https://*fygal.com/*
-// @version     14.3.6
+// @version     15.0.0
 // @grant       none
 // @run-at      document-end
 // @license     MIT

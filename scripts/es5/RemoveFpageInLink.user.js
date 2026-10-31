@@ -8,9 +8,9 @@
 'use strict';
 
 (function () {
-    if (location.pathname !== '/thread.php') return;
-    $('.threadtit1 > a[href*="fpage="]').each(function () {
-        var $this = $(this);
-        $this.attr('href', $this.attr('href').replace(/&fpage=\d+/i, ''));
-    });
+  if (location.pathname !== '/thread.php') return;
+  $('.threadtit1 > a[href*="fpage="]').each(function () {
+    var $this = $(this);
+    $this.attr('href', $this.attr('href').replace(/&fpage=\d+/i, ''));
+  });
 })();

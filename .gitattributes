@@ -1,0 +1,7 @@
+# 自定义脚本必须保持 LF 换行。
+#
+# 运行时用 /\/\/\s*==UserScript==((?:.|\n)+?)\/\/\s*==\/UserScript==/i 解析脚本元信息，
+# 其中 (?:.|\n) 无法跨越 \r，因此 CRLF 的元信息块会匹配失败（回退为默认名）。
+# 若不加此声明，core.autocrlf=true（Git for Windows 默认）会在检出时把
+# 已归一化为 LF 的产物重新变成 CRLF，使元信息块无法被解析。
+*.user.js text eol=lf

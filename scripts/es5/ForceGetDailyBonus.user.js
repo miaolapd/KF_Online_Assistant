@@ -9,18 +9,17 @@
 'use strict';
 
 (function () {
-    // 强制领取时间段（本地时间），例：'20:00:00-23:59:59'
-    var timeRange = '20:00:00-23:59:59';
-
-    var Const = require('./Const').default;
-    var Util = require('./Util');
-    var writeConfig = require('./Config').write;
-    var Public = require('./Public');
-    if (!Config.autoGetDailyBonusEnabled) return;
-    var enabled = !Util.isBetweenInTimeRange(new Date(), timeRange);
-    if (enabled === Config.getBonusAfterSpeakCompleteEnabled) return;
-    Config.getBonusAfterSpeakCompleteEnabled = enabled;
-    writeConfig();
-    console.log('“完成发言后才领取”条件修改为：' + enabled);
-    if (!enabled) Util.deleteCookie(Const.getDailyBonusCookieName);
+  // 强制领取时间段（本地时间），例：'20:00:00-23:59:59'
+  var timeRange = '20:00:00-23:59:59';
+  var Const = require('./Const').default;
+  var Util = require('./Util');
+  var writeConfig = require('./Config').write;
+  var Public = require('./Public');
+  if (!Config.autoGetDailyBonusEnabled) return;
+  var enabled = !Util.isBetweenInTimeRange(new Date(), timeRange);
+  if (enabled === Config.getBonusAfterSpeakCompleteEnabled) return;
+  Config.getBonusAfterSpeakCompleteEnabled = enabled;
+  writeConfig();
+  console.log('“完成发言后才领取”条件修改为：' + enabled);
+  if (!enabled) Util.deleteCookie(Const.getDailyBonusCookieName);
 })();

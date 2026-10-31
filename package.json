@@ -5,7 +5,13 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-scripts": "cd scripts && babel es6 -d es5"
+    "clean": "node build/build.mjs clean",
+    "build": "node build/build.mjs all",
+    "build:es6": "node build/build.mjs es6",
+    "build:es5": "node build/build.mjs es5",
+    "watch": "node build/watch.mjs",
+    "build:scripts": "node build/scripts.mjs",
+    "build-scripts": "node build/scripts.mjs"
   },
   "keywords": [
     "KFOL",
@@ -18,24 +24,16 @@
   "author": "miaolapd",
   "license": "MIT",
   "bugs": {
-    "url": "http://bbs.ikfol.com/read.php?tid=508450"
+    "url": "https://bbs.kfpromax.com/read.php?tid=508450&sf=140"
   },
   "homepage": "https://github.com/miaolapd/KF_Online_Assistant",
+  "engines": {
+    "node": ">=22.18.0"
+  },
   "devDependencies": {
-    "babel-cli": "6.26.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "6.26.2",
-    "babel-preset-es2015": "6.24.1",
-    "babelify": "8.0.0",
-    "browserify": "16.2.2",
-    "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-rename": "^1.3.0",
-    "gulp-replace": "^1.0.0",
-    "gulp-uglify": "^3.0.0",
-    "gulp-util": "^3.0.8",
-    "run-sequence": "^2.2.1",
-    "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0",
-    "watchify": "^3.11.0"
+    "@babel/cli": "^8.0.6",
+    "@babel/core": "^8.0.10",
+    "@babel/preset-env": "^8.0.7",
+    "esbuild": "^0.28.2"
   }
 }
